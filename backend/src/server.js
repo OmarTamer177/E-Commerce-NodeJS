@@ -1,4 +1,7 @@
-import express from "express";
+const express = require("express")
+const connectDB = require('./db.js');
+
+connectDB();
 
 const app = express();
 
