@@ -1,0 +1,41 @@
+body {
+    font-family: sans-serif;
+    background: #f4f4f4;
+    padding: 30px;
+  }
+  
+  form {
+    max-width: 400px;
+    margin: auto;
+    background: white;
+    padding: 25px;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  }
+  
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  input {
+    width: 100%;
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  button {
+    width: 100%;
+    padding: 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  
