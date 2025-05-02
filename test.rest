@@ -1,0 +1,37 @@
+### Create a user
+POST http://localhost:8000/auth/register
+Content-Type: application/json
+
+{
+  "name": "Admin",
+  "email": "admin@example.com",
+  "password": "123456",
+  "address": "123 Main St",
+  "role": "admin"
+}
+
+### login a user
+POST http://localhost:8000/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@example.com",
+  "password": "123456"
+}
+
+### Create a product
+POST http://localhost:8000/products
+Content-Type: application/json
+Authorization: Bearer <admin_token>
+
+{
+    "name": "Test Product",
+    "description": "This is a test product description",
+    "price": 999,
+    "category": "electronics",
+    "image": "test.jpg",
+    "stock": 10
+}
+
+###
+GET http://localhost:8000/products
