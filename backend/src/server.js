@@ -22,6 +22,9 @@ connectDB();
 // App created
 const app = express();
 
+// Middleware to serve static files from the public directory
+app.use(express.static(path.join(__dirname, '../public')));
+
 // Middleware
 app.use(express.json()); // Parse JSON bodies
 app.use(express.urlencoded({ extended: true }));
@@ -34,8 +37,14 @@ app.use('/auth', authRoutes);
 app.use('/api/products', productRoutes);
 
 // Admin page
-app.get("/admin", verifyToken, requireAdmin, (req, res) => {
-    res.sendFile(path.join(__dirname, '../public/admin.html'));
+app.get('/api/admin/check', verifyToken, requireAdmin, (req, res) => {
+    res.json({ message: 'Authorized admin' });
+  });
+  
+
+app.get("/admin", (req, res) => {
+    console.log("Admin page accessed");
+    res.sendFile(path.join(__dirname, '../public/admin-check.html'));
 })
 
 

@@ -1,0 +1,41 @@
+<!-- public/admin-check.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Checking Admin...</title>
+</head>
+<body>
+  <p>Checking if you're an admin...</p>
+
+  <script>
+    const token = prompt("Paste your JWT token:");
+
+    // save new token to localStorage
+    if (token) {
+      localStorage.setItem('token', token);
+    }
+
+    if (!token) {
+      window.location.href = '/unauthorized.html';
+    } else {
+      fetch('/api/admin/check', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      .then(res => {
+        if (res.ok) {
+          // Redirect to actual admin panel
+          window.location.href = '/admin.html';
+        } else {
+          window.location.href = '/unauthorized.html';
+        }
+      })
+      .catch(() => {
+        window.location.href = '/unauthorized.html';
+      });
+    }
+  </script>
+</body>
+</html>

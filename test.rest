@@ -22,10 +22,10 @@ Content-Type: application/json
 ### Create a product
 POST http://localhost:8000/api/products
 Content-Type: application/json
-Authorization: Bearer <token>
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTRjNzI3OGFjYTBkZTAyZTIxOTZjZSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0NjI2OTU0NCwiZXhwIjoxNzQ2MjczMTQ0fQ.sa2eyHTpRKi32anuSml56t_rfDBkwS9PtthjesAbL-A
 
 {
-    "name": "Admin Product 22",
+    "name": "Admin Product 122",
     "description": "This is a test product description",
     "price": 999,
     "category": "electronics",
