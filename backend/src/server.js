@@ -25,14 +25,21 @@ const app = express();
 // Middleware
 app.use(express.json()); // Parse JSON bodies
 app.use(express.urlencoded({ extended: true }));
+const { verifyToken, requireAdmin } = require('./middleware/authMiddleware.js');
 
 // Routes
 const productRoutes = require('./routes/productRoutes');
 const authRoutes = require('./routes/authRoutes');
 app.use('/auth', authRoutes);
-app.use('/products', productRoutes);
+app.use('/api/products', productRoutes);
+
+// Admin page
+app.get("/admin", verifyToken, requireAdmin, (req, res) => {
+    res.sendFile(path.join(__dirname, '../public/admin.html'));
+})
 
 
+// Home page
 app.get("/", (req, res) => {
     res.send("<h1>Welcome to our E-Commerce!!</h1>")
 })

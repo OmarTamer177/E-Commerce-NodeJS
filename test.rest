@@ -20,12 +20,12 @@ Content-Type: application/json
 }
 
 ### Create a product
-POST http://localhost:8000/products
+POST http://localhost:8000/api/products
 Content-Type: application/json
-Authorization: Bearer <admin_token>
+Authorization: Bearer <token>
 
 {
-    "name": "Test Product",
+    "name": "Admin Product 22",
     "description": "This is a test product description",
     "price": 999,
     "category": "electronics",
@@ -33,5 +33,11 @@ Authorization: Bearer <admin_token>
     "stock": 10
 }
 
-###
-GET http://localhost:8000/products
+### Get all products
+GET http://localhost:8000/api/products
+
+
+### Get the admin page
+GET http://localhost:8000/admin/
+Authorization: Bearer <token>
+
