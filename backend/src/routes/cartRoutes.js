@@ -11,7 +11,10 @@ const router = express.Router();
 router.get('/', verifyToken, async (req, res) => {
     try {
         const userId = req.user.id; // Get user ID from token
-        const cartItems = await CartItem.find({ user: userId }).populate('product', 'name price');
+        const cart = await Cart.findOne({ user_id: userId });
+        console.log(cart);
+        const cartId = cart._id;
+        const cartItems = await CartItem.find({ cart_id: cartId });
         res.json(cartItems);
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -61,3 +64,5 @@ router.put('/decrement/:id', verifyToken, async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
+
+module.exports = router;

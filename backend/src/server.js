@@ -30,15 +30,17 @@ app.use(express.json()); // Parse JSON bodies
 app.use(express.urlencoded({ extended: true }));
 const { verifyToken, requireAdmin } = require('./middleware/authMiddleware.js');
 
-// Routes
+// Routes "Endpoints"
 const productRoutes = require('./routes/productRoutes');
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const orderRoutes = require('./routes/orderRoutes');
+const cartRoutes = require('./routes/cartRoutes');
 app.use('/auth', authRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/orders', orderRoutes);
+app.use('/api/cart', cartRoutes);
 
 // Admin page
 app.get('/api/admin/check', verifyToken, requireAdmin, (req, res) => {

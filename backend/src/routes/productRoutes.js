@@ -75,31 +75,32 @@ router.delete('/:id', verifyToken, requireAdmin, async (req, res) => {
     }
 });
 
-// Add a product to the cart (NOT TESTED)
+// Add a product to the cart
 router.post('/add-to-cart/:id', verifyToken, async (req, res) => {
     try {
         const product = await Product.findById(req.params.id);
         if (!product) return res.status(404).json({ message: 'Product not found' });
 
+        // Get the cart for the user
+        let cart = await Cart.findOne({ user_id: req.user.id });
+        if (!cart) {
+            console.log("No cart found, creating a new one");
+            cart = new Cart({ user_id: req.user.id });
+            await cart.save();
+        }
+        
         // Check if the product is already in the cart
-        const existingCartItem = await CartItem.findOne({ user: req.user.id, product: product._id });
+        const existingCartItem = await CartItem.findOne({ cart_id: cart._id, product_id: product._id });
         if (existingCartItem) {
             existingCartItem.quantity += req.body.quantity || 1; // Increment quantity
             await existingCartItem.save();
             return res.json({ message: 'Product quantity updated in cart', cartItem: existingCartItem });
         }
         
-        // get the cart for the user
-        let cart = await Cart.findOne({ user: req.user.id });
-        if (!cart) {
-            cart = new Cart({ user: req.user.id });
-            await cart.save();
-        }
-
         // Add product to cart
         const cartItem = new CartItem({
-            user: req.user.id, // Get user ID from token
-            product: product._id,
+            cart_id: cart._id,
+            product_id: product._id,
             quantity: req.body.quantity || 1 // Default quantity to 1 if not provided
         });
         await cartItem.save();

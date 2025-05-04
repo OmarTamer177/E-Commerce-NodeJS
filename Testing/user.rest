@@ -10,8 +10,6 @@ Content-Type: application/json
   "role": "customer"
 }
 
-
-
 ### login a normal user
 POST http://localhost:8000/auth/login
 Content-Type: application/json
@@ -27,7 +25,7 @@ GET http://localhost:8000/api/products
 
 ### Get user profile
 GET http://localhost:8000/api/users/profile
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTcxNDE1NWIyY2Q5MWVmZDAxMmQ0MyIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTc0NjM1NTcwMCwiZXhwIjoxNzQ2MzU5MzAwfQ.fn9somUVjjKqZtbIjc6_ozAtGxPsp3fzz0pzNrr7NBE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTdjNWRlNDc0MTljMzg3ZjI0MDJjOCIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTc0NjM4ODQ2NiwiZXhwIjoxNzQ2MzkyMDY2fQ.kcgUHW-VLgvcf3Afct2Z4TahYU3f2-dwBp0oreaH4Vo
 
 
 ### Update user profile
@@ -42,28 +40,35 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTcxNDE1N
 }
 
 
-### view user's orders
-
-
 
 ### Add items to cart
+POST http://localhost:8000/api/products/add-to-cart/6815da9a334e81baa5b0d947
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTdjNWRlNDc0MTljMzg3ZjI0MDJjOCIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTc0NjM4ODQ2NiwiZXhwIjoxNzQ2MzkyMDY2fQ.kcgUHW-VLgvcf3Afct2Z4TahYU3f2-dwBp0oreaH4Vo
 
-
+{
+  "quantity": 1
+}
 
 ### Remove items from cart
+DELETE http://localhost:8000/api/cart/6817c79a1d9bb4a6f4fa6587
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTdjNWRlNDc0MTljMzg3ZjI0MDJjOCIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTc0NjM4ODQ2NiwiZXhwIjoxNzQ2MzkyMDY2fQ.kcgUHW-VLgvcf3Afct2Z4TahYU3f2-dwBp0oreaH4Vo
+
+
+### Increment item in cart
 
 
 
-### increment item in cart
-
-
-
-### decrement item in cart
+### Decrement item in cart
 
 
 
 ### View cart items
+GET http://localhost:8000/api/cart
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTdjNWRlNDc0MTljMzg3ZjI0MDJjOCIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTc0NjM4ODQ2NiwiZXhwIjoxNzQ2MzkyMDY2fQ.kcgUHW-VLgvcf3Afct2Z4TahYU3f2-dwBp0oreaH4Vo
 
 
+### Checkout cart items
 
-### checkout cart items
+
+### View user's orders

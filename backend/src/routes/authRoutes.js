@@ -2,6 +2,7 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const User = require('../models/User');
+const Cart = require('../models/Cart');
 const { verifyToken } = require('../middleware/authMiddleware');
 
 const router = express.Router();
@@ -26,6 +27,10 @@ router.post('/register', async (req, res) => {
 
     const newUser = new User({ name, email, password, address, role });
     await newUser.save();
+
+    // Create cart for the new user
+    const cart = new Cart({ user_id: newUser._id });
+    await cart.save();
 
     const token = generateToken(newUser);
     res.status(201).json({ message: 'User registered successfully', token, user: { id: newUser._id, name, role } });
