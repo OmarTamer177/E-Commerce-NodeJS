@@ -1,4 +1,4 @@
-### Create a user
+### Create an admin user
 POST http://localhost:8000/auth/register
 Content-Type: application/json
 
@@ -10,7 +10,28 @@ Content-Type: application/json
   "role": "admin"
 }
 
-### login a user
+### Create a normal user
+POST http://localhost:8000/auth/register
+Content-Type: application/json
+
+{
+  "name": "user",
+  "email": "user@example.com",
+  "password": "123456",
+  "address": "123 Main St",
+  "role": "customer"
+}
+
+### login an admin user
+POST http://localhost:8000/auth/login
+Content-Type: application/json
+
+{
+  "email": "user@example.com",
+  "password": "123456"
+}
+
+### login a normal user
 POST http://localhost:8000/auth/login
 Content-Type: application/json
 
@@ -22,7 +43,7 @@ Content-Type: application/json
 ### Create a product
 POST http://localhost:8000/api/products
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTRjNzI3OGFjYTBkZTAyZTIxOTZjZSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0NjI2OTU0NCwiZXhwIjoxNzQ2MjczMTQ0fQ.sa2eyHTpRKi32anuSml56t_rfDBkwS9PtthjesAbL-A
+Authorization: Bearer <token>
 
 {
     "name": "Admin Product 122",
@@ -33,11 +54,82 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTRjNzI3O
     "stock": 10
 }
 
+
 ### Get all products
 GET http://localhost:8000/api/products
+
+
+### Update a product
+
+
+
+### Delete a product
+
+
+
+### Create a user
+
+
+
+### Delete a user
+
+
+
+### Get all users
+
+
+
+### Get all orders
+
+
+
+### Update an order status
+
+
+
+### Add coupon
+
+
+
+### Get all coupons
+
+
+
+### Delete a coupon
+
 
 
 ### Get the admin page
 GET http://localhost:8000/admin/
 Authorization: Bearer <token>
 
+
+### Get user profile
+
+
+
+### view user's orders
+
+
+
+### Add items to cart
+
+
+
+### Remove items from cart
+
+
+
+### increment item in cart
+
+
+
+### decrement item in cart
+
+
+
+### View cart items
+
+
+
+### checkout cart items
