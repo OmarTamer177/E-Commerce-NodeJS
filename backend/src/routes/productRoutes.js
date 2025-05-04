@@ -37,8 +37,6 @@ router.get('/', async (req, res) => {
     }
 });
 
-/// NOT TESTED YET FROM HERE >>>>>>>>>>>>
-
 // Get a single product by ID
 router.get('/:id', async (req, res) => {
     try {
@@ -77,7 +75,7 @@ router.delete('/:id', verifyToken, requireAdmin, async (req, res) => {
     }
 });
 
-// Add a product to the cart
+// Add a product to the cart (NOT TESTED)
 router.post('/add-to-cart/:id', verifyToken, async (req, res) => {
     try {
         const product = await Product.findById(req.params.id);

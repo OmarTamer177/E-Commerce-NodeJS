@@ -1,0 +1,69 @@
+### Create a normal user
+POST http://localhost:8000/auth/register
+Content-Type: application/json
+
+{
+  "name": "user",
+  "email": "user@example.com",
+  "password": "123456",
+  "address": "123 Main St",
+  "role": "customer"
+}
+
+
+
+### login a normal user
+POST http://localhost:8000/auth/login
+Content-Type: application/json
+
+{
+  "email": "user@example.com",
+  "password": "123456"
+}
+
+### Get all products
+GET http://localhost:8000/api/products
+
+
+### Get user profile
+GET http://localhost:8000/api/users/profile
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTcxNDE1NWIyY2Q5MWVmZDAxMmQ0MyIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTc0NjM1NTcwMCwiZXhwIjoxNzQ2MzU5MzAwfQ.fn9somUVjjKqZtbIjc6_ozAtGxPsp3fzz0pzNrr7NBE
+
+
+### Update user profile
+PUT http://localhost:8000/api/users/profile
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTcxNDE1NWIyY2Q5MWVmZDAxMmQ0MyIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTc0NjM1NTcwMCwiZXhwIjoxNzQ2MzU5MzAwfQ.fn9somUVjjKqZtbIjc6_ozAtGxPsp3fzz0pzNrr7NBE
+
+{
+  "name": "Updated User",
+  "email": "user@example.com",
+  "address": "123 New Street"
+}
+
+
+### view user's orders
+
+
+
+### Add items to cart
+
+
+
+### Remove items from cart
+
+
+
+### increment item in cart
+
+
+
+### decrement item in cart
+
+
+
+### View cart items
+
+
+
+### checkout cart items

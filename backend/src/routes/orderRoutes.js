@@ -9,7 +9,7 @@ const router = express.Router();
 // Get user's orders
 router.get('/user-orders', verifyToken, async (req, res) => {
     try {
-        const userId = req.user.id; // Get user ID from token
+        const userId = req.user.id;
         const orders = await Order.find({ user: userId }).populate('products.product', 'name price');
         res.json(orders);
     } catch (error) {
@@ -54,27 +54,6 @@ router.put('/:id', verifyToken, requireAdmin, async (req, res) => {
     }
 });
 
-// Update order stock
-router.put('/update-stock/:id', verifyToken, requireAdmin, async (req, res) => {
-    try {
-        const { products } = req.body; // Array of product IDs and quantities
-        const order = await Order.findById(req.params.id).populate('products.product', 'name price stock');
-        if (!order) return res.status(404).json({ message: 'Order not found' });
-
-        for (const item of order.products) {
-            const product = products.find(p => p.product.toString() === item.product.toString());
-            if (product) {
-                item.product.stock -= product.quantity;
-                await item.product.save();
-            }
-        }
-
-        await order.save();
-        res.json({ message: 'Stock updated successfully', order });
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-});
 
 // Delete an order
 router.delete('/:id', verifyToken, requireAdmin, async (req, res) => {
@@ -86,3 +65,5 @@ router.delete('/:id', verifyToken, requireAdmin, async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
+
+module.exports = router;

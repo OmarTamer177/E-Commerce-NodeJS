@@ -10,18 +10,6 @@ Content-Type: application/json
   "role": "admin"
 }
 
-### Create a normal user
-POST http://localhost:8000/auth/register
-Content-Type: application/json
-
-{
-  "name": "user",
-  "email": "user@example.com",
-  "password": "123456",
-  "address": "123 Main St",
-  "role": "customer"
-}
-
 ### login an admin user
 POST http://localhost:8000/auth/login
 Content-Type: application/json
@@ -31,14 +19,6 @@ Content-Type: application/json
   "password": "123456"
 }
 
-### login a normal user
-POST http://localhost:8000/auth/login
-Content-Type: application/json
-
-{
-  "email": "user@example.com",
-  "password": "123456"
-}
 
 ### Create a product
 POST http://localhost:8000/api/products
@@ -58,17 +38,29 @@ Authorization: Bearer <token>
 ### Get all products
 GET http://localhost:8000/api/products
 
-
-### Update a product
-
-
-
-### Delete a product
+### Get a product by ID
+GET http://localhost:8000/api/products/6815da9a334e81baa5b0d947
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTRjNzI3OGFjYTBkZTAyZTIxOTZjZSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0NjM1Njk2MSwiZXhwIjoxNzQ2MzYwNTYxfQ.p7OOzb4wPwagu_GgU4FwuNXje43JLxYC6sMQNqiehtM
 
 
+### Update a product by ID
+PUT http://localhost:8000/api/products/6815da9a334e81baa5b0d947
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTRjNzI3OGFjYTBkZTAyZTIxOTZjZSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0NjM1Njk2MSwiZXhwIjoxNzQ2MzYwNTYxfQ.p7OOzb4wPwagu_GgU4FwuNXje43JLxYC6sMQNqiehtM
+Content-Type: application/json
 
-### Create a user
+{
+  "name": "Updated Product Name",
+  "description": "Updated description of the product",
+  "price": 29.99,
+  "category": "Electronics",
+  "image": "image.jpg",
+  "stock": 50
+}
 
+
+### Delete a product by ID
+DELETE http://localhost:8000/api/products/6815daf766883949325a1bf5
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTRjNzI3OGFjYTBkZTAyZTIxOTZjZSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0NjM1Njk2MSwiZXhwIjoxNzQ2MzYwNTYxfQ.p7OOzb4wPwagu_GgU4FwuNXje43JLxYC6sMQNqiehtM
 
 
 ### Delete a user
@@ -109,46 +101,3 @@ Authorization: Bearer <token>
 ### Get the admin page
 GET http://localhost:8000/admin/
 Authorization: Bearer <token>
-
-
-### Get user profile
-GET http://localhost:8000/api/users/profile
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTcxNDE1NWIyY2Q5MWVmZDAxMmQ0MyIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTc0NjM1NTcwMCwiZXhwIjoxNzQ2MzU5MzAwfQ.fn9somUVjjKqZtbIjc6_ozAtGxPsp3fzz0pzNrr7NBE
-
-
-### Update user profile
-PUT http://localhost:8000/api/users/profile
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTcxNDE1NWIyY2Q5MWVmZDAxMmQ0MyIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTc0NjM1NTcwMCwiZXhwIjoxNzQ2MzU5MzAwfQ.fn9somUVjjKqZtbIjc6_ozAtGxPsp3fzz0pzNrr7NBE
-
-{
-  "name": "Updated User",
-  "email": "user@example.com",
-  "address": "123 New Street"
-}
-
-
-### view user's orders
-
-
-### Add items to cart
-
-
-
-### Remove items from cart
-
-
-
-### increment item in cart
-
-
-
-### decrement item in cart
-
-
-
-### View cart items
-
-
-
-### checkout cart items
