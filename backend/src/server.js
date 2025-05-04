@@ -33,8 +33,10 @@ const { verifyToken, requireAdmin } = require('./middleware/authMiddleware.js');
 // Routes
 const productRoutes = require('./routes/productRoutes');
 const authRoutes = require('./routes/authRoutes');
+const userRoutes = require('./routes/userRoutes');
 app.use('/auth', authRoutes);
 app.use('/api/products', productRoutes);
+app.use('/api/users', userRoutes);
 
 // Admin page
 app.get('/api/admin/check', verifyToken, requireAdmin, (req, res) => {

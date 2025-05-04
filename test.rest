@@ -27,7 +27,7 @@ POST http://localhost:8000/auth/login
 Content-Type: application/json
 
 {
-  "email": "user@example.com",
+  "email": "admin@example.com",
   "password": "123456"
 }
 
@@ -36,7 +36,7 @@ POST http://localhost:8000/auth/login
 Content-Type: application/json
 
 {
-  "email": "admin@example.com",
+  "email": "user@example.com",
   "password": "123456"
 }
 
@@ -72,11 +72,18 @@ GET http://localhost:8000/api/products
 
 
 ### Delete a user
-
+DELETE http://localhost:8000/api/users/681746db11e0cd45faeffd8a
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTRjNzI3OGFjYTBkZTAyZTIxOTZjZSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0NjM1NTg4OCwiZXhwIjoxNzQ2MzU5NDg4fQ.3I1OvGjNwKazOHiuyTNAK7UkK1uPNcs0Pcpzeojom9w
 
 
 ### Get all users
+GET http://localhost:8000/api/users/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTRjNzI3OGFjYTBkZTAyZTIxOTZjZSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0NjM1NTg4OCwiZXhwIjoxNzQ2MzU5NDg4fQ.3I1OvGjNwKazOHiuyTNAK7UkK1uPNcs0Pcpzeojom9w
 
+
+### Get a user by ID
+GET http://localhost:8000/api/users/681714155b2cd91efd012d43
+Authorization: Bearer <token>
 
 
 ### Get all orders
@@ -105,11 +112,23 @@ Authorization: Bearer <token>
 
 
 ### Get user profile
+GET http://localhost:8000/api/users/profile
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTcxNDE1NWIyY2Q5MWVmZDAxMmQ0MyIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTc0NjM1NTcwMCwiZXhwIjoxNzQ2MzU5MzAwfQ.fn9somUVjjKqZtbIjc6_ozAtGxPsp3fzz0pzNrr7NBE
 
+
+### Update user profile
+PUT http://localhost:8000/api/users/profile
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTcxNDE1NWIyY2Q5MWVmZDAxMmQ0MyIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTc0NjM1NTcwMCwiZXhwIjoxNzQ2MzU5MzAwfQ.fn9somUVjjKqZtbIjc6_ozAtGxPsp3fzz0pzNrr7NBE
+
+{
+  "name": "Updated User",
+  "email": "user@example.com",
+  "address": "123 New Street"
+}
 
 
 ### view user's orders
-
 
 
 ### Add items to cart
