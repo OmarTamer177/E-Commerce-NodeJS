@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>E-Comm-Web | Men's Collection</title>
+  <link rel="stylesheet" href="/CSS_files/home.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <!-- Promo Marquee -->
+  <div class="promo-bar">
+    <div class="promo-container">
+      <div class="promo-text">
+        🎉 LIMITED TIME OFFER: USE CODE "E-comm20" FOR 20% OFF + FREE SHIPPING! 🎉
+      </div>
+      <div class="promo-text">
+        🎉 LIMITED TIME OFFER: USE CODE "E-comm20" FOR 20% OFF + FREE SHIPPING! 🎉
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="navbar-left">
+      <div class="category-nav">
+        <div class="category-item">
+          <a href="#" class="category-link" id="men-link">Men</a>
+          <div class="dropdown-menu">
+            <a href="products.html?category=men&type=all">All Products</a>
+            <a href="products.html?category=men&type=new">New Arrivals</a>
+            <a href="products.html?category=men&type=shoes">Shoes</a>
+            <a href="products.html?category=men&type=tshirts">T-Shirts</a>
+            <a href="products.html?category=men&type=shorts">Shorts</a>
+            <a href="products.html?category=men&type=jackets">Jackets</a>
+          </div>
+        </div>
+        <div class="category-item">
+          <a href="#" class="category-link" id="women-link">Women</a>
+          <div class="dropdown-menu">
+            <a href="products.html?category=women&type=all">All Products</a>
+            <a href="products.html?category=women&type=new">New Arrivals</a>
+            <a href="products.html?category=women&type=shoes">Shoes</a>
+            <a href="products.html?category=women&type=tops">Tops</a>
+            <a href="products.html?category=women&type=leggings">Leggings</a>
+            <a href="products.html?category=women&type=sports-bras">Sports Bras</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="navbar-center">
+      <a href="home.html"><img src="/Images/logo (2).png" alt="E-Comm-Web Logo" class="logo-img"></a>
+    </div>
+    
+    <div class="navbar-right">
+      <a href="login.html"><i class="fas fa-user"></i></a>
+      <a href="cart.html">
+        <i class="fas fa-shopping-cart">
+          <span class="cart-count" id="cart-count">0</span>
+        </i>
+      </a>
+    </div>
+  </nav>
+
+  <!-- Dual Hero Sections -->
+  <div class="hero-container">
+    <section class="hero men">
+      <h2>MEN'S COLLECTION</h2>
+      <p>Durable, high-performance activewear built for training, movement, and everyday wear.</p>
+      <div class="hero-buttons">
+        <button onclick="location.href='products.html?category=men&type=new'">New Arrivals</button>
+        <button onclick="location.href='products.html?category=men'">Explore</button>
+      </div>
+    </section>
+
+    <section class="hero women">
+      <h2>WOMEN'S COLLECTION</h2>
+      <p>Stylish, comfortable activewear designed for performance and everyday confidence.</p>
+      <div class="hero-buttons">
+        <button onclick="location.href='products.html?category=women&type=new'">New Arrivals</button>
+        <button onclick="location.href='products.html?category=women'">Explore</button>
+      </div>
+    </section>
+  </div>
+
+  <script src="/JS_files/home.js"></script>
+</body>
+</html>

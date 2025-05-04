@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MAVIN - Product Details</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="/CSS_files/product_details.css">
+</head>
+<body>
+  <!-- Promo Marquee -->
+  <div class="promo-bar">
+    <div class="promo-container">
+      <div class="promo-text">
+        🎉 LIMITED TIME OFFER: USE CODE "MAVIN20" FOR 20% OFF + FREE SHIPPING! 🎉
+      </div>
+      <div class="promo-text">
+        🎉 LIMITED TIME OFFER: USE CODE "MAVIN20" FOR 20% OFF + FREE SHIPPING! 🎉
+      </div>
+    </div>
+  </div>
+
+  <!-- Navigation Bar (Original Design) -->
+  <nav class="navbar">
+    <div class="navbar-left">
+      <div class="category-nav">
+        <div class="category-item">
+          <a href="#" class="category-link">Men</a>
+        </div>
+        <div class="category-item">
+          <a href="#" class="category-link">Women</a>
+        </div>
+      </div>
+    </div>
+    
+    <div class="navbar-center">
+      <a href="home.html"><img src="/Images/logo (2).png" alt="MAVIN Logo" class="logo-img"></a>
+    </div>
+    
+    <div class="navbar-right">
+      <a href="login.html"><i class="fas fa-user"></i></a>
+      <a href="cart.html">
+        <i class="fas fa-shopping-cart">
+          <span class="cart-count" id="cart-count">0</span>
+        </i>
+      </a>
+    </div>
+  </nav>
+
+  <!-- Product Details -->
+  <div class="product-container">
+    <!-- Product Image -->
+    <div class="product-image">
+      <img src="https://via.placeholder.com/600x800" alt="Product Image">
+    </div>
+    
+    <!-- Product Info -->
+    <div class="product-details">
+      <h1 class="product-title">MAVY</h1>
+      
+      <!-- Size Selection -->
+      <div class="size-options">
+        <div class="size-title">SIZE</div>
+        <div class="size-buttons">
+          <button class="size-btn">S</button>
+          <button class="size-btn selected">M</button>
+          <button class="size-btn">L</button>
+        </div>
+      </div>
+      
+      <!-- Quantity and Cart -->
+      <div class="quantity-cart">
+        <div class="quantity-selector">
+          <button class="quantity-btn">-</button>
+          <input type="text" class="quantity-value" value="1">
+          <button class="quantity-btn">+</button>
+        </div>
+        <button class="add-to-cart">Add to cart</button>
+        <button class="buy-now">Buy it now</button>
+      </div>
+      
+      <!-- Info Sections with Dropdown -->
+      <div class="info-section">
+        <div class="info-header" onclick="toggleInfo('size-chart')">
+          <span>Size Chart</span>
+          <i class="fas fa-plus"></i>
+        </div>
+        <div class="info-content" id="size-chart">
+          <p>Size chart information goes here. Detailed measurements for each size.</p>
+        </div>
+      </div>
+      
+      <div class="info-section">
+        <div class="info-header" onclick="toggleInfo('delivery')">
+          <span>Delivery & Returns</span>
+          <i class="fas fa-plus"></i>
+        </div>
+        <div class="info-content" id="delivery">
+          <p>FREE SHIPPING ABOVE 300 EGP</p>
+          <p>7 DAY RETURN POLICY</p>
+        </div>
+      </div>
+      
+      <div class="info-section">
+        <div class="info-header" onclick="toggleInfo('contact')">
+          <span>Contact Us</span>
+          <i class="fas fa-plus"></i>
+        </div>
+        <div class="info-content" id="contact">
+          <p>Email: ahmed.mohamed145@gmail.com</p>
+          <p>Phone: +201280045475</p>
+          <p>Hours: Mon-Fri 9am-5pm</p>
+        </div>
+      </div>
+      
+      <!-- Payment Info -->
+      <div class="payment-info">
+        <p>Secure online payment</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="/JS_files/product_details.js"></script>
+</body>
+</html>

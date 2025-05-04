@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin - Add Product</title>
+  <link rel="stylesheet" href="/CSS_files/admin.css">
+</head>
+<body>
+  <h1>Add New Product</h1>
+  <div class="form-container">
+    <div class="form-group">
+      <label>Name</label>
+      <input type="text" id="name" required />
+    </div>
+
+    <div class="form-group">
+      <label>Price ($)</label>
+      <input type="number" id="price" step="0.01" required />
+    </div>
+
+    <div class="form-group">
+      <label>Quantity</label>
+      <input type="number" id="quantity" required />
+    </div>
+
+    <div class="form-group">
+      <label>Category</label>
+      <select id="category">
+        <option value="men">Men</option>
+        <option value="women">Women</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Type</label>
+      <input type="text" id="type" placeholder="e.g. shoes, jackets" />
+    </div>
+
+    <div class="form-group">
+      <label>Is New?</label>
+      <select id="isNew">
+        <option value="true">Yes</option>
+        <option value="false">No</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>Upload Product Image</label>
+      <div class="drag-drop" id="drop-area">Drag & Drop or Click to Upload</div>
+      <input type="file" id="image" accept="image/*" style="display:none;" />
+      <img id="preview" class="preview-img" src="" alt="Preview" />
+    </div>
+
+    <button id="save-product">Add Product</button>
+    <div class="note">Saved in browser localStorage</div>
+  </div>
+
+  <script src="/JS_files/admin.js"></script>
+</body>
+</html>
