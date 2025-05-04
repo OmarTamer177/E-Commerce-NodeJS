@@ -188,12 +188,12 @@
   }
   
   .hero.men {
-    background-image: url('/Images/02_Blog_Desktop-Feature_Ben_1920x840.jpg');
+    background-image: url('../Images/02_Blog_Desktop-Feature_Ben_1920x840.jpg');
     z-index: 1;
   }
   
   .hero.women {
-    background-image: url('/Images/meinjd-80-header.jpg');
+    background-image: url('../Images/meinjd-80-header.jpg');
     z-index: 0;
     opacity: 0;
   }
