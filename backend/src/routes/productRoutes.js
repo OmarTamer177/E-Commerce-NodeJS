@@ -182,4 +182,28 @@ router.get('/reviews/:id', async (req, res) => {
     }
   });
 
+// Delete a review by review ID
+router.delete('/review/id/:reviewId', verifyToken, async (req, res) => {
+    try {
+        const reviewId = req.params.reviewId;
+        const userId = req.user.id;
+
+        // Find the review by ID
+        const review = await Review.findById(reviewId);
+        if (!review) {
+            return res.status(404).json({ message: 'Review not found' });
+        }
+
+        // Only allow the review's author or an admin to delete
+        if (review.user_id.toString() !== userId && req.user.role !== 'admin') {
+            return res.status(403).json({ message: 'Not authorized to delete this review' });
+        }
+
+        await Review.findByIdAndDelete(reviewId);
+        res.json({ message: 'Review deleted successfully' });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
 module.exports = router;
