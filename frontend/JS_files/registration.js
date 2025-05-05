@@ -51,15 +51,8 @@ document.addEventListener('DOMContentLoaded', function() {
             email: document.getElementById('email').value,
             password: document.getElementById('password').value,
             address: [
-                document.getElementById('address1').value,
-                document.getElementById('address2').value,
-                document.getElementById('town').value,
-                document.getElementById('postcode').value
+                document.getElementById('address').value,
             ].filter(Boolean).join(', '),
-            title: document.getElementById('title').value,
-            dob: document.getElementById('dob').value,
-            newsletter: document.querySelector('input[name="newsletter"]:checked').value === 'true',
-            partnerOffers: document.querySelector('input[name="partnerOffers"]:checked').value === 'true',
             role: 'customer' // Default role as per your schema
         };
         

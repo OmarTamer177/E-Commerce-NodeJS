@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Edit Profile | E-Commerce Site</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link rel="stylesheet" href="../CSS_files/User.css"/>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="navbar-center">
+      <a href="home.html"><img src="../Images/logo (2).png" alt="E-Comm-Web Logo" class="logo-img"></a>
+    </div>
+  </nav>
+
+  <div class="container">
+    <div class="registration-container">
+      <div class="profile-header" style="text-align:center; margin-bottom:30px;">
+        <img src="../Images/user-icon.png" alt="User Profile" class="profile-img" style="width:100px; border-radius:50%;"/>
+        <h2 id="profileName" style="margin-top:10px; color:var(--primary-color);">John Doe</h2>
+        <button id="editBtn" class="submit-btn" type="button">Edit Profile</button>
+      </div>
+
+      <form id="editProfileForm">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="firstName" class="required">First Name</label>
+            <input type="text" id="firstName" name="firstName" required disabled>
+            <div class="error-message" id="firstNameError">Please enter your first name</div>
+          </div>
+
+          <div class="form-group">
+            <label for="lastName" class="required">Last Name</label>
+            <input type="text" id="lastName" name="lastName" required disabled>
+            <div class="error-message" id="lastNameError">Please enter your last name</div>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="email" class="required">Email Address</label>
+            <input type="email" id="email" name="email" required disabled>
+            <div class="error-message" id="emailError">Email can't be changed</div>
+          </div>
+
+          <div class="form-group">
+            <label for="password" class="required">Password</label>
+            <input type="password" id="password" name="password" required disabled>
+            <div class="error-message" id="passwordError">Password must be at least 6 characters</div>
+          </div>
+
+          <div class="form-group">
+            <label for="dob">Date of Birth (YY/MM/DD)</label>
+            <input type="date" id="dob" name="dob" disabled>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="address1" class="required">Address Line 1</label>
+            <input type="text" id="address1" name="address1" required disabled>
+            <div class="error-message" id="address1Error">Please enter your address</div>
+          </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <button type="submit" class="submit-btn">Save Changes</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="../JS_files/User.js"></script>
+</body>
+</html>
