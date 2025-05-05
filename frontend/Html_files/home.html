@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="../CSS_files/home.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="../CSS_files/cart.css">
+  <link rel="stylesheet" href="../CSS_files/login.css">
 </head>
 <body>
 
@@ -56,7 +57,13 @@
     </div>
 
     <div class="navbar-right">
-      <a href="login.html"><i class="fas fa-user"></i></a>
+     
+
+      <div onclick="toggleLogin()" style="cursor:pointer;">
+        <i class="fas fa-user">
+        </i>
+      </div>
+
       <div onclick="toggleCart()" style="cursor:pointer;">
         <i class="fas fa-shopping-cart">
           <span class="cart-count" id="cart-count">0</span>
@@ -86,6 +93,36 @@
     </section>
   </div>
 
+  <!-- Middle Section -->
+  <section class="middle-highlight">
+    <h2>Discover Your Style</h2>
+    <p>From gym to street, our gear blends comfort, performance, and confidence.</p>
+  </section>
+
+  <!-- Products Categories Section -->
+  <section class="product-categories">
+    <div class="category-card">
+      <img src="../Images/lux_cross.kg-R_Download-37.webp" alt="Shoes">
+      <h3>Shoes</h3>
+      <p>Explore our high-performance, durable, and stylish shoes.</p>
+      <a href="products.html?category=men&type=shoes" class="shop-btn">Shop Shoes</a>
+    </div>
+
+    <div class="category-card">
+      <img src="../Images/M9859_608_V2_Q125_FLATFRONT.JPG" alt="T-Shirts">
+      <h3>T-Shirts</h3>
+      <p>Stay cool and comfortable in our premium quality t-shirts.</p>
+      <a href="products.html?category=men&type=tshirts" class="shop-btn">Shop T-Shirts</a>
+    </div>
+
+    <div class="category-card">
+      <img src="../Images/J7320_795_V2_BASELINE_MOD1_FRONT.JPG" alt="Jackets">
+      <h3>Jackets</h3>
+      <p>Keep warm and stylish with our cutting-edge jackets.</p>
+      <a href="products.html?category=men&type=jackets" class="shop-btn">Shop Jackets</a>
+    </div>
+  </section>
+
   <!-- Cart Sidebar -->
   <div id="cartSidebar" class="cart-sidebar hidden">
     <div class="cart-header">
@@ -106,66 +143,67 @@
     </div>
   </div>
 
-  
-<!-- Middle Section -->
-<section class="middle-highlight">
-  <h2>Discover Your Style</h2>
-  <p>From gym to street, our gear blends comfort, performance, and confidence.</p>
-</section>
-
-<!-- Products Categories Section -->
-<section class="product-categories">
-  <div class="category-card">
-    <img src="../Images/lux_cross.kg-R_Download-37.webp" alt="Shoes">
-    <h3>Shoes</h3>
-    <p>Explore our high-performance, durable, and stylish shoes.</p>
-    <a href="products.html?category=men&type=shoes" class="shop-btn">Shop Shoes</a>
-  </div>
-
-  <div class="category-card">
-    <img src="../Images/M9859_608_V2_Q125_FLATFRONT.JPG" alt="T-Shirts">
-    <h3>T-Shirts</h3>
-    <p>Stay cool and comfortable in our premium quality t-shirts.</p>
-    <a href="products.html?category=men&type=tshirts" class="shop-btn">Shop T-Shirts</a>
-  </div>
-
-  <div class="category-card">
-    <img src="../Images/J7320_795_V2_BASELINE_MOD1_FRONT.JPG" alt="Jackets">
-    <h3>Jackets</h3>
-    <p>Keep warm and stylish with our cutting-edge jackets.</p>
-    <a href="products.html?category=men&type=jackets" class="shop-btn">Shop Jackets</a>
-  </div>
-</section>
-
-<!-- Footer -->
-<footer class="site-footer">
-  <div class="footer-content">
-    <div>
-      <h4>Customer Service</h4>
-      <p><a href="#">Contact Us</a></p>
-      <p><a href="#">Shipping Info</a></p>
-      <p><a href="#">Returns</a></p>
+  <!-- Login Sidebar -->
+  <div id="loginSidebar" class="login-sidebar hidden">
+    <div class="login-header">
+      <span>LOGIN TO YOUR ACCOUNT</span>
+      <button class="close-btn" onclick="toggleLogin()">×</button>
     </div>
-    <div>
-      <h4>About</h4>
-      <p><a href="#">Our Story</a></p>
-      <p><a href="#">Careers</a></p>
-      <p><a href="#">Sustainability</a></p>
+
+    <div class="login-content">
+      <form id="loginForm">
+        <div class="form-group">
+          <label for="login-email">Email Address</label>
+          <input type="email" id="login-email" name="email" required>
+        </div>
+        
+        <div class="form-group">
+          <label for="login-password">Password</label>
+          <input type="password" id="login-password" name="password" required>
+        </div>
+        
+        <div class="forgot-password">
+          <a href="forgot-password.html">Forgot Password?</a>
+        </div>
+        
+        <button type="submit" class="login-btn">Login</button>
+      </form>
     </div>
-    <div>
-      <h4>Connect</h4>
-      <p>Email: support@e-comm-web.com</p>
-      <p>Phone: +20 123 456 789</p>
+
+    <div class="login-footer">
+      <p>Don't have an account? <a href="../Html_files/registration.html">Sign Up</a></p>
     </div>
   </div>
-  <div class="footer-bottom">
-    &copy; 2025 E-Comm-Web. All rights reserved.
-  </div>
-</footer>
 
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="footer-content">
+      <div>
+        <h4>Customer Service</h4>
+        <p><a href="#">Contact Us</a></p>
+        <p><a href="#">Shipping Info</a></p>
+        <p><a href="#">Returns</a></p>
+      </div>
+      <div>
+        <h4>About</h4>
+        <p><a href="#">Our Story</a></p>
+        <p><a href="#">Careers</a></p>
+        <p><a href="#">Sustainability</a></p>
+      </div>
+      <div>
+        <h4>Connect</h4>
+        <p>Email: ahmed.mohamed@gmail.com</p>
+        <p>Phone: +201280045475</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      &copy; 2025 E-Comm-Web. All rights reserved.
+    </div>
+  </footer>
 
   <!-- Scripts -->
   <script src="../JS_files/home.js"></script>
   <script src="../JS_files/cart.js"></script>
+  <script src="../JS_files/login.js"></script>
 </body>
 </html>
