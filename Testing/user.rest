@@ -25,13 +25,13 @@ GET http://localhost:8000/api/products
 
 ### Get user profile
 GET http://localhost:8000/api/users/profile
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTdjNWRlNDc0MTljMzg3ZjI0MDJjOCIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTc0NjQwMTgyOSwiZXhwIjoxNzQ2NDA1NDI5fQ.vGaxOWFp6zFFnACCeE9JBvjsIa8qwMFCw-TKaSmA3Js
+Authorization: Bearer <token>
 
 
 ### Update user profile
 PUT http://localhost:8000/api/users/profile
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTcxNDE1NWIyY2Q5MWVmZDAxMmQ0MyIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTc0NjM1NTcwMCwiZXhwIjoxNzQ2MzU5MzAwfQ.fn9somUVjjKqZtbIjc6_ozAtGxPsp3fzz0pzNrr7NBE
+Authorization: Bearer <token>
 
 {
   "name": "Updated User",
@@ -40,38 +40,37 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTcxNDE1N
 }
 
 
-### Add items to cart
-POST http://localhost:8000/api/products/add-to-cart/6817f9f9f3e23650211a5353
+### Add items to cart (product_id)
+POST http://localhost:8000/api/products/add-to-cart/#######
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTdjNWRlNDc0MTljMzg3ZjI0MDJjOCIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTc0NjQwMTgyOSwiZXhwIjoxNzQ2NDA1NDI5fQ.vGaxOWFp6zFFnACCeE9JBvjsIa8qwMFCw-TKaSmA3Js
+Authorization: Bearer <token>
 
 {
   "quantity": 1
 }
 
-### Remove items from cart
+### Remove items from cart (cartItem_id)
 DELETE http://localhost:8000/api/cart/6817c79a1d9bb4a6f4fa6587
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTdjNWRlNDc0MTljMzg3ZjI0MDJjOCIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTc0NjM4ODQ2NiwiZXhwIjoxNzQ2MzkyMDY2fQ.kcgUHW-VLgvcf3Afct2Z4TahYU3f2-dwBp0oreaH4Vo
+Authorization: Bearer <token>
 
-
-### Increment item in cart
+### Increment item in cart (cartItem_id)
 PUT http://localhost:8000/api/cart/increment/6817faebf3e23650211a537d
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTdjNWRlNDc0MTljMzg3ZjI0MDJjOCIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTc0NjQwMTgyOSwiZXhwIjoxNzQ2NDA1NDI5fQ.vGaxOWFp6zFFnACCeE9JBvjsIa8qwMFCw-TKaSmA3Js
+Authorization: Bearer <token>
 
-### Decrement item in cart
+### Decrement item in cart (cartItem_id)
 PUT http://localhost:8000/api/cart/decrement/6817efa193c8616cf9a0784e
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTdjNWRlNDc0MTljMzg3ZjI0MDJjOCIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTc0NjM5NTMzNywiZXhwIjoxNzQ2Mzk4OTM3fQ.U_gyTRw9EJ7nC4i-Gk0_nPir4NXKJ3p5UDdhFUS6ktU
+Authorization: Bearer <token>
 
 
 ### View cart items
 GET http://localhost:8000/api/cart
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTdjNWRlNDc0MTljMzg3ZjI0MDJjOCIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTc0NjQwMTgyOSwiZXhwIjoxNzQ2NDA1NDI5fQ.vGaxOWFp6zFFnACCeE9JBvjsIa8qwMFCw-TKaSmA3Js
+Authorization: Bearer <token>
 
 
 ### Checkout cart items
 POST http://localhost:8000/api/cart/checkout
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTdjNWRlNDc0MTljMzg3ZjI0MDJjOCIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTc0NjQwMTgyOSwiZXhwIjoxNzQ2NDA1NDI5fQ.vGaxOWFp6zFFnACCeE9JBvjsIa8qwMFCw-TKaSmA3Js
+Authorization: Bearer <token>
 
 {
   "code": "A34GH"
@@ -79,19 +78,19 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTdjNWRlN
 
 ### View user's orders
 GET http://localhost:8000/api/orders/user-orders
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTdjNWRlNDc0MTljMzg3ZjI0MDJjOCIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTc0NjQwMTQ0NiwiZXhwIjoxNzQ2NDA1MDQ2fQ.OQtFm0XPjgZKjftFDa6OCP-GGqY9d2yfA0f2rHX5_dc
+Authorization: Bearer <token>
 
-### Add product review
+### Add product review (product_id)
 POST http://localhost:8000/api/products/review/6817f9f9f3e23650211a5353
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTdjNWRlNDc0MTljMzg3ZjI0MDJjOCIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTc0NjQwMTgyOSwiZXhwIjoxNzQ2NDA1NDI5fQ.vGaxOWFp6zFFnACCeE9JBvjsIa8qwMFCw-TKaSmA3Js
+Authorization: Bearer <token>
 
 {
   "rating": 4,
   "review": "Good product!"
 }
 
-### Update product review
+### Update product review (product_id)
 PUT http://localhost:8000/api/products/review/6817f9f9f3e23650211a5353
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTdjNWRlNDc0MTljMzg3ZjI0MDJjOCIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTc0NjQwMTgyOSwiZXhwIjoxNzQ2NDA1NDI5fQ.vGaxOWFp6zFFnACCeE9JBvjsIa8qwMFCw-TKaSmA3Js
@@ -101,5 +100,5 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTdjNWRlN
   "review": "Bad product!"
 }
 
-### View product reviews
+### View product reviews (product_id)
 GET http://localhost:8000/api/products/reviews/6817f9f9f3e23650211a5353
