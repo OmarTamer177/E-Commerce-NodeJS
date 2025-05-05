@@ -80,3 +80,26 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTdjNWRlN
 ### View user's orders
 GET http://localhost:8000/api/orders/user-orders
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTdjNWRlNDc0MTljMzg3ZjI0MDJjOCIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTc0NjQwMTQ0NiwiZXhwIjoxNzQ2NDA1MDQ2fQ.OQtFm0XPjgZKjftFDa6OCP-GGqY9d2yfA0f2rHX5_dc
+
+### Add product review
+POST http://localhost:8000/api/products/review/6817f9f9f3e23650211a5353
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTdjNWRlNDc0MTljMzg3ZjI0MDJjOCIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTc0NjQwMTgyOSwiZXhwIjoxNzQ2NDA1NDI5fQ.vGaxOWFp6zFFnACCeE9JBvjsIa8qwMFCw-TKaSmA3Js
+
+{
+  "rating": 4,
+  "review": "Good product!"
+}
+
+### Update product review
+PUT http://localhost:8000/api/products/review/6817f9f9f3e23650211a5353
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTdjNWRlNDc0MTljMzg3ZjI0MDJjOCIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTc0NjQwMTgyOSwiZXhwIjoxNzQ2NDA1NDI5fQ.vGaxOWFp6zFFnACCeE9JBvjsIa8qwMFCw-TKaSmA3Js
+
+{
+  "rating": 2,
+  "review": "Bad product!"
+}
+
+### View product reviews
+GET http://localhost:8000/api/products/reviews/6817f9f9f3e23650211a5353
