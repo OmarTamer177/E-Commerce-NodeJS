@@ -4,10 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>E-Comm-Web | Products</title>
+
   <link rel="stylesheet" href="../CSS_files/products.css">
+  <link rel="stylesheet" href="../CSS_files/cart.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
+
   <!-- Promo Marquee -->
   <div class="promo-bar">
     <div class="promo-container">
@@ -48,37 +51,59 @@
         </div>
       </div>
     </div>
-    
+
     <div class="navbar-center">
       <a href="home.html"><img src="../Images/logo (2).png" alt="E-Comm-Web Logo" class="logo-img"></a>
     </div>
-    
+
     <div class="navbar-right">
       <a href="login.html"><i class="fas fa-user"></i></a>
-      <a href="cart.html">
+      <div onclick="toggleCart()" style="cursor:pointer;">
         <i class="fas fa-shopping-cart">
           <span class="cart-count" id="cart-count">0</span>
         </i>
-      </a>
+      </div>
     </div>
   </nav>
 
   <!-- Products Section -->
   <div class="products-container">
     <h1 class="page-title" id="page-title">All Products</h1>
-    
+
     <div class="filters">
       <button class="filter-btn active" data-filter="all">All</button>
       <button class="filter-btn" data-filter="new">New Arrivals</button>
       <button class="filter-btn" data-filter="men">Men</button>
       <button class="filter-btn" data-filter="women">Women</button>
     </div>
-    
+
     <div class="products-grid" id="products-grid">
-      <!-- Products will be dynamically inserted here -->
+      <!-- Products dynamically loaded here -->
     </div>
   </div>
 
+  <!-- Cart Sidebar -->
+  <div id="cartSidebar" class="cart-sidebar hidden">
+    <div class="cart-header">
+      <span id="cart-item-count">0 ITEMS IN YOUR BAG</span>
+      <button class="close-btn" onclick="toggleCart()">×</button>
+    </div>
+
+    <div id="cartItems" class="cart-items">
+      <!-- Dynamically filled -->
+    </div>
+
+    <div class="cart-footer">
+      <div class="subtotal-row">
+        <span>SUBTOTAL</span>
+        <span id="cart-subtotal">EGP 0</span>
+      </div>
+      <a href="checkout.html" class="checkout-btn">Secure Checkout</a>
+    </div>
+  </div>
+
+  <!-- Scripts -->
   <script src="../JS_files/products.js"></script>
+  <script src="../JS_files/cart.js"></script>
 </body>
 </html>
