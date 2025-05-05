@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register | E-Commerce Site</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../CSS_files/registration.css">
+</head>
+<body>
+
+     <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="navbar-left">
+      <div class="category-nav">
+        <div class="category-item">
+          <a href="#" class="category-link" id="men-link">Men</a>
+          <div class="dropdown-menu">
+            <a href="products.html?category=men&type=all">All Products</a>
+            <a href="products.html?category=men&type=new">New Arrivals</a>
+            <a href="products.html?category=men&type=shoes">Shoes</a>
+            <a href="products.html?category=men&type=tshirts">T-Shirts</a>
+            <a href="products.html?category=men&type=shorts">Shorts</a>
+            <a href="products.html?category=men&type=jackets">Jackets</a>
+          </div>
+        </div>
+        <div class="category-item">
+          <a href="#" class="category-link" id="women-link">Women</a>
+          <div class="dropdown-menu">
+            <a href="products.html?category=women&type=all">All Products</a>
+            <a href="products.html?category=women&type=new">New Arrivals</a>
+            <a href="products.html?category=women&type=shoes">Shoes</a>
+            <a href="products.html?category=women&type=tops">Tops</a>
+            <a href="products.html?category=women&type=leggings">Leggings</a>
+            <a href="products.html?category=women&type=sports-bras">Sports Bras</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="navbar-center">
+      <a href="home.html"><img src="../Images/logo (2).png" alt="E-Comm-Web Logo" class="logo-img"></a>
+    </div>
+
+    <div class="navbar-right">
+      <a href="login.html"><i class="fas fa-user"></i></a>
+      <div onclick="toggleCart()" style="cursor:pointer;">
+        <i class="fas fa-shopping-cart">
+          <span class="cart-count" id="cart-count">0</span>
+        </i>
+      </div>
+    </div>
+  </nav>
+
+
+    <div class="container">
+        <div class="registration-container">
+            <h1>CREATE YOUR ACCOUNT</h1>
+            <p class="form-description">
+                Join our community to enjoy exclusive offers, faster checkout, and personalized recommendations.
+            </p>
+            <p class="form-note">
+                *Please note, all fields marked with an asterisk (*) are required.
+            </p>
+            
+            <form id="registrationForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="firstName" class="required">First Name</label>
+                        <input type="text" id="firstName" name="firstName" required>
+                        <div class="error-message" id="firstNameError">Please enter your first name</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="lastName" class="required">Last Name</label>
+                        <input type="text" id="lastName" name="lastName" required>
+                        <div class="error-message" id="lastNameError">Please enter your last name</div>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="email" class="required">Email Address</label>
+                        <input type="email" id="email" name="email" required>
+                        <div class="error-message" id="emailError">Please enter a valid email address</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password" class="required">Password</label>
+                        <input type="password" id="password" name="password" required>
+                        <div class="error-message" id="passwordError">Password must be at least 6 characters</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="dob">Date of Birth (YY/MM/DD)</label>
+                        <input type="date" id="dob" name="dob">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="address1" class="required">Address Line</label>
+                        <input type="text" id="address1" name="address1" required>
+                        <div class="error-message" id="address1Error">Please enter your address</div>
+                    </div>
+                </div>
+                
+                <div class="divider"></div>   
+                
+                <button type="submit" class="submit-btn">CREATE ACCOUNT</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="../JS_files/registration.js"></script>
+</body>
+</html>

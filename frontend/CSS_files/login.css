@@ -1,0 +1,89 @@
+/* Login Sidebar */
+.login-sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 360px;
+    height: 100%;
+    background-color: white;
+    box-shadow: -4px 0 8px rgba(0,0,0,0.2);
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .login-sidebar.show {
+    transform: translateX(0);
+  }
+  
+  .login-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    font-weight: 600;
+    border-bottom: 1px solid #ccc;
+    text-transform: uppercase;
+    font-size: 14px;
+  }
+  
+  .login-content {
+    flex-grow: 1;
+    padding: 20px;
+  }
+  
+  .login-content .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .login-content label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+  
+  .login-content input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  .forgot-password {
+    text-align: right;
+    margin-bottom: 20px;
+  }
+  
+  .forgot-password a {
+    color: #333;
+    font-size: 13px;
+    text-decoration: underline;
+  }
+  
+  .login-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: black;
+    color: white;
+    border: none;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+  
+  .login-footer {
+    padding: 20px;
+    border-top: 1px solid #ccc;
+    text-align: center;
+    font-size: 14px;
+  }
+  
+  .login-footer a {
+    color: #333;
+    font-weight: 600;
+    text-decoration: underline;
+  }

@@ -94,7 +94,7 @@
   
   .category-nav {
     display: flex;
-    gap: 30px;
+    gap: 40px;
   }
   
   .category-item {
@@ -306,7 +306,7 @@
   /* Middle Section */
 /* Middle Highlight Section */
 .middle-highlight {
-  background-color: #cfc96d;
+  background-color: #dad36e;
   text-align: center;
   padding: 60px 20px;
 }
