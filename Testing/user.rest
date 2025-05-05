@@ -25,7 +25,7 @@ GET http://localhost:8000/api/products
 
 ### Get user profile
 GET http://localhost:8000/api/users/profile
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTdjNWRlNDc0MTljMzg3ZjI0MDJjOCIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTc0NjM4ODQ2NiwiZXhwIjoxNzQ2MzkyMDY2fQ.kcgUHW-VLgvcf3Afct2Z4TahYU3f2-dwBp0oreaH4Vo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTdjNWRlNDc0MTljMzg3ZjI0MDJjOCIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTc0NjQwMTgyOSwiZXhwIjoxNzQ2NDA1NDI5fQ.vGaxOWFp6zFFnACCeE9JBvjsIa8qwMFCw-TKaSmA3Js
 
 
 ### Update user profile
@@ -40,11 +40,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTcxNDE1N
 }
 
 
-
 ### Add items to cart
-POST http://localhost:8000/api/products/add-to-cart/6815da9a334e81baa5b0d947
+POST http://localhost:8000/api/products/add-to-cart/6817f9f9f3e23650211a5353
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTdjNWRlNDc0MTljMzg3ZjI0MDJjOCIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTc0NjM4ODQ2NiwiZXhwIjoxNzQ2MzkyMDY2fQ.kcgUHW-VLgvcf3Afct2Z4TahYU3f2-dwBp0oreaH4Vo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTdjNWRlNDc0MTljMzg3ZjI0MDJjOCIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTc0NjQwMTgyOSwiZXhwIjoxNzQ2NDA1NDI5fQ.vGaxOWFp6zFFnACCeE9JBvjsIa8qwMFCw-TKaSmA3Js
 
 {
   "quantity": 1
@@ -56,19 +55,28 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTdjNWRlN
 
 
 ### Increment item in cart
-
-
+PUT http://localhost:8000/api/cart/increment/6817faebf3e23650211a537d
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTdjNWRlNDc0MTljMzg3ZjI0MDJjOCIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTc0NjQwMTgyOSwiZXhwIjoxNzQ2NDA1NDI5fQ.vGaxOWFp6zFFnACCeE9JBvjsIa8qwMFCw-TKaSmA3Js
 
 ### Decrement item in cart
-
+PUT http://localhost:8000/api/cart/decrement/6817efa193c8616cf9a0784e
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTdjNWRlNDc0MTljMzg3ZjI0MDJjOCIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTc0NjM5NTMzNywiZXhwIjoxNzQ2Mzk4OTM3fQ.U_gyTRw9EJ7nC4i-Gk0_nPir4NXKJ3p5UDdhFUS6ktU
 
 
 ### View cart items
 GET http://localhost:8000/api/cart
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTdjNWRlNDc0MTljMzg3ZjI0MDJjOCIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTc0NjM4ODQ2NiwiZXhwIjoxNzQ2MzkyMDY2fQ.kcgUHW-VLgvcf3Afct2Z4TahYU3f2-dwBp0oreaH4Vo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTdjNWRlNDc0MTljMzg3ZjI0MDJjOCIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTc0NjQwMTgyOSwiZXhwIjoxNzQ2NDA1NDI5fQ.vGaxOWFp6zFFnACCeE9JBvjsIa8qwMFCw-TKaSmA3Js
 
 
 ### Checkout cart items
+POST http://localhost:8000/api/cart/checkout
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTdjNWRlNDc0MTljMzg3ZjI0MDJjOCIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTc0NjQwMTgyOSwiZXhwIjoxNzQ2NDA1NDI5fQ.vGaxOWFp6zFFnACCeE9JBvjsIa8qwMFCw-TKaSmA3Js
 
+{
+  "code": "A34GH"
+}
 
 ### View user's orders
+GET http://localhost:8000/api/orders/user-orders
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTdjNWRlNDc0MTljMzg3ZjI0MDJjOCIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTc0NjQwMTQ0NiwiZXhwIjoxNzQ2NDA1MDQ2fQ.OQtFm0XPjgZKjftFDa6OCP-GGqY9d2yfA0f2rHX5_dc

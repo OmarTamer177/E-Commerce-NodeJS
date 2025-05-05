@@ -23,12 +23,12 @@ Content-Type: application/json
 ### Create a product
 POST http://localhost:8000/api/products
 Content-Type: application/json
-Authorization: Bearer <token>
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTRjNzI3OGFjYTBkZTAyZTIxOTZjZSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0NjQwMTc0NCwiZXhwIjoxNzQ2NDA1MzQ0fQ.aK-38aaZdbxvqH5I9Dp-1YPQ3wJHOKF6QF0lmwNxz7s
 
 {
-    "name": "Admin Product 122",
-    "description": "This is a test product description",
-    "price": 999,
+    "name": "Product 133",
+    "description": "This is a product 133 description",
+    "price": 60,
     "category": "electronics",
     "image": "test.jpg",
     "stock": 10
@@ -49,12 +49,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTRjNzI3O
 Content-Type: application/json
 
 {
-  "name": "Updated Product Name",
-  "description": "Updated description of the product",
-  "price": 29.99,
-  "category": "Electronics",
-  "image": "image.jpg",
-  "stock": 50
+  "code": "A34GH",
+  "percentage": 10
 }
 
 
@@ -79,23 +75,37 @@ Authorization: Bearer <token>
 
 
 ### Get all orders
-
-
+GET http://localhost:8000/api/orders
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTRjNzI3OGFjYTBkZTAyZTIxOTZjZSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0NjQwMzIxMSwiZXhwIjoxNzQ2NDA2ODExfQ.YvEfqknq8TOPJqrYsYAj7K2IZGxD5QPWf2wO5QHBB7Y
 
 ### Update an order status
+PUT http://localhost:8000/api/orders/6817f0314c102114b0b87910
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTRjNzI3OGFjYTBkZTAyZTIxOTZjZSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0NjQwMzIxMSwiZXhwIjoxNzQ2NDA2ODExfQ.YvEfqknq8TOPJqrYsYAj7K2IZGxD5QPWf2wO5QHBB7Y
 
+{
+  "status": "shipped"
+}
 
+### Create coupon
+POST http://localhost:8000/api/coupons
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTRjNzI3OGFjYTBkZTAyZTIxOTZjZSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0NjM5Njc3NywiZXhwIjoxNzQ2NDAwMzc3fQ.XobeM_uyjpYcM3qnxJoClC-ShTn81rbezEpv1jLlQcs
 
-### Add coupon
-
+{
+    "code": "A34GH",
+    "percentage": 10
+}
 
 
 ### Get all coupons
-
+GET http://localhost:8000/api/coupons
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTRjNzI3OGFjYTBkZTAyZTIxOTZjZSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0NjM5Njc3NywiZXhwIjoxNzQ2NDAwMzc3fQ.XobeM_uyjpYcM3qnxJoClC-ShTn81rbezEpv1jLlQcs
 
 
 ### Delete a coupon
-
+DELETE http://localhost:8000/api/coupons/6817e67ddab05b80be4dc154
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTRjNzI3OGFjYTBkZTAyZTIxOTZjZSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0NjM5Njc3NywiZXhwIjoxNzQ2NDAwMzc3fQ.XobeM_uyjpYcM3qnxJoClC-ShTn81rbezEpv1jLlQcs
 
 
 ### Get the admin page
