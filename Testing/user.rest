@@ -102,3 +102,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTdjNWRlN
 
 ### View product reviews (product_id)
 GET http://localhost:8000/api/products/reviews/6817f9f9f3e23650211a5353
+
+### Delete a review by review ID (user)
+DELETE http://localhost:8000/api/products/review/id/<review_id>
+Authorization: Bearer <user_token>
