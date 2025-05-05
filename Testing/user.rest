@@ -25,7 +25,7 @@ GET http://localhost:8000/api/products
 
 ### Get user profile
 GET http://localhost:8000/api/users/profile
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MThlZmUyNDBiNWVmZmE0OTkxMmM5YiIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTc0NjQ3NjQ2MCwiZXhwIjoxNzQ2NDgwMDYwfQ.CwXy7Rnpx8PqlwlsJdOOiNrmHAtsSt4qtwAeVlNjxnE
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MThlZmUyNDBiNWVmZmE0OTkxMmM5YiIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTc0NjQ4MTQwMSwiZXhwIjoxNzQ2NDg1MDAxfQ.GIwdMfoukTCKbBpuHkbt3YgBdbr4lLbsVOn3bTmAsXA
 
 
 ### Update user profile

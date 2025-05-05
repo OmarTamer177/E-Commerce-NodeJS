@@ -1,20 +1,42 @@
-// Toggle Login Sidebar
+// Toggle Login Sidebar or Redirect to Profile
 function toggleLogin() {
   const loginSidebar = document.getElementById('loginSidebar');
   const cartSidebar = document.getElementById('cartSidebar');
 
-  if (localStorage.getItem("isLoggedIn") !== "true") {
+  const token = localStorage.getItem("token");
+
+  if (!token) {
+    // Not logged in — open login sidebar
     loginSidebar.classList.toggle("show");
   } else {
-    window.location.href = "user.html";
-  }  
-  
+    // Token exists — verify with backend before redirecting
+    fetch('http://localhost:8000/api/users/profile', {
+      method: 'GET',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    })
+    .then(res => {
+      if (res.ok) {
+        window.location.href = "../Html_files/User.html";
+      } else {
+        localStorage.removeItem("token");
+        loginSidebar.classList.toggle("show");
+      }
+    })
+    .catch(err => {
+      console.error('Verification failed:', err);
+      localStorage.removeItem("token");
+      loginSidebar.classList.toggle("show");
+    });
+  }
+
   if (cartSidebar && cartSidebar.classList.contains('show')) {
     cartSidebar.classList.remove('show');
   }
 }
 
-// Handle login form submission
+// Handle Login Form Submission
 document.getElementById('loginForm').addEventListener('submit', async function (e) {
   e.preventDefault();
 
@@ -37,36 +59,33 @@ document.getElementById('loginForm').addEventListener('submit', async function (
       return;
     }
 
-    // Save token
+    // Save token to localStorage
     localStorage.setItem('token', data.token);
     alert('Login successful!');
 
-    // Fetch user profile
+    // Optionally fetch and confirm user profile
     const profileRes = await fetch('http://localhost:8000/api/users/profile', {
-      method: 'GET',
       headers: {
         'Authorization': `Bearer ${data.token}`
       }
     });
 
-
     if (profileRes.ok) {
       const profile = await profileRes.json();
-      console.log('Welcome:', profile.user.name);
-
-      // Optionally update UI with user's name
-      const loginSidebar = document.getElementById('loginSidebar');
-      if (loginSidebar) loginSidebar.classList.remove('show');
+      console.log('Logged in as:', profile.user.name);
+      document.getElementById('loginSidebar').classList.remove('show');
+      window.location.href = "../Html_files/User.html";
+    } else {
+      alert("Could not fetch profile after login.");
     }
 
-    window.location.reload(); // Reload to reflect login status
   } catch (err) {
     console.error('Login error:', err);
     alert('An error occurred. Please try again.');
   }
 });
 
-// Auto display user name if already logged in
+// Auto Verify on Page Load (Optional for UI update)
 window.addEventListener('DOMContentLoaded', async () => {
   const token = localStorage.getItem('token');
   if (!token) return;
@@ -80,8 +99,13 @@ window.addEventListener('DOMContentLoaded', async () => {
 
     if (response.ok) {
       const profile = await response.json();
+      console.log('Welcome back,', profile.user.name);
+      // You can update UI with username if needed
+    } else {
+      localStorage.removeItem("token");
     }
   } catch (err) {
-    console.error('Error auto-fetching user:', err);
+    console.error('Auto-fetch user error:', err);
+    localStorage.removeItem("token");
   }
 });
