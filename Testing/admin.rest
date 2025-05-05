@@ -24,11 +24,10 @@ Content-Type: application/json
 POST http://localhost:8000/api/products
 Content-Type: application/json
 Authorization: Bearer <token>
-
 {
-    "name": "Admin Product 122",
-    "description": "This is a test product description",
-    "price": 999,
+    "name": "Product 133",
+    "description": "This is a product 133 description",
+    "price": 60,
     "category": "electronics",
     "image": "test.jpg",
     "stock": 10
@@ -40,62 +39,71 @@ GET http://localhost:8000/api/products
 
 ### Get a product by ID
 GET http://localhost:8000/api/products/6815da9a334e81baa5b0d947
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTRjNzI3OGFjYTBkZTAyZTIxOTZjZSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0NjM1Njk2MSwiZXhwIjoxNzQ2MzYwNTYxfQ.p7OOzb4wPwagu_GgU4FwuNXje43JLxYC6sMQNqiehtM
 
 
-### Update a product by ID
+### Update a product by ID (product_id)
 PUT http://localhost:8000/api/products/6815da9a334e81baa5b0d947
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTRjNzI3OGFjYTBkZTAyZTIxOTZjZSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0NjM1Njk2MSwiZXhwIjoxNzQ2MzYwNTYxfQ.p7OOzb4wPwagu_GgU4FwuNXje43JLxYC6sMQNqiehtM
+Authorization: Bearer <token>
 Content-Type: application/json
 
 {
-  "name": "Updated Product Name",
-  "description": "Updated description of the product",
-  "price": 29.99,
-  "category": "Electronics",
-  "image": "image.jpg",
-  "stock": 50
+  "code": "A34GH",
+  "percentage": 10
 }
 
 
-### Delete a product by ID
+### Delete a product by ID (product_id)
 DELETE http://localhost:8000/api/products/6815daf766883949325a1bf5
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTRjNzI3OGFjYTBkZTAyZTIxOTZjZSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0NjM1Njk2MSwiZXhwIjoxNzQ2MzYwNTYxfQ.p7OOzb4wPwagu_GgU4FwuNXje43JLxYC6sMQNqiehtM
+Authorization: Bearer <token>
 
 
-### Delete a user
+### Delete a user (user_id)
 DELETE http://localhost:8000/api/users/6817471711e0cd45faeffd96
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTRjNzI3OGFjYTBkZTAyZTIxOTZjZSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0NjM4NDU2NCwiZXhwIjoxNzQ2Mzg4MTY0fQ.6kVL3eCYLtDmdjKAJ7oKK8InBMxSCTVbK4eCly9NtjE
+Authorization: Bearer <token>
 
 
 ### Get all users
 GET http://localhost:8000/api/users/
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTRjNzI3OGFjYTBkZTAyZTIxOTZjZSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0NjM4NDU2NCwiZXhwIjoxNzQ2Mzg4MTY0fQ.6kVL3eCYLtDmdjKAJ7oKK8InBMxSCTVbK4eCly9NtjE
+Authorization: Bearer <token>
 
 
-### Get a user by ID
+### Get a user by ID (user_id)
 GET http://localhost:8000/api/users/681714155b2cd91efd012d43
 Authorization: Bearer <token>
 
 
 ### Get all orders
+GET http://localhost:8000/api/orders
+Authorization: Bearer <token>
 
+### Update an order status (order_id)
+PUT http://localhost:8000/api/orders/6817f0314c102114b0b87910
+Content-Type: application/json
+Authorization: Bearer <token>
 
+{
+  "status": "shipped"
+}
 
-### Update an order status
+### Create coupon
+POST http://localhost:8000/api/coupons
+Content-Type: application/json
+Authorization: Bearer <token>
 
-
-
-### Add coupon
-
+{
+    "code": "A34GH",
+    "percentage": 10
+}
 
 
 ### Get all coupons
-
+GET http://localhost:8000/api/coupons
+Authorization: Bearer <token>
 
 
 ### Delete a coupon
-
+DELETE http://localhost:8000/api/coupons/6817e67ddab05b80be4dc154
+Authorization: Bearer <token>
 
 
 ### Get the admin page

@@ -4,6 +4,7 @@ const bcrypt = require('bcrypt');
 const Product = require('../models/Product');
 const Cart = require('../models/Cart');
 const CartItem = require('../models/CartItem');
+const Review = require('../models/Review');
 const { verifyToken, requireAdmin } = require('../middleware/authMiddleware');
 
 const router = express.Router();
@@ -109,5 +110,71 @@ router.post('/add-to-cart/:id', verifyToken, async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
+
+// Add a review to a product
+router.post('/review/:id', verifyToken, async (req, res) => {
+    try {
+      const product = await Product.findById(req.params.id);
+      if (!product) return res.status(404).json({ message: 'Product not found' });
+  
+      const existingReview = await Review.findOne({ product_id: product._id, user_id: req.user.id });
+      if (existingReview) {
+        return res.status(400).json({ message: 'You have already reviewed this product' });
+      }
+  
+      const review = new Review({
+        product_id: product._id,
+        user_id: req.user.id,
+        rating: req.body.rating,
+        comment: req.body.comment
+      });
+  
+      await review.save();
+  
+      res.json({ message: 'Review added successfully', review });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+// Update a review for a product
+router.put('/review/:id', verifyToken, async (req, res) => {
+    try {
+      const productId = req.params.id;
+      const userId = req.user.id;
+  
+      const product = await Product.findById(productId);
+      if (!product) return res.status(404).json({ message: 'Product not found' });
+  
+      const review = await Review.findOne({ product_id: productId, user_id: userId });
+      if (!review) {
+        return res.status(404).json({ message: 'Review not found for this user and product' });
+      }
+  
+      // Update the fields
+      if (req.body.rating !== undefined) review.rating = req.body.rating;
+      if (req.body.comment !== undefined) review.comment = req.body.comment;
+  
+      await review.save();
+  
+      res.json({ message: 'Review updated successfully', review });
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+// Get all reviews for a product
+router.get('/reviews/:id', async (req, res) => {
+    try {
+      const product = await Product.findById(req.params.id);
+      if (!product) return res.status(404).json({ message: 'Product not found' });
+  
+      const reviews = await Review.find({ product_id: product._id }).populate('user_id', 'name');
+  
+      res.json(reviews);
+    } catch (error) {
+      res.status(500).json({ error: error.message });
+    }
+  });
 
 module.exports = router;

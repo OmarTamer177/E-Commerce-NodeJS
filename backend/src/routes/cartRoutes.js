@@ -3,6 +3,9 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const Cart = require('../models/Cart');
 const CartItem = require('../models/CartItem');
+const Coupon = require('../models/Coupon');
+const OrderItem = require('../models/OrderItem');
+const Order = require('../models/Order');
 const { verifyToken, requireAdmin } = require('../middleware/authMiddleware');
 
 const router = express.Router();
@@ -60,6 +63,58 @@ router.put('/decrement/:id', verifyToken, async (req, res) => {
         } else {
             res.status(400).json({ message: 'Quantity cannot be less than 1' });
         }
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Checkout cart
+router.post('/checkout', verifyToken, async (req, res) => {
+    try {
+        const userId = req.user.id; // Get user ID from token
+        const cart = await Cart.findOne({ user_id: userId });
+        if (!cart) return res.status(404).json({ message: 'Cart not found' });
+
+        // Check if the cart is empty
+        const cartItems = await CartItem.find({ cart_id: cart._id }).populate('product_id');
+        if (!cartItems) return res.status(400).json({ message: 'Cart is empty' });
+
+        // Calculate total price
+        const price = cartItems.reduce((total, item) => {
+        return total + (item.product_id?.price || 0) * item.quantity;
+        }, 0);
+        
+        let discount = 0;
+        // Add a copoun code if provided
+        const couponCode = req.body.code;
+        if (couponCode) {
+            const coupon = await Coupon.findOne({ code: couponCode });
+            if (!coupon) return res.status(400).json({ message: 'Invalid coupon code' });
+            discount = (coupon.percentage / 100);
+        }
+
+        // Create an order
+        const order = new Order({
+            user_id: userId,
+            price: price * (1 - discount),  
+            status: 'Pending',
+            order_number: `ORD-${Date.now()}`
+        });
+
+        await order.save();
+        
+        // Move the cart items to the order items
+        for (const item of cartItems) {
+            await OrderItem.create({
+                order_id: order._id,
+                product_id: item.product_id,
+                quantity: item.quantity
+            });
+        }
+
+        // For now, we'll just clear the cart
+        await CartItem.deleteMany({ cart_id: cart._id });
+        res.json({ message: 'Checkout successful, cart cleared' });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

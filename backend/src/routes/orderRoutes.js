@@ -2,6 +2,7 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const Order = require('../models/Order');
+const OrderItem = require('../models/OrderItem');
 const { verifyToken, requireAdmin } = require('../middleware/authMiddleware');
 
 const router = express.Router();
@@ -9,9 +10,38 @@ const router = express.Router();
 // Get user's orders
 router.get('/user-orders', verifyToken, async (req, res) => {
     try {
+        
         const userId = req.user.id;
-        const orders = await Order.find({ user: userId }).populate('products.product', 'name price');
-        res.json(orders);
+        const orders = await Order.find({ user_id: userId });
+        
+        
+        const ordersData = [];
+
+        for (const order of orders) {
+        const orderItems = await OrderItem.find(
+            { order_id: order._id },
+            '-order_id -_id -__v'
+        ).populate('product_id', 'name price');
+
+        const formattedItems = orderItems.map(item => ({
+            product: item.product_id?.name,
+            price: item.product_id?.price,
+            quantity: item.quantity,
+            subtotal: (item.product_id?.price || 0) * item.quantity
+        }));
+
+        const total = formattedItems.reduce((sum, item) => sum + item.subtotal, 0);
+
+        ordersData.push({
+            order_id: order._id,
+            order_number: order.order_number,
+            price: total,
+            items: formattedItems,
+            status: order.status
+        });
+        }
+
+        res.json({ orders: ordersData });
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
@@ -20,12 +50,44 @@ router.get('/user-orders', verifyToken, async (req, res) => {
 // Get all orders
 router.get('/', verifyToken, requireAdmin, async (req, res) => {
     try {
-        const orders = await Order.find().populate('user', 'name email').populate('products.product', 'name price');
-        res.json(orders);
+      const orders = await Order.find().populate('user_id', 'name email'); // Assuming Order.user_id exists
+  
+      const ordersData = [];
+  
+      for (const order of orders) {
+        const orderItems = await OrderItem.find(
+          { order_id: order._id },
+          '-order_id -_id -__v'
+        ).populate('product_id', 'name price');
+  
+        const formattedItems = orderItems.map(item => ({
+          product: item.product_id?.name,
+          price: item.product_id?.price,
+          quantity: item.quantity,
+          subtotal: (item.product_id?.price || 0) * item.quantity
+        }));
+  
+        const total = formattedItems.reduce((sum, item) => sum + item.subtotal, 0);
+  
+        ordersData.push({
+          order_id: order._id,
+          order_number: order.order_number,
+          user: {
+            name: order.user_id?.name,
+            email: order.user_id?.email
+          },
+          price: total,
+          items: formattedItems,
+          status: order.status,
+          createdAt: order.createdAt
+        });
+      }
+  
+      res.json({ orders: ordersData });
     } catch (error) {
-        res.status(500).json({ error: error.message });
+      res.status(500).json({ error: error.message });
     }
-});
+  });
 
 // Get a single order by ID
 router.get('/:id', verifyToken, requireAdmin, async (req, res) => {
@@ -46,7 +108,7 @@ router.put('/:id', verifyToken, requireAdmin, async (req, res) => {
             req.params.id,
             { status },
             { new: true }
-        ).populate('user', 'name email').populate('products.product', 'name price');
+        );
         if (!updatedOrder) return res.status(404).json({ message: 'Order not found' });
         res.json({ message: 'Order updated successfully', order: updatedOrder });
     } catch (error) {
