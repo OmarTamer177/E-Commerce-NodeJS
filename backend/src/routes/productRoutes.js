@@ -12,6 +12,11 @@ const router = express.Router();
 // Create a new product
 router.post("/", verifyToken, requireAdmin, async (req, res) => {
     try {
+        // Check if a product with the same name already exists
+        const existingProduct = await Product.findOne({ name: req.body.name });
+        if (existingProduct) {
+            return res.status(400).json({ message: "A product with this name already exists" });
+        }
         const newProduct = new Product({
             name: req.body.name,
             description: req.body.description,
