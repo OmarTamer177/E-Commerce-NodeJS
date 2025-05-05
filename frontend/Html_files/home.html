@@ -6,8 +6,10 @@
   <title>E-Comm-Web | Men's Collection</title>
   <link rel="stylesheet" href="../CSS_files/home.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="../CSS_files/cart.css">
 </head>
 <body>
+
   <!-- Promo Marquee -->
   <div class="promo-bar">
     <div class="promo-container">
@@ -48,18 +50,18 @@
         </div>
       </div>
     </div>
-    
+
     <div class="navbar-center">
       <a href="home.html"><img src="../Images/logo (2).png" alt="E-Comm-Web Logo" class="logo-img"></a>
     </div>
-    
+
     <div class="navbar-right">
       <a href="login.html"><i class="fas fa-user"></i></a>
-      <a href="cart.html">
+      <div onclick="toggleCart()" style="cursor:pointer;">
         <i class="fas fa-shopping-cart">
           <span class="cart-count" id="cart-count">0</span>
         </i>
-      </a>
+      </div>
     </div>
   </nav>
 
@@ -70,7 +72,7 @@
       <p>Durable, high-performance activewear built for training, movement, and everyday wear.</p>
       <div class="hero-buttons">
         <button onclick="location.href='products.html?category=men&type=new'">New Arrivals</button>
-        <button onclick="location.href='products.html?category=men'">Explore</button>
+        <button onclick="location.href='products.html?category=men&type=all'">Explore</button>
       </div>
     </section>
 
@@ -79,11 +81,91 @@
       <p>Stylish, comfortable activewear designed for performance and everyday confidence.</p>
       <div class="hero-buttons">
         <button onclick="location.href='products.html?category=women&type=new'">New Arrivals</button>
-        <button onclick="location.href='products.html?category=women'">Explore</button>
+        <button onclick="location.href='products.html?category=women&type=all'">Explore</button>
       </div>
     </section>
   </div>
 
+  <!-- Cart Sidebar -->
+  <div id="cartSidebar" class="cart-sidebar hidden">
+    <div class="cart-header">
+      <span id="cart-item-count">0 ITEMS IN YOUR BAG</span>
+      <button class="close-btn" onclick="toggleCart()">×</button>
+    </div>
+
+    <div id="cartItems" class="cart-items">
+      <!-- JS dynamically renders items here -->
+    </div>
+
+    <div class="cart-footer">
+      <div class="subtotal-row">
+        <span>SUBTOTAL</span>
+        <span id="cart-subtotal">EGP 0</span>
+      </div>
+      <a href="checkout.html" class="checkout-btn">Secure Checkout</a>
+    </div>
+  </div>
+
+  
+<!-- Middle Section -->
+<section class="middle-highlight">
+  <h2>Discover Your Style</h2>
+  <p>From gym to street, our gear blends comfort, performance, and confidence.</p>
+</section>
+
+<!-- Products Categories Section -->
+<section class="product-categories">
+  <div class="category-card">
+    <img src="../Images/lux_cross.kg-R_Download-37.webp" alt="Shoes">
+    <h3>Shoes</h3>
+    <p>Explore our high-performance, durable, and stylish shoes.</p>
+    <a href="products.html?category=men&type=shoes" class="shop-btn">Shop Shoes</a>
+  </div>
+
+  <div class="category-card">
+    <img src="../Images/M9859_608_V2_Q125_FLATFRONT.JPG" alt="T-Shirts">
+    <h3>T-Shirts</h3>
+    <p>Stay cool and comfortable in our premium quality t-shirts.</p>
+    <a href="products.html?category=men&type=tshirts" class="shop-btn">Shop T-Shirts</a>
+  </div>
+
+  <div class="category-card">
+    <img src="../Images/J7320_795_V2_BASELINE_MOD1_FRONT.JPG" alt="Jackets">
+    <h3>Jackets</h3>
+    <p>Keep warm and stylish with our cutting-edge jackets.</p>
+    <a href="products.html?category=men&type=jackets" class="shop-btn">Shop Jackets</a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="site-footer">
+  <div class="footer-content">
+    <div>
+      <h4>Customer Service</h4>
+      <p><a href="#">Contact Us</a></p>
+      <p><a href="#">Shipping Info</a></p>
+      <p><a href="#">Returns</a></p>
+    </div>
+    <div>
+      <h4>About</h4>
+      <p><a href="#">Our Story</a></p>
+      <p><a href="#">Careers</a></p>
+      <p><a href="#">Sustainability</a></p>
+    </div>
+    <div>
+      <h4>Connect</h4>
+      <p>Email: support@e-comm-web.com</p>
+      <p>Phone: +20 123 456 789</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    &copy; 2025 E-Comm-Web. All rights reserved.
+  </div>
+</footer>
+
+
+  <!-- Scripts -->
   <script src="../JS_files/home.js"></script>
+  <script src="../JS_files/cart.js"></script>
 </body>
 </html>

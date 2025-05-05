@@ -56,6 +56,23 @@
     <div class="note">Saved in browser localStorage</div>
   </div>
 
+      <!-- Cart Sidebar -->
+      <div id="cartSidebar" class="cart-sidebar hidden">
+        <div class="cart-header">
+          <h2>Your Cart</h2>
+          <button onclick="toggleCart()">×</button>
+        </div>
+        <div id="cartItems" class="cart-items">
+          <!-- Dynamically filled -->
+        </div>
+        <div class="cart-footer">
+          <a href="checkout.html" class="checkout-btn">Go to Checkout</a>
+        </div>
+      </div>
+    
+      <!-- Cart Icon -->
+      <div id="cartIcon" onclick="toggleCart()">🛒</div>
+
   <script src="../JS_files/admin.js"></script>
 </body>
 </html>

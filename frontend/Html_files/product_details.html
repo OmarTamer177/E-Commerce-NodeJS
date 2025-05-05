@@ -6,6 +6,9 @@
   <title>MAVIN - Product Details</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="../CSS_files/product_details.css">
+
+  <link rel="stylesheet" href="../CSS_files/cart.css">
+
 </head>
 <body>
   <!-- Promo Marquee -->
@@ -39,11 +42,11 @@
     
     <div class="navbar-right">
       <a href="login.html"><i class="fas fa-user"></i></a>
-      <a href="cart.html">
+      <div onclick="toggleCart()" style="cursor:pointer;">
         <i class="fas fa-shopping-cart">
           <span class="cart-count" id="cart-count">0</span>
         </i>
-      </a>
+      </div>
     </div>
   </nav>
 
@@ -120,6 +123,27 @@
     </div>
   </div>
 
+      <!-- Cart Sidebar -->
+      <div id="cartSidebar" class="cart-sidebar hidden">
+        <div class="cart-header">
+          <h2>Your Cart</h2>
+          <button onclick="toggleCart()">×</button>
+        </div>
+        <div id="cartItems" class="cart-items">
+          <!-- Dynamically filled -->
+        </div>
+        <div class="cart-footer">
+          <a href="checkout.html" class="checkout-btn">Go to Checkout</a>
+        </div>
+      </div>
+    
+      <!-- Cart Icon -->
+      <div id="cartIcon" onclick="toggleCart()">🛒</div>
+
   <script src="../JS_files/product_details.js"></script>
+
+  <script src="../JS_files/cart.js"></script>
+  <!-- Insert cart.html fragment here -->
+  <div id="cartSidebar" class="cart-sidebar hidden">...</div>
 </body>
 </html>
