@@ -109,3 +109,7 @@ Authorization: Bearer <token>
 ### Get the admin page
 GET http://localhost:8000/admin/
 Authorization: Bearer <token>
+
+### Delete a review by review ID (admin)
+DELETE http://localhost:8000/api/products/review/id/<review_id>
+Authorization: Bearer <admin_token>
