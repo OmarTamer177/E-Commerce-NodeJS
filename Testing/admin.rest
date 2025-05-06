@@ -19,7 +19,6 @@ Content-Type: application/json
   "password": "123456"
 }
 
-
 ### Create a product
 POST http://localhost:8000/api/products
 Content-Type: application/json
@@ -35,6 +34,51 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MThlOTA1N
   "isNew": true,
   "stock": 10
 }
+
+### Create product with image /////////// WHAT IS THIS? /////////////
+POST http://localhost:8000/api/products
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MThlOTA1NDBiNWVmZmE0OTkxMmJmMiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0NjU0OTkwMiwiZXhwIjoxNzQ2NTUzNTAyfQ.qX-iUMLZWX8r1Pq1NtjBsSax3uTu5-GjOtyaw_vKDsc
+Content-Type: multipart/form-data; boundary=---011000010111000001101001
+
+-----011000010111000001101001
+Content-Disposition: form-data; name="name"
+
+T-Shirt22
+-----011000010111000001101001
+Content-Disposition: form-data; name="description"
+
+This is a product 22 description
+-----011000010111000001101001
+Content-Disposition: form-data; name="price"
+
+60
+-----011000010111000001101001
+Content-Disposition: form-data; name="gender"
+
+male
+-----011000010111000001101001
+Content-Disposition: form-data; name="category"
+
+electronics
+-----011000010111000001101001
+Content-Disposition: form-data; name="size"
+
+M
+-----011000010111000001101001
+Content-Disposition: form-data; name="isNew"
+
+true
+-----011000010111000001101001
+Content-Disposition: form-data; name="stock"
+
+10
+-----011000010111000001101001
+Content-Disposition: form-data; name="image"; filename="test.jpg"
+Content-Type: image/jpeg
+
+< ./test.jpg
+-----011000010111000001101001--
+
 
 ### Get all products
 GET http://localhost:8000/api/products

@@ -10,33 +10,38 @@ const { verifyToken, requireAdmin } = require('../middleware/authMiddleware');
 // For image upload
 const multer = require("multer");
 const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
+const upload = multer({ storage: storage,     
+    limits: {
+    fileSize: 10 * 1024 * 1024  // Limit to 10 MB, adjust as needed
+}});
 
 const router = express.Router();
 
 // Create a new product
 router.post("/", verifyToken, requireAdmin, upload.single("image"), async (req, res) => {
     try {
+        const { name, description, price, gender, category, size, isNew, stock } = req.body;
+
         // Check if a product with the same name already exists
-        const existingProduct = await Product.findOne({ name: req.body.name });
+        const existingProduct = await Product.findOne({ name: name });
         if (existingProduct) {
             return res.status(400).json({ message: "A product with this name already exists" });
         }
         
         const newProduct = new Product({
-            name: req.body.name,
-            description: req.body.description,
-            price: req.body.price,
-            gender: req.body.gender,
-            category: req.body.category,
-            size: req.body.size || "M",
-            image: req.file ? {
-              data: req.file.buffer,
-              contentType: req.file.mimetype
-            } : undefined,
-            isNew: req.body.isNew === 'true' || req.body.isNew === true,
-            stock: req.body.stock
-          });
+            name,
+            description,
+            price,
+            gender,
+            category,
+            size,
+            image: {
+                data: req.file.buffer,
+                contentType: req.file.mimetype
+            },
+            isNew,
+            stock
+        });
 
         await newProduct.save();
         res.status(201).json({ message: "Product added successfully", product: newProduct });
