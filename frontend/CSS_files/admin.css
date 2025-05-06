@@ -1,80 +1,151 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
-    font-family: 'Arial', sans-serif;
-    padding: 20px;
-    background-color: #f4f4f4;
-  }
-  
-  h1 {
-    text-align: center;
-    margin-bottom: 30px;
-  }
-  
-  .form-container {
-    max-width: 600px;
-    margin: 0 auto;
-    background: white;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-  }
-  
-  .form-group {
-    margin-bottom: 15px;
-  }
-  
-  label {
-    font-weight: bold;
-    display: block;
-    margin-bottom: 8px;
-  }
-  
-  input[type="text"],
-  input[type="number"],
-  select {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  .drag-drop {
-    border: 2px dashed #ccc;
-    padding: 30px;
-    text-align: center;
-    cursor: pointer;
-    margin-bottom: 15px;
-    background-color: #fafafa;
-  }
-  
-  .drag-drop.hover {
-    border-color: #000;
-  }
-  
-  .preview-img {
-    width: 100%;
-    max-height: 300px;
-    object-fit: contain;
-    display: block;
-    margin-top: 10px;
-  }
-  
-  button {
-    width: 100%;
-    padding: 12px;
-    background-color: black;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-weight: bold;
-  }
-  
-  button:hover {
-    background-color: #333;
-  }
-  
-  .note {
-    font-size: 0.9rem;
-    color: #666;
-    text-align: center;
-    margin-top: 10px;
-  }
+  display: flex;
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f4;
+}
+
+/* Sidebar Styling */
+.sidebar {
+  width: 220px;
+  background-color: #000;
+  color: #fff;
+  padding: 20px;
+  min-height: 100vh;
+}
+
+.sidebar h2 {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar li {
+  padding: 10px 5px;
+  border-bottom: 1px solid #444;
+  cursor: pointer;
+}
+
+.sidebar li:hover {
+  background-color: #000;
+}
+
+/* Main Admin Page Styling */
+.main-content {
+  flex-grow: 1;
+  padding: 40px;
+}
+
+/* Admin Section Form Layout */
+.admin-section {
+  display: none;
+  max-width: 700px;
+  margin: 0 auto;
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.1);
+}
+
+.admin-section:first-child {
+  display: block;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 24px;
+}
+
+/* Form Styling */
+.form-group {
+  margin-bottom: 20px;
+}
+
+label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 8px;
+}
+
+input[type="text"],
+input[type="number"],
+select {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 14px;
+  background-color: #fefefe;
+}
+
+/* Drag-and-Drop Styling */
+.drag-drop {
+  border: 2px dashed #ccc;
+  padding: 30px;
+  text-align: center;
+  cursor: pointer;
+  background-color: #fafafa;
+  border-radius: 5px;
+  transition: border-color 0.3s;
+}
+
+.drag-drop.hover {
+  border-color: #000;
+}
+
+.preview-img {
+  width: 100%;
+  max-height: 300px;
+  object-fit: contain;
+  display: block;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+
+/* Buttons */
+button {
+  width: 100%;
+  padding: 12px;
+  background-color: #000;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 16px;
+  transition: background 0.3s;
+}
+
+button:hover {
+  background-color: #333;
+}
+
+/* Additional Notes */
+.note {
+  font-size: 0.9rem;
+  color: #666;
+  text-align: center;
+  margin-top: 10px;
+}
+
+/* View Products List */
+#product-list {
+  list-style: none;
+  padding: 0;
+}
+
+#product-list li {
+  background: #f9f9f9;
+  margin-bottom: 15px;
+  padding: 15px;
+  border-radius: 5px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.05);
+}

@@ -14,62 +14,70 @@ function getProducts() {
   return JSON.parse(localStorage.getItem('adminProducts')) || [];
 }
 
-// --- Display Products ---
-function displayProducts(filter = 'all') {
+async function displayProducts(filter = 'all') {
   const grid = document.getElementById('products-grid');
   const title = document.getElementById('page-title');
   grid.innerHTML = '';
 
-  const products = getProducts();
-  let filteredProducts = [...products];
+  try {
+    const response = await fetch('http://localhost:8000/api/products');
+    if (!response.ok) throw new Error('Failed to fetch products');
 
-  // Apply filter
-  switch (filter) {
-    case 'new':
-      filteredProducts = products.filter(p => p.isNew);
-      title.textContent = 'New Arrivals';
-      break;
-    case 'men':
-      filteredProducts = products.filter(p => p.category === 'men');
-      title.textContent = "Men's Collection";
-      break;
-    case 'women':
-      filteredProducts = products.filter(p => p.category === 'women');
-      title.textContent = "Women's Collection";
-      break;
-    default:
-      title.textContent = 'All Products';
-      break;
+    const products = await response.json();
+    let filteredProducts = [...products];
+
+    // Apply filter
+    switch (filter) {
+      case 'new':
+        filteredProducts = products.filter(p => p.isNew);
+        title.textContent = 'New Arrivals';
+        break;
+      case 'men':
+        filteredProducts = products.filter(p => p.category === 'men');
+        title.textContent = "Men's Collection";
+        break;
+      case 'women':
+        filteredProducts = products.filter(p => p.category === 'women');
+        title.textContent = "Women's Collection";
+        break;
+      default:
+        title.textContent = 'All Products';
+        break;
+    }
+
+    // No Products Message
+    if (filteredProducts.length === 0) {
+      grid.innerHTML = `<p style="grid-column: 1 / -1; text-align: center; font-size: 1.2rem;">No products available.</p>`;
+      return;
+    }
+
+    // Render Cards
+    filteredProducts.forEach(product => {
+      const productCard = document.createElement('div');
+      productCard.className = 'product-card';
+      productCard.innerHTML = `
+        <a href="product_details.html?id=${product.id}" style="text-decoration:none;color:inherit;">
+          <img src="${product.image}" alt="${product.name}" class="product-img">
+          <div class="product-info">
+            <h3 class="product-name">${product.name}</h3>
+            <p class="product-price">EGP ${product.price.toLocaleString()}</p>
+          </div>
+        </a>
+        <button class="add-to-cart" data-id="${product.id}">Add to Cart</button>
+      `;
+      grid.appendChild(productCard);
+    });
+
+    // Attach event listeners after render
+    document.querySelectorAll('.add-to-cart').forEach(button => {
+      button.addEventListener('click', addToCart);
+    });
+
+  } catch (error) {
+    grid.innerHTML = `<p style="grid-column: 1 / -1; text-align: center; color: red;">Error loading products: ${error.message}</p>`;
   }
-
-  // No Products Message
-  if (filteredProducts.length === 0) {
-    grid.innerHTML = `<p style="grid-column: 1 / -1; text-align: center; font-size: 1.2rem;">No products available.</p>`;
-    return;
-  }
-
-  // Render Cards
-  filteredProducts.forEach(product => {
-    const productCard = document.createElement('div');
-    productCard.className = 'product-card';
-    productCard.innerHTML = `
-      <a href="product_details.html?id=${product.id}" style="text-decoration:none;color:inherit;">
-        <img src="${product.image}" alt="${product.name}" class="product-img">
-        <div class="product-info">
-          <h3 class="product-name">${product.name}</h3>
-          <p class="product-price">EGP ${product.price.toLocaleString()}</p>
-        </div>
-      </a>
-      <button class="add-to-cart" data-id="${product.id}">Add to Cart</button>
-    `;
-    grid.appendChild(productCard);
-  });
-
-  // Attach event listeners after render
-  document.querySelectorAll('.add-to-cart').forEach(button => {
-    button.addEventListener('click', addToCart);
-  });
 }
+
 
 // --- Add Product to Cart ---
 function addToCart(e) {
