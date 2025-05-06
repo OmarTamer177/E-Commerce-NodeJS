@@ -52,7 +52,7 @@ app.get('/api/admin/check', verifyToken, requireAdmin, (req, res) => {
 
 app.get("/admin", (req, res) => {
     console.log("Admin page accessed");
-    res.sendFile(path.join(__dirname, '../public/admin-check.html'));
+    res.sendFile(path.join(__dirname, '../../frontend/Html_files', 'admin.html'));
 })
 
 
