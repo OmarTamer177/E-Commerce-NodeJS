@@ -63,7 +63,7 @@ document.getElementById('loginForm').addEventListener('submit', async function (
     localStorage.setItem('token', data.token);
     alert('Login successful!');
 
-    // Optionally fetch and confirm user profile
+    // fetch and confirm user profile
     const profileRes = await fetch('http://localhost:8000/api/users/profile', {
       headers: {
         'Authorization': `Bearer ${data.token}`

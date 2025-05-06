@@ -72,12 +72,23 @@
                     </div>
                 </div>
                 
+                <div class="form-group">
+                    <label for="profileImage">Upload Profile Image</label>
+                    <div class="drag-drop" id="drop-area">Drag & Drop or Click to Upload</div>
+                    <input type="file" id="profileImage" accept="image/*" style="display:none;" />
+                    <img id="preview" class="preview-img" src="" alt="Image Preview" style="display: none;" />
+                  </div>
+
+
                 <div class="divider"></div>   
                 
                 <button type="submit" class="submit-btn">CREATE ACCOUNT</button>
             </form>
         </div>
     </div>
+
+    
+      
 
     <script src="../JS_files/registration.js"></script>
 </body>

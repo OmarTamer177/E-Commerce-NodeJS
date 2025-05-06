@@ -107,3 +107,56 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
+
+document.addEventListener('DOMContentLoaded', function () {
+    const dropArea = document.getElementById('drop-area');
+    const fileInput = document.getElementById('profileImage');
+    const preview = document.getElementById('preview');
+    let uploadedImage = '';
+  
+    // Click to open file picker
+    dropArea.addEventListener('click', () => fileInput.click());
+  
+    // Drag over
+    dropArea.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropArea.classList.add('hover');
+    });
+  
+    // Drag leave
+    dropArea.addEventListener('dragleave', () => {
+      dropArea.classList.remove('hover');
+    });
+  
+    // Drop
+    dropArea.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropArea.classList.remove('hover');
+      const file = e.dataTransfer.files[0];
+      handleFile(file);
+    });
+  
+    // Input change
+    fileInput.addEventListener('change', () => {
+      const file = fileInput.files[0];
+      handleFile(file);
+    });
+  
+    function handleFile(file) {
+      if (!file || !file.type.match('image.*')) {
+        alert('Please select a valid image file');
+        return;
+      }
+  
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        uploadedImage = e.target.result;
+        preview.src = uploadedImage;
+        preview.style.display = 'block';
+      };
+      reader.readAsDataURL(file);
+    }
+  
+    // You can now use `uploadedImage` in the form submit handler if needed
+  });
+  
