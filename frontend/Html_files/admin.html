@@ -3,75 +3,125 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Admin - Add Product</title>
+  <title>Admin Panel</title>
   <link rel="stylesheet" href="../CSS_files/admin.css">
 </head>
 <body>
-  <h1>Add New Product</h1>
-  <div class="form-container">
-    <div class="form-group">
-      <label>Name</label>
-      <input type="text" id="name" required />
-    </div>
-
-    <div class="form-group">
-      <label>Price ($)</label>
-      <input type="number" id="price" step="0.01" required />
-    </div>
-
-    <div class="form-group">
-      <label>Quantity</label>
-      <input type="number" id="quantity" required />
-    </div>
-
-    <div class="form-group">
-      <label>Category</label>
-      <select id="category">
-        <option value="men">Men</option>
-        <option value="women">Women</option>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label>Type</label>
-      <input type="text" id="type" placeholder="e.g. shoes, jackets" />
-    </div>
-
-    <div class="form-group">
-      <label>Is New?</label>
-      <select id="isNew">
-        <option value="true">Yes</option>
-        <option value="false">No</option>
-      </select>
-    </div>
-
-    <div class="form-group">
-      <label>Upload Product Image</label>
-      <div class="drag-drop" id="drop-area">Drag & Drop or Click to Upload</div>
-      <input type="file" id="image" accept="image/*" style="display:none;" />
-      <img id="preview" class="preview-img" src="" alt="Preview" />
-    </div>
-
-    <button id="save-product">Add Product</button>
-    <div class="note">Saved in browser localStorage</div>
+  <div class="sidebar">
+    <h2>Admin Panel</h2>
+    <ul>
+      <li onclick="showSection('add-product')">➕ Add Product</li>
+      <li onclick="showSection('view-products')">📦 View Products</li>
+      <li onclick="showSection('manage-users')">👥 Manage Users</li>
+      <li onclick="showSection('manage-orders')">📋 Manage Orders</li>
+      <li onclick="showSection('manage-coupons')">🏷️ Manage Coupons</li>
+      <li onclick="showSection('moderate-reviews')">📝 Moderate Reviews</li>
+    </ul>
   </div>
 
-      <!-- Cart Sidebar -->
-      <div id="cartSidebar" class="cart-sidebar hidden">
-        <div class="cart-header">
-          <h2>Your Cart</h2>
-          <button onclick="toggleCart()">×</button>
-        </div>
-        <div id="cartItems" class="cart-items">
-          <!-- Dynamically filled -->
-        </div>
-        <div class="cart-footer">
-          <a href="checkout.html" class="checkout-btn">Go to Checkout</a>
-        </div>
+  <div class="main-content">
+    <!-- Add Product Section -->
+    <div id="add-product" class="admin-section">
+      <h1>Add New Product</h1>
+      <div class="form-group">
+        <label>Name</label>
+        <input type="text" id="name" required />
       </div>
-    
-      <!-- Cart Icon -->
-      <div id="cartIcon" onclick="toggleCart()">🛒</div>
+
+      <div class="form-group">
+        <label>Price ($)</label>
+        <input type="number" id="price" step="0.01" required />
+      </div>
+
+      <div class="form-group">
+        <label>Quantity</label>
+        <input type="number" id="quantity" required />
+      </div>
+
+      <div class="form-group">
+        <label>Gender</label>
+        <select id="gender">
+          <option value="male">male</option>
+          <option value="female">female</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Category</label>
+        <input type="text" id="category" placeholder="e.g. shoes, jackets" />
+      </div>
+
+      <div class="form-group">
+        <label>Description</label>
+        <textarea id="description" rows="3" placeholder="Enter product description..."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Size</label>
+        <input type="text" id="size" placeholder="e.g. S, M, L, XL or 42, 43..." />
+      </div>
+
+
+      <div class="form-group">
+        <label>Is New?</label>
+        <select id="isNew">
+          <option value="true">Yes</option>
+          <option value="false">No</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>Upload Product Image</label>
+        <div class="drag-drop" id="drop-area">Drag & Drop or Click to Upload</div>
+        <input type="file" id="image" accept="image/*" style="display:none;" />
+        <img id="preview" class="preview-img" src="" alt="Preview" />
+      </div>
+
+      <button id="save-product">Add Product</button>
+      <div class="note">Saved in browser localStorage</div>
+    </div>
+
+    <!-- View Products -->
+    <div id="view-products" class="admin-section" style="display: none;">
+      <h1>All Products</h1>
+      <ul id="product-list"></ul>
+    </div>
+
+    <!-- Manage Users -->
+    <div id="manage-users" class="admin-section" style="display: none;">
+      <h1>Manage Users</h1>
+      <div class="form-group">
+        <label>User Email</label>
+        <input type="email" id="user-email" />
+      </div>
+      <div class="form-group">
+        <label>Role</label>
+        <select id="user-role">
+          <option value="admin">Admin</option>
+          <option value="customer">Customer</option>
+        </select>
+      </div>
+      <button onclick="addUser()">Add User</button>
+    </div>
+
+    <!-- Manage Orders -->
+    <div id="manage-orders" class="admin-section" style="display: none;">
+      <h1>Manage Orders</h1>
+      <p>Coming soon...</p>
+    </div>
+
+    <!-- Manage Coupons -->
+    <div id="manage-coupons" class="admin-section" style="display: none;">
+      <h1>Manage Coupons</h1>
+      <p>Coming soon...</p>
+    </div>
+
+    <!-- Moderate Reviews -->
+    <div id="moderate-reviews" class="admin-section" style="display: none;">
+      <h1>Moderate Reviews</h1>
+      <p>Coming soon...</p>
+    </div>
+  </div>
 
   <script src="../JS_files/admin.js"></script>
 </body>
