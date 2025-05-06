@@ -23,38 +23,46 @@ Content-Type: application/json
 ### Create a product
 POST http://localhost:8000/api/products
 Content-Type: application/json
-Authorization: Bearer <token>
-{
-    "name": "Product 133",
-    "description": "This is a product 133 description",
-    "price": 60,
-    "category": "electronics",
-    "image": "test.jpg",
-    "stock": 10
-}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MThlOTA1NDBiNWVmZmE0OTkxMmJmMiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0NjU0OTkwMiwiZXhwIjoxNzQ2NTUzNTAyfQ.qX-iUMLZWX8r1Pq1NtjBsSax3uTu5-GjOtyaw_vKDsc
 
+{
+  "name": "T-Shirt",
+  "description": "This is a product 133 description",
+  "price": 60,
+  "gender": "male",
+  "category": "electronics",
+  "size": "M",
+  "isNew": true,
+  "stock": 10
+}
 
 ### Get all products
 GET http://localhost:8000/api/products
 
 ### Get a product by ID
-GET http://localhost:8000/api/products/6815da9a334e81baa5b0d947
+GET http://localhost:8000/api/products/681a3cb05d731e484b17c251
 
 
 ### Update a product by ID (product_id)
-PUT http://localhost:8000/api/products/6815da9a334e81baa5b0d947
+PUT http://localhost:8000/api/products/681a3cb05d731e484b17c251
 Authorization: Bearer <token>
 Content-Type: application/json
 
 {
-  "code": "A34GH",
-  "percentage": 10
+  "name": "updated T-Shirt",
+  "description": "This is a product 133 description",
+  "price": 90,
+  "gender": "male",
+  "category": "electronics",
+  "size": "M",
+  "isNew": true,
+  "stock": 10
 }
 
 
 ### Delete a product by ID (product_id)
-DELETE http://localhost:8000/api/products/6815daf766883949325a1bf5
-Authorization: Bearer <token>
+DELETE http://localhost:8000/api/products/681a3cb05d731e484b17c251
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MThlOTA1NDBiNWVmZmE0OTkxMmJmMiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0NjU0OTkwMiwiZXhwIjoxNzQ2NTUzNTAyfQ.qX-iUMLZWX8r1Pq1NtjBsSax3uTu5-GjOtyaw_vKDsc
 
 
 ### Delete a user (user_id)

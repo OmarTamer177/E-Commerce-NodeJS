@@ -7,24 +7,36 @@ const CartItem = require('../models/CartItem');
 const Review = require('../models/Review');
 const { verifyToken, requireAdmin } = require('../middleware/authMiddleware');
 
+// For image upload
+const multer = require("multer");
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+
 const router = express.Router();
 
 // Create a new product
-router.post("/", verifyToken, requireAdmin, async (req, res) => {
+router.post("/", verifyToken, requireAdmin, upload.single("image"), async (req, res) => {
     try {
         // Check if a product with the same name already exists
         const existingProduct = await Product.findOne({ name: req.body.name });
         if (existingProduct) {
             return res.status(400).json({ message: "A product with this name already exists" });
         }
+        
         const newProduct = new Product({
             name: req.body.name,
             description: req.body.description,
             price: req.body.price,
+            gender: req.body.gender,
             category: req.body.category,
-            image: req.body.image,
+            size: req.body.size || "M",
+            image: req.file ? {
+              data: req.file.buffer,
+              contentType: req.file.mimetype
+            } : undefined,
+            isNew: req.body.isNew === 'true' || req.body.isNew === true,
             stock: req.body.stock
-        });
+          });
 
         await newProduct.save();
         res.status(201).json({ message: "Product added successfully", product: newProduct });
@@ -55,12 +67,12 @@ router.get('/:id', async (req, res) => {
 });
 
 // Update a product
-router.put('/:id', verifyToken, requireAdmin, async (req, res) => {
+router.put('/:id', verifyToken, requireAdmin, upload.single("image"), async (req, res) => {
     try {
-        const { name, description, price, category, image, stock } = req.body;
+        const { name, description, price, gender, category, size, image, isNew, stock } = req.body;
         const updatedProduct = await Product.findByIdAndUpdate(
             req.params.id,
-            { name, description, price, category, image, stock },
+            { name, description, price, gender, category, size, image, isNew, stock },
             { new: true }
         );
         if (!updatedProduct) return res.status(404).json({ message: 'Product not found' });
