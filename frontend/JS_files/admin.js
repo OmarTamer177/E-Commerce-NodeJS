@@ -54,6 +54,7 @@ document.addEventListener('DOMContentLoaded', function () {
     };
     reader.readAsDataURL(file);
   }
+
   async function saveProduct() {
     const product = {
       name: document.getElementById('name').value,
@@ -64,20 +65,20 @@ document.addEventListener('DOMContentLoaded', function () {
       description: document.getElementById('description').value,
       size: document.getElementById('size').value,
       isNew: document.getElementById('isNew').value === 'true',
-      image: uploadedImage
+      image: uploadedImage ? { data: uploadedImage.split(',')[1], contentType: 'image/jpeg' } : undefined // Ensuring correct format for backend
     };
-  
+
     if (!product.name || isNaN(product.price) || isNaN(product.stock)) {
       alert("Please fill in all required fields.");
       return;
     }
-  
+
     const token = localStorage.getItem('token'); // You must store the token after login
     if (!token) {
       alert("No authorization token found.");
       return;
     }
-  
+
     try {
       const response = await fetch('http://localhost:8000/api/products', {
         method: 'POST',
@@ -87,20 +88,21 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         body: JSON.stringify(product)
       });
-  
+
       if (!response.ok) {
         const error = await response.text();
         throw new Error(`Error ${response.status}: ${error}`);
       }
-  
+
       alert('Product added successfully to backend!');
       resetForm();
-  
+
     } catch (error) {
       console.error('Failed to save product:', error);
       alert('Failed to add product: ' + error.message);
     }
   }
+
   
 
   function resetForm() {
@@ -134,10 +136,10 @@ document.addEventListener('DOMContentLoaded', function () {
       products.forEach(product => {
         const item = document.createElement('li');
         item.innerHTML = `
-          <strong>${product.name}</strong> - $${product.price.toFixed(2)} (${product.quantity} pcs)<br/>
+          <strong>${product.name}</strong> - $${product.price.toFixed(2)} (${product.stock} pcs)<br/>
           <em>${product.description}</em><br/>
           <strong>Size:</strong> ${product.size}<br/>
-          <img src="${product.image}" width="100" />
+          <img src="data:${product.img.contentType};base64,${product.img.data}" width="100" />
           <hr/>
         `;
         productList.appendChild(item);

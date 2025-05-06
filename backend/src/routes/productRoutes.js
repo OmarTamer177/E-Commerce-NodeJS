@@ -7,40 +7,32 @@ const CartItem = require('../models/CartItem');
 const Review = require('../models/Review');
 const { verifyToken, requireAdmin } = require('../middleware/authMiddleware');
 
-// For image upload
-const multer = require("multer");
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage,     
-    limits: {
-    fileSize: 10 * 1024 * 1024  // Limit to 10 MB, adjust as needed
-}});
-
 const router = express.Router();
 
 // Create a new product
-router.post("/", verifyToken, requireAdmin, upload.single("image"), async (req, res) => {
+router.post("/", verifyToken, requireAdmin, async (req, res) => {
     try {
-        const { name, description, price, gender, category, size, isNew, stock } = req.body;
-
         // Check if a product with the same name already exists
-        const existingProduct = await Product.findOne({ name: name });
+        const existingProduct = await Product.findOne({ name: req.body.name });
         if (existingProduct) {
             return res.status(400).json({ message: "A product with this name already exists" });
         }
         
+        const { name, description, price, gender, category, size, isNew, stock, image } = req.body;
+
         const newProduct = new Product({
             name,
             description,
             price,
             gender,
             category,
-            size,
-            image: {
-                data: req.file.buffer,
-                contentType: req.file.mimetype
-            },
-            isNew,
-            stock
+            size: size || "M",
+            img: image ? {
+                data: image.data,
+                contentType: image.contentType,
+            } : undefined,
+            isNew: isNew === 'true' || isNew === true,
+            stock,
         });
 
         await newProduct.save();
@@ -71,13 +63,42 @@ router.get('/:id', async (req, res) => {
     }
 });
 
+// Get all products
+router.get('/', async (req, res) => {
+    try {
+        const products = await Product.find();
+        res.json(products);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
+// Get a single product by ID
+router.get('/:id', async (req, res) => {
+    try {
+        const product = await Product.findById(req.params.id);
+        if (!product) return res.status(404).json({ message: 'Product not found' });
+        res.json(product);
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
 // Update a product
-router.put('/:id', verifyToken, requireAdmin, upload.single("image"), async (req, res) => {
+router.put('/:id', verifyToken, requireAdmin, async (req, res) => {
     try {
         const { name, description, price, gender, category, size, image, isNew, stock } = req.body;
+
+        // Check if the image is provided and process it correctly
+        const processedImage = image ? {
+            data: image.data.split(',')[1], // Removing base64 header part
+            contentType: 'image/jpeg', // or dynamically detect the contentType
+        } : undefined;
+  
+
         const updatedProduct = await Product.findByIdAndUpdate(
             req.params.id,
-            { name, description, price, gender, category, size, image, isNew, stock },
+            { name, description, price, gender, category, size, image: processedImage, isNew, stock },
             { new: true }
         );
         if (!updatedProduct) return res.status(404).json({ message: 'Product not found' });

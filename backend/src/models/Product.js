@@ -14,9 +14,9 @@ const productSchema = new mongoose.Schema({
     enum: ['S', 'M', 'L'],
     default: 'M'
   },
-  image: {
-    data: Buffer,
-    contentType: String
+  img: {
+    data: String,
+    contentType: String,
   },
   isNew: {
     type: Boolean,

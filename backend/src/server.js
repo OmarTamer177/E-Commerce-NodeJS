@@ -29,6 +29,8 @@ app.use(express.static(path.join(__dirname, '../../frontend')));
 app.use(express.json()); // Parse JSON bodies
 app.use(express.urlencoded({ extended: true }));
 const { verifyToken, requireAdmin } = require('./middleware/authMiddleware.js');
+const bodyParser = require('body-parser');
+app.use(bodyParser.json({ limit: '10mb' }));
 
 // Routes "Endpoints"
 const productRoutes = require('./routes/productRoutes');
