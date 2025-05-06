@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
     document.getElementById(sectionId).style.display = 'block';
     if (sectionId === 'view-products') displayProducts();
+    else if (sectionId === 'manage-users') handleManageUsers();
   };
 
   // Drag and drop events
@@ -136,12 +137,15 @@ document.addEventListener('DOMContentLoaded', function () {
       products.forEach(product => {
         const item = document.createElement('li');
         item.innerHTML = `
-          <strong>${product.name}</strong> - $${product.price.toFixed(2)} (${product.stock} pcs)<br/>
-          <em>${product.description}</em><br/>
-          <strong>Size:</strong> ${product.size}<br/>
-          <img src="data:${product.img.contentType};base64,${product.img.data}" width="100" />
+          <a href="admin_product_details.html?id=${product._id}" style="text-decoration:none; color:inherit;">
+            <strong>${product.name}</strong> - $${product.price.toFixed(2)} (${product.stock} pcs)<br/>
+            <em>${product.description}</em><br/>
+            <strong>Size:</strong> ${product.size}<br/>
+            <img src="data:${product.img.contentType};base64,${product.img.data}" width="100" />
+          </a>
           <hr/>
         `;
+
         productList.appendChild(item);
       });
   
@@ -150,6 +154,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
   
+
 
   function addUser() {
     const email = document.getElementById('user-email').value;
@@ -167,4 +172,69 @@ document.addEventListener('DOMContentLoaded', function () {
     alert('User added successfully!');
     document.getElementById('user-email').value = '';
   }
+
+  function handleManageUsers() {
+    const token = localStorage.getItem("token");
+    const manageUsersSection = document.getElementById("manage-users");
+    manageUsersSection.style.display = "block";
+  
+    const usersList = document.getElementById("users-list");
+    usersList.innerHTML = "<p>Loading users...</p>";
+  
+    fetch("http://localhost:8000/api/users/", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to fetch users");
+        return res.json();
+      })
+      .then((users) => {
+        usersList.innerHTML = "";
+        users.forEach((user) => {
+          const userCard = document.createElement("div");
+          userCard.className = "product-card";
+  
+          userCard.innerHTML = `
+          <h3>${user.name || "Unnamed User"}</h3>
+          <p>Email: ${user.email}</p>
+          <p>Role: ${user.role}</p>
+          <button class="delete-btn">Delete</button>
+        `;
+
+        const deleteBtn = userCard.querySelector('.delete-btn');
+        deleteBtn.addEventListener('click', () => deleteUser(user._id));
+
+  
+          usersList.appendChild(userCard);
+        });
+      })
+      .catch((error) => {
+        usersList.innerHTML = `<p style="color:red;">${error.message}</p>`;
+      });
+  }
+  
+  function deleteUser(userId) {
+    const token = localStorage.getItem("token");
+    const confirmed = confirm("Are you sure you want to delete this user?");
+    if (!confirmed) return;
+  
+    fetch(`http://localhost:8000/api/users/${userId}`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((res) => {
+        if (!res.ok) throw new Error("Failed to delete user");
+        alert("User deleted successfully");
+        handleManageUsers(); // Refresh list
+      })
+      .catch((err) => {
+        console.error(err);
+        alert("Error deleting user.");
+      });
+  }
+  
 });

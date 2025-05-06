@@ -90,19 +90,9 @@
     <!-- Manage Users -->
     <div id="manage-users" class="admin-section" style="display: none;">
       <h1>Manage Users</h1>
-      <div class="form-group">
-        <label>User Email</label>
-        <input type="email" id="user-email" />
-      </div>
-      <div class="form-group">
-        <label>Role</label>
-        <select id="user-role">
-          <option value="admin">Admin</option>
-          <option value="customer">Customer</option>
-        </select>
-      </div>
-      <button onclick="addUser()">Add User</button>
+      <div id="users-list" class="product-list"></div>
     </div>
+
 
     <!-- Manage Orders -->
     <div id="manage-orders" class="admin-section" style="display: none;">

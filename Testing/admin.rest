@@ -1,4 +1,4 @@
-### Create an admin user
+### Create an admin user                                              Dooooooooooooooooone
 POST http://localhost:8000/auth/register
 Content-Type: application/json
 
@@ -10,7 +10,7 @@ Content-Type: application/json
   "role": "admin"
 }
 
-### login an admin user
+### login an admin user                                              Dooooooooooooooooone
 POST http://localhost:8000/auth/login
 Content-Type: application/json
 
@@ -19,7 +19,7 @@ Content-Type: application/json
   "password": "123456"
 }
 
-### Create a product
+### Create a product                                              Dooooooooooooooooone
 POST http://localhost:8000/api/products
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MThlOTA1NDBiNWVmZmE0OTkxMmJmMiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0NjU2Mzc4MiwiZXhwIjoxNzQ2NTY3MzgyfQ.iN9fGPFEklrkWEFMgFVorPz46Cc8g2zLYwfV0SewLGk
@@ -35,14 +35,14 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MThlOTA1N
   "stock": 10
 }
 
-### Get all products
+### Get all products                                              Dooooooooooooooooone
 GET http://localhost:8000/api/products
 
-### Get a product by ID
+### Get a product by ID                                              Dooooooooooooooooone
 GET http://localhost:8000/api/products/681a3cb05d731e484b17c251
 
 
-### Update a product by ID (product_id)
+### Update a product by ID (product_id)                                              Dooooooooooooooooone
 PUT http://localhost:8000/api/products/681a75bee907710d40186e77
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MThlOTA1NDBiNWVmZmE0OTkxMmJmMiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0NjU2Mzc4MiwiZXhwIjoxNzQ2NTY3MzgyfQ.iN9fGPFEklrkWEFMgFVorPz46Cc8g2zLYwfV0SewLGk
 Content-Type: application/json
@@ -59,22 +59,22 @@ Content-Type: application/json
 }
 
 
-### Delete a product by ID (product_id)
+### Delete a product by ID (product_id)                                              Dooooooooooooooooone
 DELETE http://localhost:8000/api/products/681a3cb05d731e484b17c251
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MThlOTA1NDBiNWVmZmE0OTkxMmJmMiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0NjU0OTkwMiwiZXhwIjoxNzQ2NTUzNTAyfQ.qX-iUMLZWX8r1Pq1NtjBsSax3uTu5-GjOtyaw_vKDsc
 
 
-### Delete a user (user_id)
+### Delete a user (user_id)                                              Dooooooooooooooooone
 DELETE http://localhost:8000/api/users/6817471711e0cd45faeffd96
 Authorization: Bearer <token>
 
 
-### Get all users
+### Get all users                                              Dooooooooooooooooone
 GET http://localhost:8000/api/users/
 Authorization: Bearer <token>
 
 
-### Get a user by ID (user_id)
+### Get a user by ID (user_id)                                              Dooooooooooooooooone
 GET http://localhost:8000/api/users/681714155b2cd91efd012d43
 Authorization: Bearer <token>
 
@@ -113,7 +113,7 @@ DELETE http://localhost:8000/api/coupons/6817e67ddab05b80be4dc154
 Authorization: Bearer <token>
 
 
-### Get the admin page
+### Get the admin page                                              Dooooooooooooooooone
 GET http://localhost:8000/admin/
 Authorization: Bearer <token>
 

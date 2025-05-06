@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Product Details</title>
+  <link rel="stylesheet" href="../CSS_files/admin_product_details.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Edit Product</h1>
+    <form id="product-form">
+      <label>Name:</label>
+      <input type="text" id="name" required />
+
+      <label>Description:</label>
+      <textarea id="description" rows="3" required></textarea>
+
+      <label>Price ($):</label>
+      <input type="number" id="price" step="0.01" required />
+
+      <label>Gender:</label>
+      <select id="gender" required>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+      </select>
+
+      <label>Category:</label>
+      <input type="text" id="category" required />
+
+      <label>Size:</label>
+      <select id="size" required>
+        <option value="S">S</option>
+        <option value="M">M</option>
+        <option value="L">L</option>
+      </select>
+
+      <label>Is New?</label>
+      <select id="isNew" required>
+        <option value="true">True</option>
+        <option value="false">False</option>
+      </select>
+
+      <label>Stock:</label>
+      <input type="number" id="stock" required />
+
+      <div class="button-group">
+        <button type="submit" class="update-btn">Update Product</button>
+        <button type="button" class="delete-btn" id="delete-btn">Delete Product</button>
+      </div>
+    </form>
+
+    <button class="back-btn" onclick="window.location.href='admin.html'">Back to Admin Page</button>
+  </div>
+
+  <script src="../JS_files/admin_product_details.js"></script>
+</body>
+</html>

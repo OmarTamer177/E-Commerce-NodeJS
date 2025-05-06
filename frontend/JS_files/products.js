@@ -57,7 +57,7 @@ async function displayProducts(filter = 'all') {
       productCard.className = 'product-card';
       productCard.innerHTML = `
         <a href="product_details.html?id=${product.id}" style="text-decoration:none;color:inherit;">
-          <img src="${product.image}" alt="${product.name}" class="product-img">
+          <img src="data:${product.img.contentType};base64,${product.img.data}" alt="${product.name}" class="product-img">
           <div class="product-info">
             <h3 class="product-name">${product.name}</h3>
             <p class="product-price">EGP ${product.price.toLocaleString()}</p>
