@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Checkout</title>
+  <link rel="stylesheet" href="../CSS_files/checkout.css" />
+</head>
+<body>
+  <div class="checkout-container">
+    <div class="left-section">
+      <h2>Shipping method</h2>
+      <div class="shipping-method">
+        <span>Shipping (2–5 Working Days)</span>
+        <strong>EGP 85.00</strong>
+      </div>
+
+      <h2>Payment</h2>
+      <p class="secure-msg">All transactions are secure and encrypted.</p>
+
+      <div class="payment-option">
+        <input type="radio" name="payment" value="cod" id="cod" />
+        <label for="cod" class="method-name">Cash on Delivery (COD)</label>
+      </div>
+
+      <h2>Billing address</h2>
+      <div class="payment-option">
+        <input type="radio" name="billing" id="same" checked />
+        <label for="same">Same as shipping address</label>
+      </div>
+      <div class="payment-option">
+        <input type="radio" name="billing" id="different" />
+        <label for="different">Use a different billing address</label>
+      </div>
+
+      <button id="payNowBtn" class="pay-now" disabled>Pay now</button>
+      <div id="errorMessage" class="error-message"></div>
+    </div>
+
+    <div class="right-section" id="cartSummary">
+      <h2>Order Summary</h2>
+      <div id="cartItems">
+        <p>No items in your cart.</p>
+      </div>
+
+      <div class="summary" id="summarySection" style="display:none;">
+        <p><span>Subtotal</span><span id="subtotal">EGP 0.00</span></p>
+        <p><span>Shipping</span><span>EGP 50.00</span></p>
+        <p class="total"><span>Total</span><span id="total">EGP 0.00</span></p>
+      </div>
+    </div>
+  </div>
+
+  <script src="../JS_files/checkout.js"></script>
+</body>
+</html>
