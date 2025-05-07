@@ -79,11 +79,11 @@ GET http://localhost:8000/api/users/681714155b2cd91efd012d43
 Authorization: Bearer <token>
 
 
-### Get all orders
+### Get all orders                                              Dooooooooooooooooone
 GET http://localhost:8000/api/orders
 Authorization: Bearer <token>
 
-### Update an order status (order_id)
+### Update an order status (order_id)                                              Dooooooooooooooooone
 PUT http://localhost:8000/api/orders/6817f0314c102114b0b87910
 Content-Type: application/json
 Authorization: Bearer <token>
@@ -92,7 +92,7 @@ Authorization: Bearer <token>
   "status": "shipped"
 }
 
-### Create coupon
+### Create coupon                                              Dooooooooooooooooone
 POST http://localhost:8000/api/coupons
 Content-Type: application/json
 Authorization: Bearer <token>
@@ -103,12 +103,12 @@ Authorization: Bearer <token>
 }
 
 
-### Get all coupons
+### Get all coupons                                              Dooooooooooooooooone
 GET http://localhost:8000/api/coupons
-Authorization: Bearer <token>
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MThlOTA1NDBiNWVmZmE0OTkxMmJmMiIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0NjYzNjc5NCwiZXhwIjoxNzQ2NjQwMzk0fQ.QMYl95qzkDTXVN83i7vQE0xFxYe2NO8RLLrM4t73UCw
 
 
-### Delete a coupon
+### Delete a coupon                                              Dooooooooooooooooone
 DELETE http://localhost:8000/api/coupons/6817e67ddab05b80be4dc154
 Authorization: Bearer <token>
 
@@ -117,6 +117,6 @@ Authorization: Bearer <token>
 GET http://localhost:8000/admin/
 Authorization: Bearer <token>
 
-### Delete a review by review ID (admin)
+### Delete a review by review ID (admin)                                              Dooooooooooooooooone
 DELETE http://localhost:8000/api/products/review/id/<review_id>
 Authorization: Bearer <admin_token>

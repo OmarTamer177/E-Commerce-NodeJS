@@ -13,9 +13,9 @@
       <li onclick="showSection('add-product')">➕ Add Product</li>
       <li onclick="showSection('view-products')">📦 View Products</li>
       <li onclick="showSection('manage-users')">👥 Manage Users</li>
-      <li onclick="showSection('manage-orders')">📋 Manage Orders</li>
+      <li onclick="showSection('view-orders')">📋 Manage Orders</li>
       <li onclick="showSection('manage-coupons')">🏷️ Manage Coupons</li>
-      <li onclick="showSection('moderate-reviews')">📝 Moderate Reviews</li>
+      <li onclick="showSection('manage-reviews')">📝 Manage Reviews</li>
     </ul>
   </div>
 
@@ -95,22 +95,41 @@
 
 
     <!-- Manage Orders -->
-    <div id="manage-orders" class="admin-section" style="display: none;">
-      <h1>Manage Orders</h1>
-      <p>Coming soon...</p>
+    <div id="view-orders" class="admin-section" style="display: none;">
+      <h1>View Orders</h1>
+      <div id="orders-list" class="product-list"></div>
     </div>
+    
+    
+
 
     <!-- Manage Coupons -->
     <div id="manage-coupons" class="admin-section" style="display: none;">
       <h1>Manage Coupons</h1>
-      <p>Coming soon...</p>
+
+      <form id="create-coupon-form" style="margin-bottom: 20px;">
+        <input type="text" id="coupon-code" placeholder="Coupon Code" required />
+        <input type="number" id="coupon-percentage" placeholder="Discount %" required min="1" max="100" />
+        <button type="submit">Create Coupon</button>
+      </form>
+
+      <div id="coupons-list" class="product-list"></div>
     </div>
 
-    <!-- Moderate Reviews -->
-    <div id="moderate-reviews" class="admin-section" style="display: none;">
-      <h1>Moderate Reviews</h1>
-      <p>Coming soon...</p>
+
+
+    <!-- Manage Reviews -->
+    <div id="manage-reviews" class="admin-section" style="display: none;">
+      <h1>Manage Product Reviews</h1>
+      
+      <h3>Select a product to view its reviews:</h3>
+      <div id="product-buttons" class="product-list"></div>
+
+      <h3 style="margin-top: 20px;">Reviews:</h3>
+      <div id="reviews-list" class="product-list"></div>
     </div>
+
+
   </div>
 
   <script src="../JS_files/admin.js"></script>
