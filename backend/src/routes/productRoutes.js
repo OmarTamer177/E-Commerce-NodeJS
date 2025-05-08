@@ -132,6 +132,11 @@ router.post('/add-to-cart/:id', verifyToken, async (req, res) => {
             cart = new Cart({ user_id: req.user.id });
             await cart.save();
         }
+
+        // Check if the product quantity is in stock
+        if (req.body.quantity > product.stock) {
+            return res.status(400).json({ message: 'Requested quantity exceeds available stock' });
+        }
         
         // Check if the product is already in the cart
         const existingCartItem = await CartItem.findOne({ cart_id: cart._id, product_id: product._id });

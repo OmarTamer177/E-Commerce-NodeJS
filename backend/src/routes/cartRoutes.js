@@ -6,6 +6,7 @@ const CartItem = require('../models/CartItem');
 const Coupon = require('../models/Coupon');
 const OrderItem = require('../models/OrderItem');
 const Order = require('../models/Order');
+const Product = require('../models/Product');
 const { verifyToken, requireAdmin } = require('../middleware/authMiddleware');
 
 const router = express.Router();
@@ -97,8 +98,9 @@ router.post('/checkout', verifyToken, async (req, res) => {
 
         // Calculate total price
         const price = cartItems.reduce((total, item) => {
-        return total + (item.product_id?.price || 0) * item.quantity;
+            return total + (item.product_id?.price || 0) * item.quantity;
         }, 0);
+        price = price + (price * 0.14) + 85; // Add 14% tax + shipping cost
         
         let discount = 0;
         // Add a copoun code if provided
@@ -126,6 +128,13 @@ router.post('/checkout', verifyToken, async (req, res) => {
                 product_id: item.product_id,
                 quantity: item.quantity
             });
+
+            // Reduce the stock of the product here
+            const product = await Product.findById(item.product_id);
+            if (product) {
+                product.stock -= item.quantity;
+                await product.save();
+            }
         }
 
         // For now, we'll just clear the cart
