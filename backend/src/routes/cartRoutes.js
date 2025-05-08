@@ -97,7 +97,7 @@ router.post('/checkout', verifyToken, async (req, res) => {
         if (!cartItems) return res.status(400).json({ message: 'Cart is empty' });
 
         // Calculate total price
-        const price = cartItems.reduce((total, item) => {
+        let price = cartItems.reduce((total, item) => {
             return total + (item.product_id?.price || 0) * item.quantity;
         }, 0);
         price = price + (price * 0.14) + 85; // Add 14% tax + shipping cost
