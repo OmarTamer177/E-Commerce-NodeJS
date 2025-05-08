@@ -115,6 +115,7 @@ select {
 button {
   width: 100%;
   padding: 12px;
+  margin : 7px;
   background-color: #000;
   color: white;
   border: none;
@@ -153,4 +154,25 @@ button:hover {
 .product-select-btn{
 
   margin:3px;
+}
+.refund-btn {
+  width: 100%;
+  padding: 12px;
+  margin :7px;
+  background-color: #000;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 16px;
+  transition: background 0.3s;
+
+}
+
+.refund-btn:hover {
+  background-color: #333;}
+
+.refund-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
 }

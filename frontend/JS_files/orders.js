@@ -48,14 +48,46 @@ document.addEventListener("DOMContentLoaded", async () => {
         const body = `
           <div class="order-products">${productsHTML}</div>
           <p><strong>Total Price: EGP ${order.price.toLocaleString()}</strong></p>
+          <button class="refund-btn" data-id="${order.order_id}">Request Refund</button>
         `;
   
         card.innerHTML = header + body;
         ordersList.appendChild(card);
       });
   
-    } catch (error) {
-      console.error("Orders error:", error);
+      // ✅ Attach event listeners *after* rendering
+      document.querySelectorAll('.refund-btn').forEach(button => {
+        button.addEventListener('click', async () => {
+          const orderId = button.getAttribute('data-id');
+  
+          try {
+            const res = await fetch('http://localhost:8000/api/orders/request-refund', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+              },
+              body: JSON.stringify({ order_id: orderId })
+            });
+  
+            if (!res.ok) {
+              const errData = await res.json();
+              throw new Error(errData.message || 'Refund failed');
+            }
+  
+            alert('Refund request sent successfully!');
+            button.disabled = true;
+            button.textContent = 'Refund Requested';
+  
+          } catch (err) {
+            console.error(err);
+            alert('An error occurred while requesting refund.');
+          }
+        });
+      });
+  
+    } catch (e) {
+      console.error("Orders error:", e);
       errorMessage.textContent = "Could not load your orders. Please try again later.";
     }
   });

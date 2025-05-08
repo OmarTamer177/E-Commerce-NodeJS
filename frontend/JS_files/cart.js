@@ -78,7 +78,6 @@ async function renderCart() {
     }
 
     const cartItems = await response.json();
-    const product = JSON.parse(localStorage.getItem('currentProduct'));
 
     container.innerHTML = '';
 
@@ -110,11 +109,43 @@ async function renderCart() {
           <p>Qty: ${item.quantity}</p>
           <p>Price: EGP ${product.price.toLocaleString()}</p>
           <p><strong>Subtotal: EGP ${itemTotal.toLocaleString()}</strong></p>
+          <button class="remove-item-btn" data-id="${item._id}">🗑️ Remove</button>
         </div>
       `;
     
       container.appendChild(itemDiv);
     });
+
+    document.querySelectorAll('.remove-item-btn').forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const itemId = btn.getAttribute('data-id');
+        const token = localStorage.getItem('token');
+    
+        if (!token) {
+          alert("You must be logged in.");
+          return;
+        }
+    
+        try {
+          const res = await fetch(`http://localhost:8000/api/cart/${itemId}`, {
+            method: 'DELETE',
+            headers: {
+              'Authorization': `Bearer ${token}`
+            }
+          });
+    
+          if (!res.ok) throw new Error('Failed to remove item');
+    
+          alert('Item removed successfully!');
+          renderCart(); // Refresh cart
+    
+        } catch (err) {
+          console.error(err);
+          alert('Could not remove item.');
+        }
+      });
+    });
+    
     
     
     // Add total to the end

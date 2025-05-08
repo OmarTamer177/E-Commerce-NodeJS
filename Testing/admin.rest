@@ -39,7 +39,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MThlOTA1N
 GET http://localhost:8000/api/products
 
 ### Get a product by ID                                              Dooooooooooooooooone
-GET http://localhost:8000/api/products/681a3cb05d731e484b17c251
+GET http://localhost:8000/api/products/681a75bee907710d40186e77
 
 
 ### Update a product by ID (product_id)                                              Dooooooooooooooooone
