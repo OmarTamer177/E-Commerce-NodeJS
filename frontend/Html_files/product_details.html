@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MAVIN - Product Details</title>
+  <title>Product Details</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="../CSS_files/product_details.css">
 
@@ -58,7 +58,11 @@
     </div>
     
     <div class="navbar-right">
-      <a href="login.html"><i class="fas fa-user"></i></a>
+      <div id="loginSidebar" class="login-sidebar hidden" onclick="toggleLogin()" style="cursor:pointer;">
+        <i class="fas fa-user">
+        </i>
+      </div>
+
       <div onclick="toggleCart()" style="cursor:pointer;">
         <i class="fas fa-shopping-cart">
           <span class="cart-count" id="cart-count">0</span>
@@ -69,68 +73,13 @@
 
   <!-- Product Details -->
   <div class="product-container">
-    <!-- Product Image -->
-    <div class="product-image">
-      <img src="https://via.placeholder.com/600x800" alt="Product Image">
-    </div>
     
     <!-- Product Info -->
     <div class="product-details">
       <h1 class="product-title">MAVY</h1>
       
-      <!-- Size Selection -->
-      <div class="size-options">
-        <div class="size-title">SIZE</div>
-        <div class="size-buttons">
-          <button class="size-btn">S</button>
-          <button class="size-btn selected">M</button>
-          <button class="size-btn">L</button>
-        </div>
-      </div>
-      
-      <!-- Quantity and Cart -->
-      <div class="quantity-cart">
-        <div class="quantity-selector">
-          <button class="quantity-btn">-</button>
-          <input type="text" class="quantity-value" value="1">
-          <button class="quantity-btn">+</button>
-        </div>
+      <!-- Cart -->
         <button class="add-to-cart">Add to cart</button>
-        <button class="buy-now">Buy it now</button>
-      </div>
-      
-      <!-- Info Sections with Dropdown -->
-      <div class="info-section">
-        <div class="info-header" onclick="toggleInfo('size-chart')">
-          <span>Size Chart</span>
-          <i class="fas fa-plus"></i>
-        </div>
-        <div class="info-content" id="size-chart">
-          <p>Size chart information goes here. Detailed measurements for each size.</p>
-        </div>
-      </div>
-      
-      <div class="info-section">
-        <div class="info-header" onclick="toggleInfo('delivery')">
-          <span>Delivery & Returns</span>
-          <i class="fas fa-plus"></i>
-        </div>
-        <div class="info-content" id="delivery">
-          <p>FREE SHIPPING ABOVE 300 EGP</p>
-          <p>7 DAY RETURN POLICY</p>
-        </div>
-      </div>
-      
-      <div class="info-section">
-        <div class="info-header" onclick="toggleInfo('contact')">
-          <span>Contact Us</span>
-          <i class="fas fa-plus"></i>
-        </div>
-        <div class="info-content" id="contact">
-          <p>Email: ahmed.mohamed145@gmail.com</p>
-          <p>Phone: +201280045475</p>
-          <p>Hours: Mon-Fri 9am-5pm</p>
-        </div>
       </div>
       
       <!-- Payment Info -->
@@ -160,6 +109,7 @@
   <script src="../JS_files/product_details.js"></script>
 
   <script src="../JS_files/cart.js"></script>
+  <script src="../JS_files/login.js"></script>
   <!-- Insert cart.html fragment here -->
   <div id="cartSidebar" class="cart-sidebar hidden">...</div>
 </body>

@@ -1,146 +1,173 @@
-// DOM Elements
-const sizeButtons = document.querySelectorAll('.size-btn');
-const minusBtn = document.querySelector('.quantity-btn:first-child');
-const plusBtn = document.querySelector('.quantity-btn:last-child');
-const quantityInput = document.querySelector('.quantity-value');
-const addToCartBtn = document.querySelector('.add-to-cart');
-const buyNowBtn = document.querySelector('.buy-now');
-const cartCount = document.getElementById('cart-count');
+// Utility: Extract product ID from URL
+function getProductIdFromURL() {
+  const params = new URLSearchParams(window.location.search);
+  return params.get('id');
+}
 
-// State
-let currentProduct = null;
-let selectedSize = 'M'; // Default size
-let quantity = 1;
-
-// Initialize page
-document.addEventListener('DOMContentLoaded', function() {
-  // Load product from URL ID
-  loadProductFromURL();
-  
-  // Initialize cart count
-  updateCartCount();
-  
-  // Set up event listeners
-  setupEventListeners();
-});
-
-// Load product based on URL ID
-function loadProductFromURL() {
-  const urlParams = new URLSearchParams(window.location.search);
-  const productId = urlParams.get('id');
-  
+// Fetch and display product details
+async function loadProductDetails() {
+  const productId = getProductIdFromURL();
   if (!productId) {
-    alert('No product specified!');
-    window.location.href = 'products.html';
+    alert('Product ID not found in URL');
     return;
   }
 
-  // Get product from localStorage (replace with API call in real implementation)
-  const products = JSON.parse(localStorage.getItem('adminProducts')) || [];
-  currentProduct = products.find(p => p.id == productId);
-  
-  if (!currentProduct) {
-    alert('Product not found!');
-    window.location.href = 'products.html';
-    return;
+  try {
+    const res = await fetch(`http://localhost:8000/api/products/${productId}`);
+    if (!res.ok) throw new Error('Failed to load product data');
+    const product = await res.json();
+    localStorage.setItem('currentProduct', JSON.stringify(product));
+      const container = document.querySelector('.product-container');
+      container.innerHTML = `
+      <div class="product-image">
+        <img src="data:${product.img.contentType};base64,${product.img.data}" alt="${product.name}">
+      </div>
+      
+      <div class="product-details">
+        <h1 class="product-title">${product.name}</h1>
+        
+        <div class="product-price">
+          <p>Price: EGP ${product.price.toLocaleString()}</p>
+        </div>
+        
+        <div class="size-options">
+          <div class="size-title">SIZE :</div>
+          <div class="size-title">${product.size}</div>
+        </div>
+        
+        <div class="quantity-cart">
+          <div class="quantity-selector">
+            <button class="quantity-btn">-</button>
+            <input type="text" class="quantity-value" value="1">
+            <button class="quantity-btn">+</button>
+          </div>
+          <button class="add-to-cart">Add to cart</button>
+        </div>
+        
+        <div class="payment-info">
+          <p>Secure online payment</p>
+        </div>
+      </div>
+    `;
+    
+    
+
+  } catch (err) {
+    alert('Error loading product details: ' + err.message);
   }
-
-  // Update page with product data
-  renderProductDetails();
 }
 
-// Display product information
-function renderProductDetails() {
-  document.querySelector('.product-title').textContent = currentProduct.name;
-  document.querySelector('.product-image img').src = currentProduct.image;
-  document.querySelector('.product-image img').alt = currentProduct.name;
-  
-  // You can add more fields here:
-  // document.querySelector('.product-price').textContent = `$${currentProduct.price.toFixed(2)}`;
-  // document.querySelector('.product-description').textContent = currentProduct.description;
-}
+function setupAddToCart() {
+  document.querySelector('.add-to-cart').addEventListener('click', async () => {
+    const product = JSON.parse(localStorage.getItem('currentProduct'));
+    if (!product || !product._id) {
+      alert('Product not found.');
+      return;
+    }
+    const qty = parseInt(document.querySelector('.quantity-value').value) || 1;
 
-// Set up all event listeners
-function setupEventListeners() {
-  // Size selection
-  sizeButtons.forEach(button => {
-    button.addEventListener('click', () => {
-      sizeButtons.forEach(btn => btn.classList.remove('selected'));
-      button.classList.add('selected');
-      selectedSize = button.textContent;
-    });
+    // Replace this with however you're storing the user's token
+    const token = localStorage.getItem('token'); 
+    if (!token) {
+      alert('You must be logged in to add to cart.');
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:8000/api/products/add-to-cart/${product._id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ quantity: qty })
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.log(errorData.message || 'Failed to add to cart');
+      }
+
+      alert('Product added to cart!');
+      updateCartCount(); // Update UI if needed
+
+    } catch (error) {
+      console.error('Add to cart error:', error);
+      alert(`Error: ${error.message}`);
+    }
   });
+}
 
-  // Quantity adjustment
+
+function createQuantitySelector() {
+  const quantityCart = document.createElement('div');
+  quantityCart.className = 'quantity-cart';
+
+  const quantitySelector = document.createElement('div');
+  quantitySelector.className = 'quantity-selector';
+
+  // Minus Button
+  const minusBtn = document.createElement('button');
+  minusBtn.className = 'quantity-btn';
+  minusBtn.textContent = '-';
+
+  // Input Field
+  const qtyInput = document.createElement('input');
+  qtyInput.type = 'number'; // numeric input type
+  qtyInput.className = 'quantity-value';
+  qtyInput.value = '1';
+  qtyInput.min = '1';
+
+  // Plus Button
+  const plusBtn = document.createElement('button');
+  plusBtn.className = 'quantity-btn';
+  plusBtn.textContent = '+';
+
+  // Append buttons and input to selector
+  quantitySelector.appendChild(minusBtn);
+  quantitySelector.appendChild(qtyInput);
+  quantitySelector.appendChild(plusBtn);
+
+  quantityCart.appendChild(quantitySelector);
+
+  // Event Listeners
   minusBtn.addEventListener('click', () => {
-    if (quantity > 1) {
-      quantity--;
-      quantityInput.value = quantity;
+    let current = parseInt(qtyInput.value);
+    if (current > 1) {
+      qtyInput.value = current - 1;
     }
   });
 
   plusBtn.addEventListener('click', () => {
-    quantity++;
-    quantityInput.value = quantity;
+    let current = parseInt(qtyInput.value);
+    qtyInput.value = current + 1;
   });
 
-  quantityInput.addEventListener('change', () => {
-    quantity = parseInt(quantityInput.value) || 1;
-    quantityInput.value = quantity;
+  // Ensure the value is numeric after the change
+  qtyInput.addEventListener('input', () => {
+    if (isNaN(parseInt(qtyInput.value)) || qtyInput.value < 1) {
+      qtyInput.value = '1';
+    }
   });
 
-  // Add to cart
-  addToCartBtn.addEventListener('click', addToCart);
-
-  // Buy now
-  buyNowBtn.addEventListener('click', buyNow);
+  return quantityCart;
 }
 
-// Add item to cart
-function addToCart() {
-  if (!currentProduct) return;
-  
-  const cartItem = {
-    id: currentProduct.id,
-    name: currentProduct.name,
-    price: currentProduct.price,
-    size: selectedSize,
-    quantity: quantity,
-    image: currentProduct.image
-  };
 
-  let cart = JSON.parse(localStorage.getItem('cart')) || [];
-  cart.push(cartItem);
-  localStorage.setItem('cart', JSON.stringify(cart));
-  
-  updateCartCount();
-  alert(`${cartItem.name} (Size: ${cartItem.size}) added to cart!`);
-}
 
-// Buy now functionality
-function buyNow() {
-  addToCart();
-  window.location.href = 'cart.html';
-}
 
 // Update cart count in navbar
 function updateCartCount() {
   const cart = JSON.parse(localStorage.getItem('cart')) || [];
-  cartCount.textContent = cart.length;
+  const count = cart.reduce((acc, item) => acc + item.qty, 0);
+  document.getElementById('cart-count').textContent = count;
 }
 
-// Toggle info sections
-function toggleInfo(id) {
-  const content = document.getElementById(id);
-  const icon = content.previousElementSibling.querySelector('i');
-  
-  content.classList.toggle('active');
-  if (content.classList.contains('active')) {
-    icon.classList.replace('fa-plus', 'fa-minus');
-  } else {
-    icon.classList.replace('fa-minus', 'fa-plus');
-  }
-}
-
-// Make toggleInfo function globally available for HTML onclick
-window.toggleInfo = toggleInfo;
+// === Initialize on Page Load ===
+// === Initialize on Page Load ===
+document.addEventListener('DOMContentLoaded', async () => {
+  await loadProductDetails();  // Wait for product to be fully loaded and rendered
+  setupAddToCart();            // Then attach event listener to the rendered button
+  updateCartCount();
+  updateCartCount();
+});

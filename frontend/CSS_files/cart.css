@@ -114,3 +114,57 @@
   font-weight: bold;
   text-transform: uppercase;
 }
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ddd;
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  background-color: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.cart-item-img img {
+  width: 100px;
+  height: auto;
+  object-fit: cover;
+  margin-right: 20px;
+  border-radius: 5px;
+}
+
+.cart-info {
+  flex-grow: 1;
+}
+
+.cart-info h4 {
+  margin: 0 0 10px;
+  font-size: 1.2rem;
+}
+
+.cart-info p {
+  margin: 5px 0;
+  color: #333;
+}
+#checkout-btn {
+  background-color: #000; /* You can change to your primary brand color */
+  color: #fff;
+  padding: 14px 28px;
+  font-size: 16px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-weight: bold;
+  width: 100%; /* or a fixed width like 300px */
+  max-width: 400px;
+  margin: 20px auto;
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+#checkout-btn:hover {
+  background-color: #444; /* Slightly lighter for hover effect */
+}

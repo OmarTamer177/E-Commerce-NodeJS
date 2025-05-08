@@ -32,12 +32,12 @@ async function displayProducts(filter = 'all') {
         filteredProducts = products.filter(p => p.isNew);
         title.textContent = 'New Arrivals';
         break;
-      case 'men':
-        filteredProducts = products.filter(p => p.category === 'men');
+      case 'male':
+        filteredProducts = products.filter(p => p.category === 'male');
         title.textContent = "Men's Collection";
         break;
-      case 'women':
-        filteredProducts = products.filter(p => p.category === 'women');
+      case 'female':
+        filteredProducts = products.filter(p => p.category === 'female');
         title.textContent = "Women's Collection";
         break;
       default:
@@ -56,21 +56,20 @@ async function displayProducts(filter = 'all') {
       const productCard = document.createElement('div');
       productCard.className = 'product-card';
       productCard.innerHTML = `
-        <a href="product_details.html?id=${product.id}" style="text-decoration:none;color:inherit;">
+        <a href="product_details.html?id=${product._id}" style="text-decoration:none;color:inherit;">
           <img src="data:${product.img.contentType};base64,${product.img.data}" alt="${product.name}" class="product-img">
           <div class="product-info">
             <h3 class="product-name">${product.name}</h3>
             <p class="product-price">EGP ${product.price.toLocaleString()}</p>
           </div>
         </a>
-        <button class="add-to-cart" data-id="${product.id}">Add to Cart</button>
       `;
       grid.appendChild(productCard);
     });
 
     // Attach event listeners after render
     document.querySelectorAll('.add-to-cart').forEach(button => {
-      button.addEventListener('click', addToCart);
+      button.addEventListener('click', Product_details);
     });
 
   } catch (error) {
@@ -79,38 +78,21 @@ async function displayProducts(filter = 'all') {
 }
 
 
-// --- Add Product to Cart ---
-function addToCart(e) {
+// --- View product details ---
+function Product_details(e) {
   e.preventDefault();
   e.stopPropagation();
 
-  const productId = parseInt(e.target.getAttribute('data-id'));
-  const products = getProducts();
-  const product = products.find(p => p.id === productId);
-
-  if (!product) {
-    alert("Product not found!");
+  const productId = e.target.getAttribute('data-id');
+  if (!productId) {
+    alert("No product ID found!");
     return;
   }
 
-  let cart = JSON.parse(localStorage.getItem('cart')) || [];
-  const productSize = product.size || 'ONE SIZE';
-
-  const existing = cart.find(item => item.name === product.name && item.size === productSize);
-  if (existing) {
-    existing.qty += 1;
-  } else {
-    cart.push({
-      name: product.name,
-      size: productSize,
-      price: product.price,
-      image: product.image,
-      qty: 1
-    });
-  }
-  localStorage.setItem('cart', JSON.stringify(cart));
-  updateCartCount();
+  // Redirect to the product details page with the ID in the query string
+  window.location.href = `product_details.html?id=${productId}`;
 }
+
 
 // --- Filter Buttons ---
 document.querySelectorAll('.filter-btn').forEach(button => {
@@ -130,8 +112,8 @@ function checkUrlFilters() {
   let filter = 'all';
 
   if (type === 'new') filter = 'new';
-  else if (category === 'men') filter = 'men';
-  else if (category === 'women') filter = 'women';
+  else if (category === 'male') filter = 'male';
+  else if (category === 'female') filter = 'female';
 
   // Apply filter styles
   document.querySelectorAll('.filter-btn').forEach(btn => {
@@ -146,8 +128,8 @@ function checkUrlFilters() {
   // Update title if specific
   if (category && type !== 'all') {
     let title = '';
-    if (category === 'men') title += "Men's ";
-    if (category === 'women') title += "Women's ";
+    if (category === 'male') title += "male's ";
+    if (category === 'female') title += "female's ";
     title += type.charAt(0).toUpperCase() + type.slice(1).replace('-', ' ');
     document.getElementById('page-title').textContent = title;
   }

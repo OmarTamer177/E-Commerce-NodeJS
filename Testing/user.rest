@@ -1,4 +1,4 @@
-### Create a normal user
+### Create a normal user                                              Dooooooooooooooooone
 POST http://localhost:8000/auth/register
 Content-Type: application/json
 
@@ -10,7 +10,7 @@ Content-Type: application/json
   "role": "customer"
 }
 
-### login a normal user
+### login a normal user                                              Dooooooooooooooooone
 POST http://localhost:8000/auth/login
 Content-Type: application/json
 
@@ -19,16 +19,16 @@ Content-Type: application/json
   "password": "123456"
 }
 
-### Get all products
+### Get all products                                              Dooooooooooooooooone
 GET http://localhost:8000/api/products
 
 
-### Get user profile
+### Get user profile                                              Dooooooooooooooooone
 GET http://localhost:8000/api/users/profile
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MThlZmUyNDBiNWVmZmE0OTkxMmM5YiIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTc0NjQ4MTQwMSwiZXhwIjoxNzQ2NDg1MDAxfQ.GIwdMfoukTCKbBpuHkbt3YgBdbr4lLbsVOn3bTmAsXA
 
 
-### Update user profile
+### Update user profile                                              Dooooooooooooooooone
 PUT http://localhost:8000/api/users/profile
 Content-Type: application/json
 Authorization: Bearer <token>
@@ -78,7 +78,7 @@ Authorization: Bearer <token>
 
 ### View user's orders
 GET http://localhost:8000/api/orders/user-orders
-Authorization: Bearer <token>
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MWJhMjk5ZmU2NDAxMmM0N2YzNWIzMiIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTc0NjcxOTY1MiwiZXhwIjoxNzQ2NzIzMjUyfQ.t_7o-nS3V1q-YS2ZbKAzvpeZy0CPvgMaBPwWkvHQpvw
 
 ### Add product review (product_id)
 POST http://localhost:8000/api/products/review/681a75bee907710d40186e77
