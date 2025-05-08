@@ -17,8 +17,24 @@ router.get('/', verifyToken, async (req, res) => {
         const cart = await Cart.findOne({ user_id: userId });
         console.log(cart);
         const cartId = cart._id;
-        const cartItems = await CartItem.find({ cart_id: cartId });
-        res.json(cartItems);
+        const cartItems = await CartItem.find({ cart_id: cartId }).populate('product_id');
+
+        const formattedCart = cartItems.map(item => ({
+            _id: item._id,
+            quantity: item.quantity,
+            product: {
+                _id: item.product_id._id,
+                name: item.product_id.name,
+                price: item.product_id.price,
+                description: item.product_id.description,
+                category: item.product_id.category,
+                size: item.product_id.size,
+                stock: item.product_id.stock,
+                img: item.product_id.img,
+            }
+        }));
+
+        res.json(formattedCart);
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
