@@ -168,3 +168,19 @@
 #checkout-btn:hover {
   background-color: #444; /* Slightly lighter for hover effect */
 }
+.remove-item-btn {
+  background-color: #e74c3c;         /* Red tone */
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  margin-top: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.remove-item-btn:hover {
+  background-color: #c0392b;         /* Darker red on hover */
+}
+

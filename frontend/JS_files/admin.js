@@ -281,11 +281,16 @@ document.addEventListener('DOMContentLoaded', function () {
           <p><strong>Total Price:</strong> $${price}</p>
           <p><strong>Status:</strong> ${order.status}</p>
           <button class="update-btn">Update Order Status</button>
+          <button class="refund-btn" data-id="${order.order_id}">Request Refund</button>
         `;
   
-        // Attach the event listener correctly
+        // Attach the event listener for updating order status
         const updateBtn = orderCard.querySelector('.update-btn');
         updateBtn.addEventListener('click', () => updateOrderStatus(order.order_id));
+  
+        // Attach the event listener for requesting refund
+        const refundBtn = orderCard.querySelector('.refund-btn');
+        refundBtn.addEventListener('click', () => requestRefund(order.order_id));
   
         ordersList.appendChild(orderCard);
       });
@@ -294,7 +299,6 @@ document.addEventListener('DOMContentLoaded', function () {
       ordersList.innerHTML = `<p style="color:red;">Error loading orders: ${error.message}</p>`;
     }
   }
-  
   
   // Function to handle updating the order status
   async function updateOrderStatus(orderId) {
@@ -330,6 +334,39 @@ document.addEventListener('DOMContentLoaded', function () {
       alert('Failed to update order status: ' + error.message);
     }
   }
+  
+  // Function to handle refund request
+  async function requestRefund(orderId) {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      alert("No authorization token found.");
+      return;
+    }
+  
+    try {
+      const response = await fetch(`http://localhost:8000/api/orders/request-refund`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({ order_id: orderId })
+      });
+  
+      if (!response.ok) {
+        const errData = await response.json();
+        throw new Error(errData.message || 'Refund request failed');
+      }
+  
+      alert('Refund request sent successfully!');
+      displayOrders();  // Refresh the orders list
+  
+    } catch (error) {
+      console.error('Failed to request refund:', error);
+      alert('Failed to request refund: ' + error.message);
+    }
+  }
+  
   
   async function displayCoupons() {
     const couponsList = document.getElementById('coupons-list');

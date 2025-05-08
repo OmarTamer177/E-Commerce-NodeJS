@@ -43,9 +43,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     firstName.disabled = !isDisabled;
     lastName.disabled = !isDisabled;
-    password.disabled = !isDisabled;
     address1.disabled = !isDisabled;
-    dob.disabled = !isDisabled;
 
     if (isDisabled) {
       editBtn.textContent = 'Save Changes';
@@ -54,6 +52,10 @@ document.addEventListener('DOMContentLoaded', function () {
       saveProfile();
     }
   });
+  document.getElementById('orders').addEventListener('click', () => {
+    window.location.href = '../Html_files/orders.html'; // adjust the path if needed
+  });
+  
 
   // Save profile to backend
   async function saveProfile() {

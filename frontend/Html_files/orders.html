@@ -5,8 +5,43 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>My Orders</title>
   <link rel="stylesheet" href="../CSS_files/orders.css">
+  <link rel="stylesheet" href="../CSS_files/home.css">
 </head>
 <body>
+     <!-- Navigation Bar -->
+  <nav class="navbar">
+    <div class="navbar-left">
+      <div class="category-nav">
+        <div class="category-item">
+          <a href="#" class="category-link" id="men-link">Men</a>
+          <div class="dropdown-menu">
+            <a href="products.html?category=male&type=all">All Products</a>
+            <a href="products.html?category=male&type=new">New Arrivals</a>
+            <a href="products.html?category=male&type=shoes">Shoes</a>
+            <a href="products.html?category=male&type=tshirts">T-Shirts</a>
+            <a href="products.html?category=male&type=shorts">Shorts</a>
+            <a href="products.html?category=male&type=jackets">Jackets</a>
+          </div>
+        </div>
+        <div class="category-item">
+          <a href="#" class="category-link" id="women-link">Women</a>
+          <div class="dropdown-menu">
+            <a href="products.html?category=female&type=all">All Products</a>
+            <a href="products.html?category=female&type=new">New Arrivals</a>
+            <a href="products.html?category=female&type=shoes">Shoes</a>
+            <a href="products.html?category=female&type=tops">Tops</a>
+            <a href="products.html?category=female&type=leggings">Leggings</a>
+            <a href="products.html?category=female&type=sports-bras">Sports Bras</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="navbar-center">
+      <a href="home.html"><img src="../Images/logo (2).png" alt="E-Comm-Web Logo" class="logo-img"></a>
+    </div>
+    </div>
+  </nav>
   <div class="orders-container">
     <h1>Your Orders</h1>
     <div id="ordersList" class="orders-list">Loading your orders...</div>

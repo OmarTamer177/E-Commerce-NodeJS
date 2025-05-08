@@ -34,6 +34,11 @@ async function loadProductDetails() {
           <div class="size-title">SIZE :</div>
           <div class="size-title">${product.size}</div>
         </div>
+
+        <div class="stock">
+          <div class="size-title">STOCK :</div>
+          <div class="size-title">${product.stock}</div>
+        </div>
         
         <div class="quantity-cart">
           <div class="quantity-selector">
