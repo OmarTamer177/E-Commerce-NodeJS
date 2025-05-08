@@ -4,7 +4,6 @@ updateCartCount();
 function updateCartCount() {
   const cartItems = JSON.parse(localStorage.getItem('cart')) || [];
   const totalItems = cartItems.reduce((sum, item) => sum + item.qty, 0);
-  document.getElementById("cart-count").textContent = totalItems;
   const itemCountText = document.getElementById("cart-item-count");
   if (itemCountText) itemCountText.textContent = `${totalItems} ITEM${totalItems !== 1 ? 'S' : ''} IN YOUR BAG`;
 }

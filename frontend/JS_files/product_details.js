@@ -218,7 +218,6 @@ function createQuantitySelector() {
 function updateCartCount() {
   const cart = JSON.parse(localStorage.getItem('cart')) || [];
   const count = cart.reduce((acc, item) => acc + item.qty, 0);
-  document.getElementById('cart-count').textContent = count;
 }
 
 // === Initialize on Page Load ===
