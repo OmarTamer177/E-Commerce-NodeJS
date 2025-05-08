@@ -169,7 +169,7 @@ router.post('/review/:id', verifyToken, async (req, res) => {
         product_id: product._id,
         user_id: req.user.id,
         rating: req.body.rating,
-        comment: req.body.comment
+        review: req.body.review
       });
   
       await review.save();

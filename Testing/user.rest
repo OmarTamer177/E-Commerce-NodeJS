@@ -81,9 +81,9 @@ GET http://localhost:8000/api/orders/user-orders
 Authorization: Bearer <token>
 
 ### Add product review (product_id)
-POST http://localhost:8000/api/products/review/6817f9f9f3e23650211a5353
+POST http://localhost:8000/api/products/review/681a75bee907710d40186e77
 Content-Type: application/json
-Authorization: Bearer <token>
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MWM1YjVmYTU5NjVlMWNjMTdjOGNlZiIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTc0NjY4ODg2NSwiZXhwIjoxNzQ2NjkyNDY1fQ.lCIHnOEOqiJlSt4gUyw4Nq2X2eQ1-haFCtiN3usXKuA
 
 {
   "rating": 4,
@@ -101,7 +101,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTdjNWRlN
 }
 
 ### View product reviews (product_id)
-GET http://localhost:8000/api/products/reviews/6817f9f9f3e23650211a5353
+GET http://localhost:8000/api/products/reviews/681a75bee907710d40186e77
 
 ### Delete a review by review ID (user)
 DELETE http://localhost:8000/api/products/review/id/<review_id>
