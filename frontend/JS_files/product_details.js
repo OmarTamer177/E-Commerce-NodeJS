@@ -17,8 +17,14 @@ async function loadProductDetails() {
     if (!res.ok) throw new Error('Failed to load product data');
     const product = await res.json();
     localStorage.setItem('currentProduct', JSON.stringify(product));
-      const container = document.querySelector('.product-container');
-      container.innerHTML = `
+    const reviewsRes = await fetch(`http://localhost:8000/api/products/reviews/${productId}`);
+    if (!reviewsRes.ok) throw new Error('Failed to load reviews');
+    const reviews = await reviewsRes.json();
+
+
+    const container = document.querySelector('.product-container');
+
+    container.innerHTML = `
       <div class="product-image">
         <img src="data:${product.img.contentType};base64,${product.img.data}" alt="${product.name}">
       </div>
@@ -53,14 +59,61 @@ async function loadProductDetails() {
           <p>Secure online payment</p>
         </div>
       </div>
-    `;
-    
-    
 
+      <div class="reviews-section">
+        <h2>Reviews</h2>
+        <div class="reviews-list">
+          ${
+            reviews.length > 0
+              ? reviews.map(r => `
+                  <div class="review">
+                    <p><strong>${r.user_id.name}</strong> ★ ${r.rating}/5</p>
+                    <p>${r.review}</p>
+                  </div>
+                `).join('')
+              : '<p>No reviews yet for this product.</p>'
+          }
+        </div>
+
+      </div>
+    `;
+
+    document.getElementById('submit-review').addEventListener('click', async () => {
+      const review = document.getElementById('review-comment').value.trim();
+      const rating = document.getElementById('review-rating').value;
+      const productId = getProductIdFromURL();
+      const token = localStorage.getItem('token');
+    
+      if (!token) return alert('You must be logged in to submit a review.');
+      if (!review || !rating) return alert('Please provide a rating and comment.');
+    
+      try {
+        const res = await fetch(`http://localhost:8000/api/products/review/${productId}`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({rating, review })
+        });
+    
+        if (!res.ok) {
+          const data = await res.json();
+          throw new Error(data.message || 'Failed to submit review.');
+        }
+    
+        alert('Review submitted!');
+        loadProductDetails(); // Refresh page to show new review
+      } catch (err) {
+        alert(err.message);
+      }
+    });
+    
   } catch (err) {
     alert('Error loading product details: ' + err.message);
   }
 }
+
 
 function setupAddToCart() {
   document.querySelector('.add-to-cart').addEventListener('click', async () => {

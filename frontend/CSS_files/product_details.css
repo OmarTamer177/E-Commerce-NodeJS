@@ -312,3 +312,109 @@
       margin-bottom: 15px;
     }
   }
+  .reviews-section {
+    margin-top: 40px;
+    border-top: 1px solid #ccc;
+    padding-top: 20px;
+  }
+  
+  .reviews-section h2 {
+    font-size: 22px;
+    margin-bottom: 15px;
+  }
+  
+  .review {
+    border-bottom: 1px solid #eee;
+    padding: 10px 0;
+  }
+  
+  .review strong {
+    font-weight: bold;
+    color: #2c3e50;
+  }
+  
+  .review p {
+    margin: 5px 0;
+  }
+  .reviews-section {
+    margin: 40px 0;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+  }
+  
+  .reviews-section h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .reviews-list .review {
+    background-color: #fff;
+    padding: 15px 20px;
+    margin-bottom: 15px;
+    border-left: 4px solid #4CAF50;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  }
+  
+  .reviews-list .review p {
+    margin: 5px 0;
+    color: #444;
+    line-height: 1.5;
+  }
+  
+  .reviews-list .review p strong {
+    color: #2c3e50;
+  }
+  
+  .add-review-section {
+    margin-top: 30px;
+    padding: 20px;
+    background-color: #eef4f7;
+    border-radius: 12px;
+  }
+  
+  .add-review-section h3 {
+    margin-bottom: 15px;
+    font-size: 20px;
+    color: #333;
+  }
+  
+  #review-comment {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    resize: vertical;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    font-size: 14px;
+  }
+  
+  #review-rating {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    background-color: #fff;
+  }
+  
+  #submit-review {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 14px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+  }
+  
+  #submit-review:hover {
+    background-color: #45a049;
+  }
+    
