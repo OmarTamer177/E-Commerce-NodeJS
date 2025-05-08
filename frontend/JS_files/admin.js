@@ -517,7 +517,7 @@ document.addEventListener('DOMContentLoaded', function () {
         card.innerHTML = `
           <h4>${review.user?.name || 'Anonymous'} (${review.user?.email || 'N/A'})</h4>
           <p><strong>Rating:</strong> ${review.rating}</p>
-          <p><strong>Comment:</strong> ${review.comment || 'No comment'}</p>
+          <p><strong>Comment:</strong> ${review.review || 'No comment'}</p>
           <button class="delete-review-btn" data-id="${review._id}">Delete</button>
         `;
   
