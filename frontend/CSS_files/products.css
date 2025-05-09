@@ -345,3 +345,69 @@
   border-top: 1px solid #333;
   padding-top: 10px;
 }
+
+/* Add this to your existing products.css */
+
+/* Category-specific filter styles */
+.filters {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 30px;
+  flex-wrap: wrap;
+  padding: 10px 0;
+}
+
+.filter-btn {
+  padding: 8px 16px;
+  background-color: #f8f8f8;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  transition: all 0.3s;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.filter-btn:hover, 
+.filter-btn.active {
+  background-color: #000;
+  color: white;
+  border-color: #000;
+}
+
+/* Category title styles */
+.page-title {
+  font-size: 2rem;
+  margin-bottom: 15px;
+  text-align: center;
+  text-transform: capitalize;
+}
+
+.page-title:after {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 3px;
+  background: #000;
+  margin: 15px auto 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .filters {
+    gap: 8px;
+    justify-content: flex-start;
+    overflow-x: auto;
+    padding: 10px 5px;
+    -webkit-overflow-scrolling: touch;
+  }
+  
+  .filter-btn {
+    padding: 6px 12px;
+    font-size: 0.8rem;
+  }
+  
+  .page-title {
+    font-size: 1.5rem;
+  }
+}
