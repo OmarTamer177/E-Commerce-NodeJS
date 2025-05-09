@@ -32,17 +32,19 @@ async function displayProducts(filter = 'all') {
         title.textContent = 'New Arrivals';
         break;
       case 'male':
-        filteredProducts = products.filter(p => p.category === 'male');
+        filteredProducts = products.filter(p => p.gender === 'male');
         title.textContent = "Men's Collection";
         break;
       case 'female':
-        filteredProducts = products.filter(p => p.category === 'female');
+        filteredProducts = products.filter(p => p.gender === 'female');
         title.textContent = "Women's Collection";
         break;
       default:
         title.textContent = 'All Products';
         break;
     }
+
+
 
     // No Products Message
     if (filteredProducts.length === 0) {
@@ -105,14 +107,14 @@ document.querySelectorAll('.filter-btn').forEach(button => {
 // --- URL-based Filter Parsing ---
 function checkUrlFilters() {
   const urlParams = new URLSearchParams(window.location.search);
-  const category = urlParams.get('category');
+  const gender = urlParams.get('gender');
   const type = urlParams.get('type');
 
   let filter = 'all';
 
   if (type === 'new') filter = 'new';
-  else if (category === 'male') filter = 'male';
-  else if (category === 'female') filter = 'female';
+  else if (gender === 'male') filter = 'male';
+  else if (gender === 'female') filter = 'female';
 
   // Apply filter styles
   document.querySelectorAll('.filter-btn').forEach(btn => {
@@ -125,10 +127,10 @@ function checkUrlFilters() {
   displayProducts(filter);
 
   // Update title if specific
-  if (category && type !== 'all') {
+  if (gender && type !== 'all') {
     let title = '';
-    if (category === 'male') title += "male's ";
-    if (category === 'female') title += "female's ";
+    if (gender === 'male') title += "male's ";
+    if (gender === 'female') title += "female's ";
     title += type.charAt(0).toUpperCase() + type.slice(1).replace('-', ' ');
     document.getElementById('page-title').textContent = title;
   }

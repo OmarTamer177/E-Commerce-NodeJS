@@ -40,7 +40,7 @@ Authorization: Bearer <token>
 }
 
 
-### Add items to cart (product_id)
+### Add items to cart (product_id)                                              Dooooooooooooooooone
 POST http://localhost:8000/api/products/add-to-cart/#######
 Content-Type: application/json
 Authorization: Bearer <token>
@@ -49,7 +49,7 @@ Authorization: Bearer <token>
   "quantity": 1
 }
 
-### Remove items from cart (cartItem_id)
+### Remove items from cart (cartItem_id)                                              Dooooooooooooooooone
 DELETE http://localhost:8000/api/cart/6817c79a1d9bb4a6f4fa6587
 Authorization: Bearer <token>
 
@@ -62,12 +62,12 @@ PUT http://localhost:8000/api/cart/decrement/6817efa193c8616cf9a0784e
 Authorization: Bearer <token>
 
 
-### View cart items
+### View cart items                                              Dooooooooooooooooone
 GET http://localhost:8000/api/cart
 Authorization: Bearer <token>
 
 
-### Checkout cart items
+### Checkout cart items                                              Dooooooooooooooooone
 POST http://localhost:8000/api/cart/checkout
 Content-Type: application/json
 Authorization: Bearer <token>
@@ -76,18 +76,18 @@ Authorization: Bearer <token>
   "code": "A34GH"
 }
 
-### View user's orders
+### View user's orders                                              Dooooooooooooooooone
 GET http://localhost:8000/api/orders/user-orders
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MWJhMjk5ZmU2NDAxMmM0N2YzNWIzMiIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTc0NjcxOTY1MiwiZXhwIjoxNzQ2NzIzMjUyfQ.t_7o-nS3V1q-YS2ZbKAzvpeZy0CPvgMaBPwWkvHQpvw
 
-### Add product review (product_id)
+### Add product review (product_id)                                              Dooooooooooooooooone
 POST http://localhost:8000/api/products/review/681a75bee907710d40186e77
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MWM1YjVmYTU5NjVlMWNjMTdjOGNlZiIsInJvbGUiOiJjdXN0b21lciIsImlhdCI6MTc0NjY4ODg2NSwiZXhwIjoxNzQ2NjkyNDY1fQ.lCIHnOEOqiJlSt4gUyw4Nq2X2eQ1-haFCtiN3usXKuA
 
 {
-  "rating": 4,
-  "review": "Good product!"
+  "rating": 5,
+  "review": "very good product!"
 }
 
 ### Update product review (product_id)
@@ -100,7 +100,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY4MTdjNWRlN
   "review": "Bad product!"
 }
 
-### View product reviews (product_id)
+### View product reviews (product_id)                                              Dooooooooooooooooone
 GET http://localhost:8000/api/products/reviews/681a75bee907710d40186e77
 
 ### Delete a review by review ID (user)
