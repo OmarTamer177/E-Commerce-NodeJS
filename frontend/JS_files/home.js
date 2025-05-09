@@ -1,7 +1,5 @@
 // Cart count placeholder
 let cartItems = 0;
-document.getElementById("cart-count").textContent = cartItems;
-
 // Hero section slider
 let currentHero = 0;
 const heroes = document.querySelectorAll('.hero');

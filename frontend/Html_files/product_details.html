@@ -6,6 +6,7 @@
   <title>Product Details</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="stylesheet" href="../CSS_files/product_details.css">
+  <link rel="stylesheet" href="../CSS_files/home.css">
 
   <link rel="stylesheet" href="../CSS_files/cart.css">
 
@@ -58,9 +59,8 @@
     </div>
     
     <div class="navbar-right">
-      <div id="loginSidebar" class="login-sidebar hidden" onclick="toggleLogin()" style="cursor:pointer;">
-        <i class="fas fa-user">
-        </i>
+      <div id="loginSidebar" class="login-sidebar hidden" style="cursor:pointer;">
+      <a href="User.html"><i class="fas fa-user"></i></a>
       </div>
 
       <div onclick="toggleCart()" style="cursor:pointer;">
@@ -123,7 +123,6 @@
   <script src="../JS_files/product_details.js"></script>
 
   <script src="../JS_files/cart.js"></script>
-  <script src="../JS_files/login.js"></script>
   <!-- Insert cart.html fragment here -->
   <div id="cartSidebar" class="cart-sidebar hidden">...</div>
 </body>

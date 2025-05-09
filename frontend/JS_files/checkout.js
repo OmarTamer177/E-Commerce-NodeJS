@@ -127,7 +127,7 @@ payBtn.addEventListener('click', async () => {
   const paymentMethod = document.querySelector('input[name="payment"]:checked')?.value;
   const billingSameAsShipping = document.getElementById('same').checked;
   const token = localStorage.getItem('token');
-  const discountCode = document.getElementById('discountCode')?.value?.trim() || null;
+  const discountCode = document.getElementById('discountCode')?.value || null;
 
   if (!token) {
     showLoginPrompt();
@@ -172,7 +172,7 @@ payBtn.addEventListener('click', async () => {
 
     const result = await response.json();
 
-    if (paymentMethod === 'myfatoorah' && result.paymentUrl) {
+    if (paymentMethod === 'instapay' && result.paymentUrl) {
       window.location.href = result.paymentUrl;
     } else {
       window.location.href = '../Html_files/orders.html';
