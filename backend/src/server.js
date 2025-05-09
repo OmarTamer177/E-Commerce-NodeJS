@@ -24,6 +24,7 @@ const app = express();
 
 // Middleware to serve static files from the public directory
 app.use(express.static(path.join(__dirname, '../../frontend')));
+app.use(express.static(path.join(__dirname, '../../frontend/Html_files')));
 
 // Middleware
 app.use(express.json()); // Parse JSON bodies
@@ -66,10 +67,11 @@ app.get("/", (req, res) => {
 
 app.get('/:page', (req, res) => {
     const page = req.params.page;
-    const filePath = path.join(__dirname, '../frontend/Html_files', `${page}.html`);
+    const filePath = path.join(__dirname, '../../frontend/Html_files', `${page}.html`);
     res.sendFile(filePath, (err) => {
         if (err) {
             res.status(404).send('Page not found');
+            console.error(err);
         }
     });
 });
