@@ -9,6 +9,8 @@ const subtotalEl = document.getElementById("subtotal");
 const totalEl = document.getElementById("total");
 const payBtn = document.getElementById("payNowBtn");
 const errorMessageEl = document.getElementById("errorMessage");
+const cardPaymentForm = document.getElementById('cardPaymentForm');
+const paypalForm = document.getElementById('paypalForm');
 
 // Initialize checkout page
 document.addEventListener('DOMContentLoaded', async () => {
@@ -134,6 +136,30 @@ payBtn.addEventListener('click', async () => {
     return;
   }
 
+  if (!paymentMethod) {
+    errorMessageEl.textContent = 'Please select a payment method';
+    return;
+  }
+
+  // Validate payment form fields based on selected method
+  if (paymentMethod === 'credit_card' || paymentMethod === 'debit_card') {
+    const cardNumber = document.getElementById('cardNumber').value;
+    const cardHolder = document.getElementById('cardHolder').value;
+    const expiryDate = document.getElementById('expiryDate').value;
+    const cvv = document.getElementById('cvv').value;
+
+    if (!cardNumber || !cardHolder || !expiryDate || !cvv) {
+      errorMessageEl.textContent = 'Please fill in all card details';
+      return;
+    }
+  } else if (paymentMethod === 'paypal') {
+    const paypalEmail = document.getElementById('paypalEmail').value;
+    if (!paypalEmail) {
+      errorMessageEl.textContent = 'Please enter your PayPal email';
+      return;
+    }
+  }
+
   try {
     payBtn.disabled = true;
     payBtn.textContent = 'Processing...';
@@ -155,6 +181,20 @@ payBtn.addEventListener('click', async () => {
       throw new Error('Your cart is empty');
     }
 
+    // Prepare payment data
+    const paymentData = {
+      paymentMethod,
+      billingSameAsShipping,
+      discountCode,
+      cardDetails: paymentMethod === 'credit_card' || paymentMethod === 'debit_card' ? {
+        cardNumber: document.getElementById('cardNumber').value,
+        cardHolder: document.getElementById('cardHolder').value,
+        expiryDate: document.getElementById('expiryDate').value,
+        cvv: document.getElementById('cvv').value
+      } : null,
+      paypalEmail: paymentMethod === 'paypal' ? document.getElementById('paypalEmail').value : null
+    };
+
     // Send checkout request
     const response = await fetch(`${API_BASE_URL}/cart/checkout`, {
       method: 'POST',
@@ -162,7 +202,7 @@ payBtn.addEventListener('click', async () => {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       },
-      code: discountCode || 0
+      body: JSON.stringify(paymentData)
     });
 
     if (!response.ok) {
@@ -171,12 +211,10 @@ payBtn.addEventListener('click', async () => {
     }
 
     const result = await response.json();
+    console.log('Checkout successful:', result);
 
-    if (paymentMethod === 'instapay' && result.paymentUrl) {
-      window.location.href = result.paymentUrl;
-    } else {
-      window.location.href = '../Html_files/orders.html';
-    }
+    // Redirect to orders page
+    window.location.href = '../Html_files/orders.html';
 
   } catch (error) {
     console.error('Payment error:', error);
@@ -189,3 +227,39 @@ payBtn.addEventListener('click', async () => {
 function redirectToLogin() {
   window.location.href = '../Html_files/login.html';
 }
+
+// Add this event listener for payment method selection
+document.querySelectorAll('input[name="payment"]').forEach(radio => {
+    radio.addEventListener('change', (e) => {
+        // Hide all payment forms first
+        cardPaymentForm.classList.add('hidden');
+        paypalForm.classList.add('hidden');
+
+        // Show the appropriate form based on selection
+        const selectedMethod = e.target.value;
+        if (selectedMethod === 'credit_card' || selectedMethod === 'debit_card') {
+            cardPaymentForm.classList.remove('hidden');
+        } else if (selectedMethod === 'paypal') {
+            paypalForm.classList.remove('hidden');
+        }
+    });
+});
+
+// Add input formatting for card details
+document.getElementById('cardNumber')?.addEventListener('input', (e) => {
+    let value = e.target.value.replace(/\D/g, '');
+    value = value.replace(/(\d{4})/g, '$1 ').trim();
+    e.target.value = value;
+});
+
+document.getElementById('expiryDate')?.addEventListener('input', (e) => {
+    let value = e.target.value.replace(/\D/g, '');
+    if (value.length >= 2) {
+        value = value.slice(0, 2) + '/' + value.slice(2, 4);
+    }
+    e.target.value = value;
+});
+
+document.getElementById('cvv')?.addEventListener('input', (e) => {
+    e.target.value = e.target.value.replace(/\D/g, '').slice(0, 3);
+});

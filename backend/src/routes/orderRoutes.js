@@ -37,7 +37,8 @@ router.get('/user-orders', verifyToken, async (req, res) => {
             order_number: order.order_number,
             price: total,
             items: formattedItems,
-            status: order.status
+            status: order.status,
+            payment_method: order.payment_method
         });
         }
 
@@ -50,7 +51,7 @@ router.get('/user-orders', verifyToken, async (req, res) => {
 // Get all orders
 router.get('/', verifyToken, requireAdmin, async (req, res) => {
     try {
-      const orders = await Order.find().populate('user_id', 'name email'); // Assuming Order.user_id exists
+      const orders = await Order.find().populate('user_id', 'name email');
   
       const ordersData = [];
   
@@ -70,7 +71,7 @@ router.get('/', verifyToken, requireAdmin, async (req, res) => {
         const total = formattedItems.reduce((sum, item) => sum + item.subtotal, 0);
   
         ordersData.push({
-          order_id: order._id,
+          _id: order._id,
           order_number: order.order_number,
           user: {
             name: order.user_id?.name,
@@ -79,6 +80,8 @@ router.get('/', verifyToken, requireAdmin, async (req, res) => {
           price: total,
           items: formattedItems,
           status: order.status,
+          payment_method: order.payment_method,
+          refund_reason: order.refund_reason,
           createdAt: order.createdAt
         });
       }
@@ -125,6 +128,41 @@ router.delete('/:id', verifyToken, requireAdmin, async (req, res) => {
         res.json({ message: 'Order deleted successfully', order: deletedOrder });
     } catch (error) {
         res.status(500).json({ error: error.message });
+    }
+});
+
+// Add this new route for order cancellation
+router.post('/:id/cancel', verifyToken, async (req, res) => {
+    try {
+        const order = await Order.findOne({
+            _id: req.params.id,
+            user_id: req.user.id
+        });
+
+        if (!order) {
+            return res.status(404).json({ message: 'Order not found' });
+        }
+
+        // Only allow cancellation if payment method is cash on delivery
+        if (order.payment_method !== 'cash_on_delivery') {
+            return res.status(400).json({ 
+                message: 'Only cash on delivery orders can be cancelled. For other payment methods, please request a refund.' 
+            });
+        }
+
+        // Only allow cancellation if order is not already delivered or cancelled
+        if (['Delivered', 'Cancelled', 'Refunded'].includes(order.status)) {
+            return res.status(400).json({ 
+                message: 'Cannot cancel an order that is already delivered, cancelled, or refunded' 
+            });
+        }
+
+        order.status = 'Cancelled';
+        await order.save();
+
+        res.json({ message: 'Order cancelled successfully', order });
+    } catch (error) {
+        res.status(500).json({ message: 'Error cancelling order', error: error.message });
     }
 });
 

@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
     else if (sectionId === 'view-orders') displayOrders(); 
     else if (sectionId === 'manage-coupons') displayCoupons(); 
     else if (sectionId === 'manage-reviews') loadProductsForReview(); 
+    else if (sectionId === 'view-refunds') displayRefunds();
 
     
   };
@@ -604,5 +605,170 @@ document.addEventListener('DOMContentLoaded', function () {
   
 
   document.getElementById('create-coupon-form').addEventListener('submit', createCoupon);  
+
+  async function displayRefunds() {
+    const refundsList = document.getElementById('refunds-list');
+    refundsList.innerHTML = ''; // Clear previous content
+
+    const token = localStorage.getItem('token');
+    if (!token) {
+      alert("No authorization token found.");
+      return;
+    }
+
+    try {
+      // Fetch both orders and refunds
+      const [ordersResponse, refundsResponse] = await Promise.all([
+        fetch('http://localhost:8000/api/orders', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        }),
+        fetch('http://localhost:8000/api/refunds/all', {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        })
+      ]);
+
+      if (!ordersResponse.ok || !refundsResponse.ok) {
+        throw new Error('Failed to fetch data');
+      }
+
+      const ordersData = await ordersResponse.json();
+      const refundsData = await refundsResponse.json();
+
+      // Filter cancelled orders
+      const cancelledOrders = ordersData.orders.filter(order => 
+        order.status === 'Cancelled'
+      );
+
+      // Combine cancelled orders and refunds
+      const allItems = [
+        ...cancelledOrders.map(order => ({
+          type: 'cancelled',
+          data: order
+        })),
+        ...refundsData.map(refund => ({
+          type: 'refund',
+          data: refund
+        }))
+      ];
+
+      if (!allItems.length) {
+        refundsList.innerHTML = '<p>No refunds or cancelled orders found.</p>';
+        return;
+      }
+
+      // Sort by date (most recent first)
+      allItems.sort((a, b) => new Date(b.data.createdAt) - new Date(a.data.createdAt));
+
+      allItems.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'refund-card';
+        
+        if (item.type === 'cancelled') {
+          const order = item.data;
+          const userName = order.user?.name || 'Unknown User';
+          const userEmail = order.user?.email || 'N/A';
+          const price = typeof order.price === 'number' ? order.price.toFixed(2) : '0.00';
+
+          card.innerHTML = `
+            <h3>Order Number: ${order.order_number}</h3>
+            <p><strong>User:</strong> ${userName} (${userEmail})</p>
+            <p><strong>Total Price:</strong> $${price}</p>
+            <p><strong>Status:</strong> <span class="status cancelled">Cancelled</span></p>
+            <p><strong>Payment Method:</strong> ${order.payment_method}</p>
+            <p><strong>Date:</strong> ${new Date(order.createdAt).toLocaleDateString()}</p>
+          `;
+        } else {
+          const refund = item.data;
+          const userName = refund.user?.name || 'Unknown User';
+          const userEmail = refund.user?.email || 'N/A';
+
+          card.innerHTML = `
+            <h3>Refund Request</h3>
+            <p><strong>User:</strong> ${userName} (${userEmail})</p>
+            <p><strong>Amount:</strong> $${refund.amount.toFixed(2)}</p>
+            <p><strong>Status:</strong> <span class="status refund">${refund.status}</span></p>
+            <p><strong>Reason:</strong> ${refund.reason}</p>
+            <p><strong>Date:</strong> ${new Date(refund.createdAt).toLocaleDateString()}</p>
+            ${refund.status === 'pending' ? `
+              <div class="action-buttons">
+                <button class="approve-btn" data-id="${refund._id}">Approve</button>
+                <button class="reject-btn" data-id="${refund._id}">Reject</button>
+              </div>
+            ` : ''}
+          `;
+        }
+
+        refundsList.appendChild(card);
+      });
+
+      // Add event listeners for approve/reject buttons
+      document.querySelectorAll('.approve-btn').forEach(btn => {
+        btn.addEventListener('click', () => handleRefundAction(btn.dataset.id, 'approve'));
+      });
+
+      document.querySelectorAll('.reject-btn').forEach(btn => {
+        btn.addEventListener('click', () => handleRefundAction(btn.dataset.id, 'reject'));
+      });
+
+    } catch (error) {
+      console.error('Error in displayRefunds:', error);
+      refundsList.innerHTML = `<p style="color:red;">Error loading refunds: ${error.message}</p>`;
+    }
+  }
+
+  // Update the handleRefundAction function
+  async function handleRefundAction(refundId, action) {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      alert("No authorization token found.");
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:8000/api/refunds/${refundId}/status`, {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ status: action === 'approve' ? 'approved' : 'rejected' })
+      });
+
+      if (!response.ok) {
+        throw new Error(`Failed to ${action} refund`);
+      }
+
+      alert(`Succeeded to ${action} refund`);
+      displayRefunds(); // Refresh the list
+
+    } catch (error) {
+      alert(`Error: ${error.message}`);
+    }
+  }
+
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      // Remove active class from all buttons
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      // Add active class to clicked button
+      btn.classList.add('active');
+      
+      const filter = btn.dataset.filter;
+      const cards = document.querySelectorAll('.refund-card');
+      
+      cards.forEach(card => {
+        if (filter === 'all') {
+          card.style.display = 'block';
+        } else {
+          const status = card.querySelector('.status').textContent.toLowerCase();
+          card.style.display = status.includes(filter) ? 'block' : 'none';
+        }
+      });
+    });
+  });
 
 });

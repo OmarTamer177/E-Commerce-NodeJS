@@ -88,13 +88,51 @@ router.put('/decrement/:id', verifyToken, async (req, res) => {
 // Checkout cart
 router.post('/checkout', verifyToken, async (req, res) => {
     try {
-        const userId = req.user.id; // Get user ID from token
+        console.log('Checkout request received:', req.body); // Add logging
+        const userId = req.user.id;
+        const { paymentMethod, cardDetails, paypalEmail } = req.body;
+
+        // Validate payment method
+        if (!paymentMethod) {
+            return res.status(400).json({ message: 'Payment method is required' });
+        }
+
+        // Map frontend payment method to backend format
+        const paymentMethodMap = {
+            'cod': 'cash_on_delivery',
+            'credit_card': 'credit_card',
+            'debit_card': 'debit_card',
+            'paypal': 'paypal'
+        };
+
+        const backendPaymentMethod = paymentMethodMap[paymentMethod];
+        if (!backendPaymentMethod) {
+            return res.status(400).json({ message: 'Invalid payment method' });
+        }
+
+        // Validate payment details based on method
+        if (backendPaymentMethod === 'credit_card' || backendPaymentMethod === 'debit_card') {
+            if (!cardDetails || !cardDetails.cardNumber || !cardDetails.cardHolder || !cardDetails.expiryDate || !cardDetails.cvv) {
+                return res.status(400).json({ message: 'Card details are required' });
+            }
+        } else if (backendPaymentMethod === 'paypal') {
+            if (!paypalEmail) {
+                return res.status(400).json({ message: 'PayPal email is required' });
+            }
+        }
+
         const cart = await Cart.findOne({ user_id: userId });
-        if (!cart) return res.status(404).json({ message: 'Cart not found' });
+        if (!cart) {
+            console.log('Cart not found for user:', userId);
+            return res.status(404).json({ message: 'Cart not found' });
+        }
 
         // Check if the cart is empty
         const cartItems = await CartItem.find({ cart_id: cart._id }).populate('product_id');
-        if (!cartItems) return res.status(400).json({ message: 'Cart is empty' });
+        if (!cartItems || cartItems.length === 0) {
+            console.log('Cart is empty for user:', userId);
+            return res.status(400).json({ message: 'Cart is empty' });
+        }
 
         // Calculate total price
         let price = cartItems.reduce((total, item) => {
@@ -103,8 +141,8 @@ router.post('/checkout', verifyToken, async (req, res) => {
         price = price + (price * 0.14) + 85; // Add 14% tax + shipping cost
         
         let discount = 0;
-        // Add a copoun code if provided
-        const couponCode = req.body.code;
+        // Add a coupon code if provided
+        const couponCode = req.body.discountCode;
         if (couponCode) {
             const coupon = await Coupon.findOne({ code: couponCode });
             if (!coupon) return res.status(400).json({ message: 'Invalid coupon code' });
@@ -114,11 +152,13 @@ router.post('/checkout', verifyToken, async (req, res) => {
         // Create an order
         const order = new Order({
             user_id: userId,
-            price: price * (1 - discount),  
+            price: price * (1 - discount),
             status: 'Pending',
-            order_number: `ORD-${Date.now()}`
+            order_number: `ORD-${Date.now()}`,
+            payment_method: backendPaymentMethod
         });
 
+        console.log('Creating order:', order); // Add logging
         await order.save();
         
         // Move the cart items to the order items
@@ -129,7 +169,7 @@ router.post('/checkout', verifyToken, async (req, res) => {
                 quantity: item.quantity
             });
 
-            // Reduce the stock of the product here
+            // Reduce the stock of the product
             const product = await Product.findById(item.product_id);
             if (product) {
                 product.stock -= item.quantity;
@@ -137,11 +177,27 @@ router.post('/checkout', verifyToken, async (req, res) => {
             }
         }
 
-        // For now, we'll just clear the cart
+        // Clear the cart
         await CartItem.deleteMany({ cart_id: cart._id });
-        res.json({ message: 'Checkout successful, cart cleared' });
+
+        // Return success response with order details
+        res.json({ 
+            message: 'Checkout successful', 
+            order: {
+                id: order._id,
+                order_number: order.order_number,
+                total: order.price,
+                status: order.status
+            }
+        });
+
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        console.error('Checkout error:', error); // Add detailed error logging
+        res.status(500).json({ 
+            message: 'Payment processing failed',
+            error: error.message,
+            stack: error.stack // Include stack trace for debugging
+        });
     }
 });
 

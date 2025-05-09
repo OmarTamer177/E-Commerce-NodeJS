@@ -22,7 +22,7 @@ function toggleCart() {
   if (!cartSidebar) {
     cartSidebar = document.createElement('div');
     cartSidebar.id = 'cartSidebar';
-    cartSidebar.className = 'sidebar'; // Add your sidebar class
+    cartSidebar.className = 'cart-sidebar';
     document.body.appendChild(cartSidebar);
   }
 
@@ -50,7 +50,6 @@ function toggleCart() {
   }
 }
 
-
 // Render Cart Contents
 async function renderCart() {
   const container = document.getElementById('cart-container');
@@ -61,7 +60,7 @@ async function renderCart() {
 
   const token = localStorage.getItem('token');
   if (!token) {
-    alert('Please log in to view your cart.');
+    container.innerHTML = '<p>Please log in to view your cart.</p>';
     return;
   }
 
@@ -85,16 +84,16 @@ async function renderCart() {
       container.innerHTML = '<p>Your cart is empty.</p>';
       return;
     }
-    total=0;
-    quan=cartItems.quantity;
+
+    let total = 0;
     cartItems.forEach(item => {
-      const product = item.product; // Full product object from backend
+      const product = item.product;
       const itemTotal = product.price * item.quantity;
       total += itemTotal;
     
       const imgSrc = product.img && product.img.data
         ? `data:${product.img.contentType};base64,${product.img.data}`
-        : 'https://via.placeholder.com/100';
+        : '../Images/placeholder.png'; // Use a local placeholder image
     
       const itemDiv = document.createElement('div');
       itemDiv.className = 'cart-item';
@@ -116,38 +115,6 @@ async function renderCart() {
       container.appendChild(itemDiv);
     });
 
-    document.querySelectorAll('.remove-item-btn').forEach(btn => {
-      btn.addEventListener('click', async () => {
-        const itemId = btn.getAttribute('data-id');
-        const token = localStorage.getItem('token');
-    
-        if (!token) {
-          alert("You must be logged in.");
-          return;
-        }
-    
-        try {
-          const res = await fetch(`http://localhost:8000/api/cart/${itemId}`, {
-            method: 'DELETE',
-            headers: {
-              'Authorization': `Bearer ${token}`
-            }
-          });
-    
-          if (!res.ok) throw new Error('Failed to remove item');
-    
-          alert('Item removed successfully!');
-          renderCart(); // Refresh cart
-    
-        } catch (err) {
-          console.error(err);
-          alert('Could not remove item.');
-        }
-      });
-    });
-    
-    
-    
     // Add total to the end
     const totalDiv = document.createElement('div');
     totalDiv.className = 'cart-total';

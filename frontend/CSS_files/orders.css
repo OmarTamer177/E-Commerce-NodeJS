@@ -67,20 +67,21 @@ body {
     margin-bottom: 5px;
   }
   
-  .refund-btn {
+  .refund-btn, .cancel-btn {
     background-color: #ff5252;
     color: white;
     border: none;
     padding: 10px 15px;
     border-radius: 5px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
   }
   
-  .refund-btn:hover {
+  .refund-btn:hover, .cancel-btn:hover {
     background-color: #e04848;
   }
   
-  .refund-btn:disabled {
+  .refund-btn:disabled, .cancel-btn:disabled {
     background-color: #bbb;
     cursor: not-allowed;
   }

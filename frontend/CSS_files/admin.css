@@ -176,3 +176,74 @@ button:hover {
   background-color: #ccc;
   cursor: not-allowed;
 }
+
+/* Add these styles for the refunds section */
+#view-refunds {
+  padding: 20px;
+}
+
+.refund-card {
+  background: white;
+  padding: 20px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  border-left: 4px solid #ccc;
+}
+
+.refund-card h3 {
+  margin: 0 0 10px 0;
+  color: #333;
+}
+
+.refund-card p {
+  margin: 5px 0;
+  color: #666;
+}
+
+.status {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.9em;
+  font-weight: bold;
+}
+
+.status.refund {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.status.cancelled {
+  background-color: #fff3e0;
+  color: #ef6c00;
+}
+
+.status.pending {
+  background-color: #e3f2fd;
+  color: #1565c0;
+}
+
+.action-buttons {
+  margin-top: 15px;
+  display: flex;
+  gap: 10px;
+}
+
+.approve-btn, .reject-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.approve-btn {
+  background-color: #4caf50;
+  color: white;
+}
+
+.reject-btn {
+  background-color: #f44336;
+  color: white;
+}
