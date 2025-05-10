@@ -30,12 +30,12 @@ router.get('/user-orders', verifyToken, async (req, res) => {
             subtotal: (item.product_id?.price || 0) * item.quantity
         }));
 
-        const total = formattedItems.reduce((sum, item) => sum + item.subtotal, 0);
+        //const total = formattedItems.reduce((sum, item) => sum + item.subtotal, 0);
 
         ordersData.push({
             order_id: order._id,
             order_number: order.order_number,
-            price: total,
+            price: order.price,
             items: formattedItems,
             status: order.status,
             payment_method: order.payment_method
@@ -68,7 +68,7 @@ router.get('/', verifyToken, requireAdmin, async (req, res) => {
           subtotal: (item.product_id?.price || 0) * item.quantity
         }));
   
-        const total = formattedItems.reduce((sum, item) => sum + item.subtotal, 0);
+        //const total = formattedItems.reduce((sum, item) => sum + item.subtotal, 0);
   
         ordersData.push({
           _id: order._id,
@@ -77,7 +77,7 @@ router.get('/', verifyToken, requireAdmin, async (req, res) => {
             name: order.user_id?.name,
             email: order.user_id?.email
           },
-          price: total,
+          price: order.price,
           items: formattedItems,
           status: order.status,
           payment_method: order.payment_method,
