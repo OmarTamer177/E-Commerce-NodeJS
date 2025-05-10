@@ -17,6 +17,7 @@
       <li onclick="showSection('manage-coupons')">🏷️ Manage Coupons</li>
       <li onclick="showSection('manage-reviews')">📝 Manage Reviews</li>
       <li onclick="showSection('view-refunds')">🔄 Refunds & Cancels</li>
+      <li onclick="showSection('inventory')">📊 Inventory Management</li>
     </ul>
   </div>
 
@@ -136,6 +137,61 @@
       <div id="refunds-list"></div>
     </div>
 
+    <!-- Inventory Management Section -->
+    <div id="inventory" class="admin-section" style="display: none;">
+      <h1>Inventory Management</h1>
+      
+      <div class="inventory-controls">
+        <div class="search-filter">
+          <input type="text" id="inventorySearch" placeholder="Search products..." />
+          <select id="inventoryCategory">
+            <option value="">All Categories</option>
+            <option value="t-shirt">T-Shirts</option>
+            <option value="pants">Pants</option>
+            <option value="shoes">Shoes</option>
+            <option value="sweatshirt">Sweatshirt</option>
+            <option value="shorts">Shorts</option>
+          </select>
+          <select id="inventoryStock">
+            <option value="">All Stock Levels</option>
+            <option value="low">Low Stock</option>
+            <option value="out">Out of Stock</option>
+            <option value="in">In Stock</option>
+          </select>
+        </div>
+
+        <div class="inventory-summary">
+          <div class="summary-card">
+            <h3>Total Products</h3>
+            <p id="totalProducts">0</p>
+          </div>
+          <div class="summary-card warning">
+            <h3>Low Stock Items</h3>
+            <p id="lowStockCount">0</p>
+          </div>
+          <div class="summary-card danger">
+            <h3>Out of Stock</h3>
+            <p id="outOfStockCount">0</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="inventory-table-container">
+        <table id="inventoryTable">
+          <thead>
+            <tr>
+              <th>Product</th>
+              <th>Category</th>
+              <th>Current Stock</th>
+              <th>Threshold</th>
+              <th>Status</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody id="inventoryTableBody"></tbody>
+        </table>
+      </div>
+    </div>
   </div>
 
   <script src="../JS_files/admin.js"></script>

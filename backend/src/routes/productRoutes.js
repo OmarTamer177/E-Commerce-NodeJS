@@ -249,4 +249,34 @@ router.delete('/review/id/:reviewId', verifyToken, async (req, res) => {
     }
 });
 
+// Update product stock
+router.patch('/:id/stock', verifyToken, requireAdmin, async (req, res) => {
+    try {
+        const { quantity, type, note } = req.body;
+        const product = await Product.findById(req.params.id);
+        
+        if (!product) {
+            return res.status(404).json({ message: 'Product not found' });
+        }
+
+        // Update stock
+        product.stock += quantity;
+
+        // Add to stock history if it exists
+        if (product.stockHistory) {
+            product.stockHistory.push({
+                quantity,
+                type,
+                note,
+                date: new Date()
+            });
+        }
+
+        await product.save();
+        res.json({ message: 'Stock updated successfully', product });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
+    }
+});
+
 module.exports = router;
