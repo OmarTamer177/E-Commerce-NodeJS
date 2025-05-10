@@ -90,14 +90,14 @@ async function renderCart() {
       const product = item.product;
       const itemTotal = product.price * item.quantity;
       total += itemTotal;
-    
+
       const imgSrc = product.img && product.img.data
         ? `data:${product.img.contentType};base64,${product.img.data}`
-        : '../Images/placeholder.png'; // Use a local placeholder image
-    
+        : '../Images/placeholder.png';
+
       const itemDiv = document.createElement('div');
       itemDiv.className = 'cart-item';
-    
+
       itemDiv.innerHTML = `
         <div class="cart-item-img">
           <img src="${imgSrc}" alt="${product.name}" />
@@ -108,14 +108,12 @@ async function renderCart() {
           <p>Qty: ${item.quantity}</p>
           <p>Price: EGP ${product.price.toLocaleString()}</p>
           <p><strong>Subtotal: EGP ${itemTotal.toLocaleString()}</strong></p>
-          <button class="remove-item-btn" data-id="${item._id}">🗑️ Remove</button>
+          <button class="remove-item-btn" onclick="removeItem('${item._id}')">🗑️ Remove</button>
         </div>
       `;
-    
+
       container.appendChild(itemDiv);
     });
-
-
 
     // Add total to the end
     const totalDiv = document.createElement('div');
@@ -128,21 +126,31 @@ async function renderCart() {
     container.innerHTML = `<p style="color:red;">Error: ${err.message}</p>`;
   }
 }
-// Update Quantity in Cart
-function updateQty(index, newQty) {
-  const qty = parseInt(newQty);
-  if (qty < 1) return;
 
-  cart[index].qty = qty;
-  saveCart();
-  renderCart();
+// Remove Item from Server Cart
+async function removeItem(itemId) {
+  const token = localStorage.getItem('token');
+  if (!token) return;
+
+  try {
+    const response = await fetch(`http://localhost:8000/api/cart/${itemId}`, {
+      method: 'DELETE',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
+
+    if (!response.ok) {
+      throw new Error('Failed to remove item.');
+    }
+
+    renderCart(); // Refresh cart after removal
+  } catch (error) {
+    console.error('Error removing item:', error);
+    alert('Failed to remove item. Please try again.');
+  }
 }
-// Remove Item from Cart
-function removeItem(index) {
-  cart.splice(index, 1);
-  saveCart();
-  renderCart();
-}
+
 // Checkout with Auth Check
 async function handleCheckout() {
   const token = localStorage.getItem('token');
@@ -152,6 +160,7 @@ async function handleCheckout() {
     document.getElementById('loginSidebar')?.classList.add('show');
     return;
   }
+
   try {
     const response = await fetch('http://localhost:8000/api/users/profile', {
       headers: {
@@ -165,6 +174,7 @@ async function handleCheckout() {
       document.getElementById('loginSidebar')?.classList.add('show');
       return;
     }
+
     // Token is valid
     window.location.href = '/checkout';
   } catch (error) {
@@ -172,6 +182,7 @@ async function handleCheckout() {
     alert('Failed to verify your session. Please try again.');
   }
 }
+
 // Initialize Cart on Page Load
 document.addEventListener('DOMContentLoaded', () => {
   loadCart();
