@@ -74,7 +74,7 @@ async function displayProducts(filter = 'all', gender = "male") {
       const productCard = document.createElement('div');
       productCard.className = 'product-card';
       productCard.innerHTML = `
-        <a href="product_details.html?id=${product._id}" style="text-decoration:none;color:inherit;">
+        <a href="product_details?id=${product._id}" style="text-decoration:none;color:inherit;">
           <img src="data:${product.img.contentType};base64,${product.img.data}" alt="${product.name}" class="product-img">
           <div class="product-info">
             <h3 class="product-name">${product.name}</h3>
@@ -108,7 +108,7 @@ function Product_details(e) {
   }
 
   // Redirect to the product details page with the ID in the query string
-  window.location.href = `product_details.html?id=${productId}`;
+  window.location.href = `product_details?id=${productId}`;
 }
 
 

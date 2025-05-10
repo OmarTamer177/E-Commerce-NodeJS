@@ -117,6 +117,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
   
 function requestRefund(orderId) {
-    window.location.href = `refund.html?orderId=${orderId}`;
+    window.location.href = `refund?orderId=${orderId}`;
 }
   

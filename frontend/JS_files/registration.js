@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (response.ok) {
                 alert('Registration successful! You can now log in.');
-                window.location.href = '/login.html';
+                window.location.href = '/login';
             } else {
                 if (data?.error?.includes('email')) {
                     document.getElementById('emailError').textContent = 'This email is already registered';

@@ -53,7 +53,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
   document.getElementById('orders').addEventListener('click', () => {
-    window.location.href = '../Html_files/orders.html'; // adjust the path if needed
+    window.location.href = '/orders'; // adjust the path if needed
   });
   
 
@@ -134,6 +134,6 @@ document.addEventListener('DOMContentLoaded', function () {
   // Logout handler
   logoutBtn.addEventListener('click', function () {
     localStorage.removeItem('token');
-    window.location.href = '../Html_files/home.html'; // Adjust to your login page
+    window.location.href = '/home'; // Adjust to your login page
   });
 });

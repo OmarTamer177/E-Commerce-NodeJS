@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     const token = localStorage.getItem('token');
 
     if (!token) {
-        window.location.href = 'login.html';
+        window.location.href = 'login';
         return;
     }
 
@@ -69,7 +69,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
 
             alert('Refund request submitted successfully');
-            window.location.href = 'orders.html';
+            window.location.href = 'orders';
 
         } catch (error) {
             errorMessage.textContent = error.message;

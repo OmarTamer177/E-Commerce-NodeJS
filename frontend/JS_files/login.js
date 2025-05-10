@@ -18,7 +18,7 @@ function toggleLogin() {
     })
     .then(res => {
       if (res.ok) {
-        window.location.href = "../Html_files/User.html";
+        window.location.href = "/User";
       } else {
         localStorage.removeItem("token");
         loginSidebar.classList.toggle("show");
@@ -74,7 +74,7 @@ document.getElementById('loginForm').addEventListener('submit', async function (
       const profile = await profileRes.json();
       console.log('Logged in as:', profile.user.name);
       document.getElementById('loginSidebar').classList.remove('show');
-      window.location.href = "../Html_files/User.html";
+      window.location.href = "/User";
     } else {
       alert("Could not fetch profile after login.");
     }

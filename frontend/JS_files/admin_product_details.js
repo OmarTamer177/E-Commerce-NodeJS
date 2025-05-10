@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
   
         alert("Product deleted successfully!");
-        window.location.href = "admin.html";
+        window.location.href = "admin";
         window.close(); // close the tab
       } catch (err) {
         alert("Failed to delete product: " + err.message);

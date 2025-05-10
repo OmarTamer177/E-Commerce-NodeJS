@@ -212,7 +212,7 @@ payBtn.addEventListener('click', async () => {
     const result = await response.json();
     console.log('Checkout successful:', result);
     // Redirect to orders page
-    window.location.href = '../Html_files/orders.html';
+    window.location.href = '/orders';
 
   } catch (error) {
     console.error('Payment error:', error);
@@ -222,7 +222,7 @@ payBtn.addEventListener('click', async () => {
   }
 });
 function redirectToLogin() {
-  window.location.href = '../Html_files/login.html';
+  window.location.href = '/login';
 }
 // Add this event listener for payment method selection
 document.querySelectorAll('input[name="payment"]').forEach(radio => {

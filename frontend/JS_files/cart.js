@@ -166,7 +166,7 @@ async function handleCheckout() {
       return;
     }
     // Token is valid
-    window.location.href = '../Html_files/checkout.html';
+    window.location.href = '/checkout';
   } catch (error) {
     console.error('Verification error:', error);
     alert('Failed to verify your session. Please try again.');

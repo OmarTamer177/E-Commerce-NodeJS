@@ -142,7 +142,7 @@ document.addEventListener('DOMContentLoaded', function () {
       products.forEach(product => {
         const item = document.createElement('li');
         item.innerHTML = `
-          <a href="admin_product_details.html?id=${product._id}" style="text-decoration:none; color:inherit;">
+          <a href="admin_product_details?id=${product._id}" style="text-decoration:none; color:inherit;">
             <strong>${product.name}</strong> - $${product.price.toFixed(2)} (${product.stock} pcs)<br/>
             <em>${product.description}</em><br/>
             <strong>Size:</strong> ${product.size}<br/>
@@ -825,7 +825,7 @@ document.addEventListener('DOMContentLoaded', function () {
         <td>${product.lowStockThreshold || 5}</td>
         <td><span class="stock-status ${stockStatus.class}">${stockStatus.text}</span></td>
         <td class="action-buttons">
-          <button class="action-btn details" onclick="window.location.href='admin_product_details.html?id=${product._id}'">Details</button>
+          <button class="action-btn details" onclick="window.location.href='admin_product_details?id=${product._id}'">Details</button>
         </td>
       `;
       tbody.appendChild(row);
