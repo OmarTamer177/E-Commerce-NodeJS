@@ -4,6 +4,8 @@ function getProductIdFromURL() {
   return params.get('id');
 }
 
+let selectedRating = 0; // Global rating value
+
 // Fetch and display product details
 async function loadProductDetails() {
   const productId = getProductIdFromURL();
@@ -17,10 +19,10 @@ async function loadProductDetails() {
     if (!res.ok) throw new Error('Failed to load product data');
     const product = await res.json();
     localStorage.setItem('currentProduct', JSON.stringify(product));
+
     const reviewsRes = await fetch(`http://localhost:8000/api/products/reviews/${productId}`);
     if (!reviewsRes.ok) throw new Error('Failed to load reviews');
     const reviews = await reviewsRes.json();
-
 
     const container = document.querySelector('.product-container');
 
@@ -28,24 +30,12 @@ async function loadProductDetails() {
       <div class="product-image">
         <img src="data:${product.img.contentType};base64,${product.img.data}" alt="${product.name}">
       </div>
-      
+
       <div class="product-details">
         <h1 class="product-title">${product.name}</h1>
-        
-        <div class="product-price">
-          <p>Price: EGP ${product.price.toLocaleString()}</p>
-        </div>
-        
-        <div class="size-options">
-          <div class="size-title">SIZE :</div>
-          <div class="size-title">${product.size}</div>
-        </div>
-
-        <div class="stock">
-          <div class="size-title">STOCK :</div>
-          <div class="size-title">${product.stock}</div>
-        </div>
-        
+        <div class="product-price"><p>Price: EGP ${product.price.toLocaleString()}</p></div>
+        <div class="size-options"><div class="size-title">SIZE :</div><div class="size-title">${product.size}</div></div>
+        <div class="stock"><div class="size-title">STOCK :</div><div class="size-title">${product.stock}</div></div>
         <div class="quantity-cart">
           <div class="quantity-selector">
             <button class="quantity-btn">-</button>
@@ -54,10 +44,7 @@ async function loadProductDetails() {
           </div>
           <button class="add-to-cart">Add to cart</button>
         </div>
-        
-        <div class="payment-info">
-          <p>Secure online payment</p>
-        </div>
+        <div class="payment-info"><p>Secure online payment</p></div>
       </div>
 
       <div class="reviews-section">
@@ -75,61 +62,92 @@ async function loadProductDetails() {
           }
         </div>
 
+        <div class="submit-review">
+          <textarea id="review-comment" placeholder="Write your review here..."></textarea>
+          <div class="star-rating">
+            <span class="star" data-value="1">★</span>
+            <span class="star" data-value="2">★</span>
+            <span class="star" data-value="3">★</span>
+            <span class="star" data-value="4">★</span>
+            <span class="star" data-value="5">★</span>
+          </div>
+          <button id="submit-review">Submit Review</button>
+        </div>
       </div>
     `;
 
-    document.getElementById('submit-review').addEventListener('click', async () => {
-      const review = document.getElementById('review-comment').value.trim();
-      const rating = document.getElementById('review-rating').value;
-      const productId = getProductIdFromURL();
-      const token = localStorage.getItem('token');
-    
-      if (!token) return alert('You must be logged in to submit a review.');
-      if (!review || !rating) return alert('Please provide a rating and comment.');
-    
-      try {
-        const res = await fetch(`http://localhost:8000/api/products/review/${productId}`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          },
-          body: JSON.stringify({rating, review })
-        });
-    
-        if (!res.ok) {
-          const data = await res.json();
-          throw new Error(data.message || 'Failed to submit review.');
-        }
-    
-        alert('Review submitted!');
-        loadProductDetails(); // Refresh page to show new review
-      } catch (err) {
-        alert(err.message);
-      }
-    });
-    
+    setupReviewStars();
+    document.getElementById('submit-review').addEventListener('click', handleSubmitReview);
+
   } catch (err) {
     alert('Error loading product details: ' + err.message);
   }
 }
 
+// Handle review submission
+async function handleSubmitReview() {
+  const review = document.getElementById('review-comment').value.trim();
+  const rating = selectedRating;
+  const productId = getProductIdFromURL();
+  const token = localStorage.getItem('token');
 
+  if (!token) return alert('You must be logged in to submit a review.');
+  if (!review || !rating) return alert('Please provide a rating and comment.');
+
+  try {
+    const res = await fetch(`http://localhost:8000/api/products/review/${productId}`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+      body: JSON.stringify({ rating, review })
+    });
+
+    if (!res.ok) {
+      const data = await res.json();
+      throw new Error(data.message || 'Failed to submit review.');
+    }
+
+    alert('Review submitted!');
+    loadProductDetails(); // Refresh
+  } catch (err) {
+    alert(err.message);
+  }
+}
+
+// Setup review star selection
+function setupReviewStars() {
+  const stars = document.querySelectorAll('.star');
+  stars.forEach(star => {
+    const value = parseInt(star.getAttribute('data-value'));
+
+    star.addEventListener('mouseover', () => {
+      stars.forEach(s => s.classList.toggle('hover', parseInt(s.getAttribute('data-value')) <= value));
+    });
+
+    star.addEventListener('mouseout', () => {
+      stars.forEach(s => s.classList.remove('hover'));
+    });
+
+    star.addEventListener('click', () => {
+      selectedRating = value;
+      stars.forEach(s => s.classList.toggle('selected', parseInt(s.getAttribute('data-value')) <= selectedRating));
+    });
+  });
+}
+
+// Add to cart functionality
 function setupAddToCart() {
-  document.querySelector('.add-to-cart').addEventListener('click', async () => {
-    const product = JSON.parse(localStorage.getItem('currentProduct'));
-    if (!product || !product._id) {
-      alert('Product not found.');
-      return;
-    }
-    const qty = parseInt(document.querySelector('.quantity-value').value) || 1;
+  document.querySelector('.product-container').addEventListener('click', async (e) => {
+    if (!e.target.classList.contains('add-to-cart')) return;
 
-    // Replace this with however you're storing the user's token
-    const token = localStorage.getItem('token'); 
-    if (!token) {
-      alert('You must be logged in to add to cart.');
-      return;
-    }
+    const product = JSON.parse(localStorage.getItem('currentProduct'));
+    if (!product || !product._id) return alert('Product not found.');
+
+    const qty = parseInt(document.querySelector('.quantity-value').value) || 1;
+    const token = localStorage.getItem('token');
+    if (!token) return alert('You must be logged in to add to cart.');
 
     try {
       const response = await fetch(`http://localhost:8000/api/products/add-to-cart/${product._id}`, {
@@ -147,8 +165,7 @@ function setupAddToCart() {
       }
 
       alert('Product added to cart!');
-      updateCartCount(); // Update UI if needed
-
+      updateCartCount();
     } catch (error) {
       console.error('Add to cart error:', error);
       alert(`Error: ${error.message}`);
@@ -156,75 +173,32 @@ function setupAddToCart() {
   });
 }
 
-
-function createQuantitySelector() {
-  const quantityCart = document.createElement('div');
-  quantityCart.className = 'quantity-cart';
-
-  const quantitySelector = document.createElement('div');
-  quantitySelector.className = 'quantity-selector';
-
-  // Minus Button
-  const minusBtn = document.createElement('button');
-  minusBtn.className = 'quantity-btn';
-  minusBtn.textContent = '-';
-
-  // Input Field
-  const qtyInput = document.createElement('input');
-  qtyInput.type = 'number'; // numeric input type
-  qtyInput.className = 'quantity-value';
-  qtyInput.value = '1';
-  qtyInput.min = '1';
-
-  // Plus Button
-  const plusBtn = document.createElement('button');
-  plusBtn.className = 'quantity-btn';
-  plusBtn.textContent = '+';
-
-  // Append buttons and input to selector
-  quantitySelector.appendChild(minusBtn);
-  quantitySelector.appendChild(qtyInput);
-  quantitySelector.appendChild(plusBtn);
-
-  quantityCart.appendChild(quantitySelector);
-
-  // Event Listeners
-  minusBtn.addEventListener('click', () => {
-    let current = parseInt(qtyInput.value);
-    if (current > 1) {
-      qtyInput.value = current - 1;
-    }
-  });
-
-  plusBtn.addEventListener('click', () => {
-    let current = parseInt(qtyInput.value);
-    qtyInput.value = current + 1;
-  });
-
-  // Ensure the value is numeric after the change
-  qtyInput.addEventListener('input', () => {
-    if (isNaN(parseInt(qtyInput.value)) || qtyInput.value < 1) {
-      qtyInput.value = '1';
-    }
-  });
-
-  return quantityCart;
-}
-
-
-
-
 // Update cart count in navbar
 function updateCartCount() {
   const cart = JSON.parse(localStorage.getItem('cart')) || [];
   const count = cart.reduce((acc, item) => acc + item.qty, 0);
+  // You can update your navbar here with the count
 }
 
-// === Initialize on Page Load ===
-// === Initialize on Page Load ===
+// Quantity selector logic
+function setupQuantityButtons() {
+  document.querySelector('.product-container').addEventListener('click', (e) => {
+    const input = document.querySelector('.quantity-value');
+    if (!input) return;
+
+    if (e.target.textContent === '+') {
+      input.value = parseInt(input.value || '1') + 1;
+    } else if (e.target.textContent === '-') {
+      const current = parseInt(input.value);
+      input.value = current > 1 ? current - 1 : 1;
+    }
+  });
+}
+
+// Initialize
 document.addEventListener('DOMContentLoaded', async () => {
-  await loadProductDetails();  // Wait for product to be fully loaded and rendered
-  setupAddToCart();            // Then attach event listener to the rendered button
-  updateCartCount();
+  await loadProductDetails();
+  setupAddToCart();
+  setupQuantityButtons();
   updateCartCount();
 });

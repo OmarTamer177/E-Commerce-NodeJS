@@ -369,52 +369,103 @@
     color: #2c3e50;
   }
   
-  .add-review-section {
-    margin-top: 30px;
-    padding: 20px;
-    background-color: #eef4f7;
-    border-radius: 12px;
-  }
-  
-  .add-review-section h3 {
-    margin-bottom: 15px;
-    font-size: 20px;
-    color: #333;
-  }
-  
-  #review-comment {
-    width: 100%;
-    height: 100px;
-    padding: 10px;
-    resize: vertical;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    margin-bottom: 10px;
-    font-size: 14px;
-  }
-  
-  #review-rating {
-    width: 100%;
-    padding: 8px;
-    margin-bottom: 15px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    font-size: 14px;
-    background-color: #fff;
-  }
-  
-  #submit-review {
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
-    font-size: 14px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  #submit-review:hover {
-    background-color: #45a049;
-  }
+  /* Review section container */
+.add-review-section {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Review section container */
+.add-review-section {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Heading style */
+.add-review-section h3 {
+  text-align: center;
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+/* Textarea style */
+#review-comment {
+  width: 100%;
+  height: 150px;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  resize: none;
+  font-size: 16px;
+  margin-bottom: 15px;
+  outline: none;
+}
+
+/* Textarea focus effect */
+#review-comment:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* Rating stars container */
+.rating {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  margin-bottom: 15px;
+}
+
+/* Default star style */
+.star {
+  font-size: 2rem;
+  color: #d3d3d3; /* Default gray color */
+  cursor: pointer;
+}
+
+/* Hover effect when mouse is over a star */
+.star.hover {
+  color: #ffcc00; /* Gold color for hover */
+}
+
+/* Selected star stays golden */
+.star.selected {
+  color: #ffcc00; /* Gold color for selected stars */
+}
+
+
+
+/* Button style */
+#submit-review {
+  width: 100%;
+  padding: 12px;
+  background-color: #000000;
+  color: white;
+  font-size: 18px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+/* Button hover effect */
+#submit-review:hover {
+  background-color: #0056b3;
+}
+
+
+
+/* Button hover effect */
+#submit-review:hover {
+  background-color: #373232;
+}
+
     

@@ -111,6 +111,15 @@ function checkUrlFilters() {
   const type = urlParams.get('type');
 
   let filter = 'all';
+  
+  if(type === 'male'){
+    if (type === 'new') {
+        filter = 'new';  
+      }
+      else if (type === 't-shirt'){
+        
+      }
+    }
 
   if (type === 'new') filter = 'new';
   else if (gender === 'male') filter = 'male';

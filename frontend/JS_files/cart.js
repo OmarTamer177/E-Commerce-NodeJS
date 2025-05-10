@@ -115,6 +115,8 @@ async function renderCart() {
       container.appendChild(itemDiv);
     });
 
+
+
     // Add total to the end
     const totalDiv = document.createElement('div');
     totalDiv.className = 'cart-total';
@@ -126,7 +128,6 @@ async function renderCart() {
     container.innerHTML = `<p style="color:red;">Error: ${err.message}</p>`;
   }
 }
-
 // Update Quantity in Cart
 function updateQty(index, newQty) {
   const qty = parseInt(newQty);
@@ -136,14 +137,12 @@ function updateQty(index, newQty) {
   saveCart();
   renderCart();
 }
-
 // Remove Item from Cart
 function removeItem(index) {
   cart.splice(index, 1);
   saveCart();
   renderCart();
 }
-
 // Checkout with Auth Check
 async function handleCheckout() {
   const token = localStorage.getItem('token');
@@ -153,7 +152,6 @@ async function handleCheckout() {
     document.getElementById('loginSidebar')?.classList.add('show');
     return;
   }
-
   try {
     const response = await fetch('http://localhost:8000/api/users/profile', {
       headers: {
@@ -167,7 +165,6 @@ async function handleCheckout() {
       document.getElementById('loginSidebar')?.classList.add('show');
       return;
     }
-
     // Token is valid
     window.location.href = '../Html_files/checkout.html';
   } catch (error) {
@@ -175,7 +172,6 @@ async function handleCheckout() {
     alert('Failed to verify your session. Please try again.');
   }
 }
-
 // Initialize Cart on Page Load
 document.addEventListener('DOMContentLoaded', () => {
   loadCart();

@@ -117,7 +117,9 @@ function calculateTotals(items) {
     return sum + (price * quantity);
   }, 0);
 
-  const total = subtotal + SHIPPING_COST;
+  const beftax = 1.14*subtotal;
+  const total= beftax + SHIPPING_COST
+
 
   subtotalEl.textContent = `EGP ${subtotal.toFixed(2)}`;
   totalEl.textContent = `EGP ${total.toFixed(2)}`;
@@ -180,7 +182,6 @@ payBtn.addEventListener('click', async () => {
     if (!cartData || cartData.length === 0) {
       throw new Error('Your cart is empty');
     }
-
     // Prepare payment data
     const paymentData = {
       paymentMethod,
@@ -204,15 +205,12 @@ payBtn.addEventListener('click', async () => {
       },
       body: JSON.stringify(paymentData)
     });
-
     if (!response.ok) {
       const errorData = await response.json();
       throw new Error(errorData.message || 'Payment processing failed');
     }
-
     const result = await response.json();
     console.log('Checkout successful:', result);
-
     // Redirect to orders page
     window.location.href = '../Html_files/orders.html';
 
@@ -223,11 +221,9 @@ payBtn.addEventListener('click', async () => {
     payBtn.textContent = 'Pay now';
   }
 });
-
 function redirectToLogin() {
   window.location.href = '../Html_files/login.html';
 }
-
 // Add this event listener for payment method selection
 document.querySelectorAll('input[name="payment"]').forEach(radio => {
     radio.addEventListener('change', (e) => {
@@ -244,14 +240,12 @@ document.querySelectorAll('input[name="payment"]').forEach(radio => {
         }
     });
 });
-
 // Add input formatting for card details
 document.getElementById('cardNumber')?.addEventListener('input', (e) => {
     let value = e.target.value.replace(/\D/g, '');
     value = value.replace(/(\d{4})/g, '$1 ').trim();
     e.target.value = value;
 });
-
 document.getElementById('expiryDate')?.addEventListener('input', (e) => {
     let value = e.target.value.replace(/\D/g, '');
     if (value.length >= 2) {
@@ -259,7 +253,6 @@ document.getElementById('expiryDate')?.addEventListener('input', (e) => {
     }
     e.target.value = value;
 });
-
 document.getElementById('cvv')?.addEventListener('input', (e) => {
     e.target.value = e.target.value.replace(/\D/g, '').slice(0, 3);
 });
