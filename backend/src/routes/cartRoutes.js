@@ -134,6 +134,19 @@ router.post('/checkout', verifyToken, async (req, res) => {
             return res.status(400).json({ message: 'Cart is empty' });
         }
 
+        // check if the products are in stock
+        for (const item of cartItems) {
+            const product = await Product.findById(item.product_id);
+            if (!product) {
+                console.log('Product not found:', item.product_id);
+                return res.status(404).json({ message: 'Product not found' });
+            }
+            if (product.stock < item.quantity) {
+                console.log('Product out of stock:', product.name);
+                return res.status(400).json({ message: `Product ${product.name} quantity is invalid` });
+            }
+        }
+
         // Calculate total price
         let price = cartItems.reduce((total, item) => {
             return total + (item.product_id?.price || 0) * item.quantity;
