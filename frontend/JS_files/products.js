@@ -13,7 +13,7 @@ function getProducts() {
   return JSON.parse(localStorage.getItem('adminProducts')) || [];
 }
 
-async function displayProducts(filter = 'all') {
+async function displayProducts(filter = 'all', gender = "male") {
   const grid = document.getElementById('products-grid');
   const title = document.getElementById('page-title');
   grid.innerHTML = '';
@@ -39,11 +39,28 @@ async function displayProducts(filter = 'all') {
         filteredProducts = products.filter(p => p.gender === 'female');
         title.textContent = "Women's Collection";
         break;
+      case 't-shirt':
+      case 'pants':
+      case 'sweatshirt':
+      case 'shorts':
+        filteredProducts = products.filter(p => p.category?.toLowerCase() === filter);
+        title.textContent = `${filter.charAt(0).toUpperCase() + filter.slice(1)}`;
+        break;
       default:
         title.textContent = 'All Products';
         break;
     }
 
+    switch (gender) {
+      case 'male':
+        filteredProducts = filteredProducts.filter(p => p.gender?.toLowerCase() === gender);
+        break;
+      case 'female':
+        filteredProducts = filteredProducts.filter(p => p.gender?.toLowerCase() === gender);
+        break;
+      default:
+        break;
+    }
 
 
     // No Products Message
@@ -100,7 +117,8 @@ document.querySelectorAll('.filter-btn').forEach(button => {
   button.addEventListener('click', function () {
     document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
     this.classList.add('active');
-    displayProducts(this.getAttribute('data-filter'));
+    const urlParams = new URLSearchParams(window.location.search);
+    displayProducts(this.getAttribute('data-filter'), urlParams.get('gender'));
   });
 });
 
@@ -111,19 +129,17 @@ function checkUrlFilters() {
   const type = urlParams.get('type');
 
   let filter = 'all';
-  
-  if(type === 'male'){
-    if (type === 'new') {
-        filter = 'new';  
-      }
-      else if (type === 't-shirt'){
-        
-      }
-    }
 
-  if (type === 'new') filter = 'new';
-  else if (gender === 'male') filter = 'male';
-  else if (gender === 'female') filter = 'female';
+  if (type) {
+    const categories = ['t-shirt', 'pants', 'sweatshirt', 'shorts', 'new'];
+    if (categories.includes(type)) {
+      filter = type;
+    }
+  } else if (gender === 'male') {
+    filter = 'male';
+  } else if (gender === 'female') {
+    filter = 'female';
+  }
 
   // Apply filter styles
   document.querySelectorAll('.filter-btn').forEach(btn => {
@@ -133,17 +149,15 @@ function checkUrlFilters() {
     }
   });
 
-  displayProducts(filter);
+  displayProducts(filter, gender);
 
-  // Update title if specific
-  if (gender && type !== 'all') {
-    let title = '';
-    if (gender === 'male') title += "male's ";
-    if (gender === 'female') title += "female's ";
-    title += type.charAt(0).toUpperCase() + type.slice(1).replace('-', ' ');
+  // Optional: Update page title more specifically
+  if (type && gender) {
+    let title = `${gender.charAt(0).toUpperCase() + gender.slice(1)}'s ${type.charAt(0).toUpperCase() + type.slice(1)}`;
     document.getElementById('page-title').textContent = title;
   }
 }
+
 
 // --- Init ---
 checkUrlFilters();
