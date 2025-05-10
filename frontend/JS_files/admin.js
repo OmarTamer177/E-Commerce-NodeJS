@@ -19,8 +19,9 @@ document.addEventListener('DOMContentLoaded', function () {
     else if (sectionId === 'manage-coupons') displayCoupons(); 
     else if (sectionId === 'manage-reviews') loadProductsForReview(); 
     else if (sectionId === 'view-refunds') displayRefunds();
-
-    
+    else if (sectionId === 'inventory') {
+      loadInventory();
+    }
   };
 
   // Drag and drop events
@@ -770,5 +771,133 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     });
   });
+
+  async function loadInventory() {
+    try {
+      const response = await fetch('http://localhost:8000/api/products');
+      if (!response.ok) {
+        throw new Error('Failed to fetch products');
+      }
+
+      const products = await response.json();
+      updateInventoryTable(products);
+      updateInventorySummary(products);
+      
+      // Initialize event listeners for inventory controls
+      initializeInventoryControls();
+    } catch (error) {
+      console.error('Error loading inventory:', error);
+      alert('Failed to load inventory data');
+    }
+  }
+
+  function initializeInventoryControls() {
+    // Initialize search and filter event listeners
+    const searchInput = document.getElementById('inventorySearch');
+    const categoryFilter = document.getElementById('inventoryCategory');
+    const stockFilter = document.getElementById('inventoryStock');
+
+    if (searchInput) {
+      searchInput.addEventListener('input', filterInventory);
+    }
+    if (categoryFilter) {
+      categoryFilter.addEventListener('change', filterInventory);
+    }
+    if (stockFilter) {
+      stockFilter.addEventListener('change', filterInventory);
+    }
+  }
+
+  function updateInventoryTable(products) {
+    const tbody = document.getElementById('inventoryTableBody');
+    if (!tbody) return;
+    
+    tbody.innerHTML = '';
+
+    products.forEach(product => {
+      const row = document.createElement('tr');
+      const stockStatus = getStockStatus(product);
+      
+      row.innerHTML = `
+        <td>${product.name}</td>
+        <td>${product.category}</td>
+        <td>${product.stock}</td>
+        <td>${product.lowStockThreshold || 5}</td>
+        <td><span class="stock-status ${stockStatus.class}">${stockStatus.text}</span></td>
+        <td class="action-buttons">
+          <button class="action-btn details" onclick="window.location.href='admin_product_details.html?id=${product._id}'">Details</button>
+        </td>
+      `;
+      tbody.appendChild(row);
+    });
+  }
+
+  function updateInventorySummary(products) {
+    const totalProducts = products.length;
+    const lowStockItems = products.filter(p => p.stock <= (p.lowStockThreshold || 5) && p.stock > 0).length;
+    const outOfStockItems = products.filter(p => p.stock <= 0).length;
+
+    const totalProductsEl = document.getElementById('totalProducts');
+    const lowStockCountEl = document.getElementById('lowStockCount');
+    const outOfStockCountEl = document.getElementById('outOfStockCount');
+
+    if (totalProductsEl) totalProductsEl.textContent = totalProducts;
+    if (lowStockCountEl) lowStockCountEl.textContent = lowStockItems;
+    if (outOfStockCountEl) outOfStockCountEl.textContent = outOfStockItems;
+  }
+
+  function getStockStatus(product) {
+    if (product.stock <= 0) {
+      return { class: 'out', text: 'Out of Stock' };
+    }
+    if (product.stock <= (product.lowStockThreshold || 5)) {
+      return { class: 'low', text: 'Low Stock' };
+    }
+    return { class: 'good', text: 'In Stock' };
+  }
+
+  async function filterInventory() {
+    const searchTerm = document.getElementById('inventorySearch').value.toLowerCase();
+    const category = document.getElementById('inventoryCategory').value;
+    const stockStatus = document.getElementById('inventoryStock').value;
+
+    try {
+      const response = await fetch('http://localhost:8000/api/products');
+      if (!response.ok) {
+        throw new Error('Failed to fetch products');
+      }
+
+      let products = await response.json();
+
+      // Apply search filter
+      if (searchTerm) {
+        products = products.filter(p => p.name.toLowerCase().includes(searchTerm));
+      }
+
+      // Apply category filter - Updated to handle case-insensitive comparison
+      if (category) {
+        products = products.filter(p => p.category.toLowerCase() === category.toLowerCase());
+      }
+
+      // Apply stock status filter
+      if (stockStatus) {
+        switch (stockStatus) {
+          case 'low':
+            products = products.filter(p => p.stock <= (p.lowStockThreshold || 5) && p.stock > 0);
+            break;
+          case 'out':
+            products = products.filter(p => p.stock <= 0);
+            break;
+          case 'in':
+            products = products.filter(p => p.stock > (p.lowStockThreshold || 5));
+            break;
+        }
+      }
+
+      updateInventoryTable(products);
+    } catch (error) {
+      console.error('Error filtering inventory:', error);
+    }
+  }
 
 });
